@@ -29,12 +29,24 @@
     }
     label {
       font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .field-hint {
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
     }
     input, select, button {
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    input:invalid, select:invalid {
+      border-color: #ff6b6b;
     }
     button {
       background-color: #0088cc;
@@ -42,90 +54,217 @@
       border: none;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.2s;
+      position: relative;
     }
     button:hover {
       background-color: #007ab8;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .loader {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    @keyframes spin {
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+    .error-message {
+      color: #ff6b6b;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
     }
   </style>
 </head>
 <body>
   <h1>Астрологический прогноз</h1>
   <form id="astroForm">
-    <label>Имя:
-      <input type="text" name="name" required />
-    </label>
-    <label>Дата рождения (ДД.ММ.ГГГГ):
-      <input type="text" name="birth_date" required />
-    </label>
-    <label>Время рождения (чч:мм, можно пропустить):
-      <input type="text" name="birth_time" />
-    </label>
-    <label>Город рождения:
-      <input type="text" name="birth_city" required />
-    </label>
-    <label>Пол:
-      <select name="gender" required>
-        <option value="">Выбери</option>
-        <option value="м">Мужчина/парень</option>
-        <option value="ж">Женщина/девушка</option>
+    <div class="form-group">
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name" required />
+      <div class="error-message" id="name-error">Пожалуйста, введите ваше имя</div>
+    </div>
+
+    <div class="form-group">
+      <label for="birth_date">Дата рождения:</label>
+      <input type="text" id="birth_date" name="birth_date" placeholder="ДД.ММ.ГГГГ" required 
+             pattern="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d" />
+      <div class="field-hint">Формат: ДД.ММ.ГГГГ</div>
+      <div class="error-message" id="birth_date-error">Пожалуйста, введите корректную дату в формате ДД.ММ.ГГГГ</div>
+    </div>
+
+    <div class="form-group">
+      <label for="birth_time">Время рождения (необязательно):</label>
+      <input type="text" id="birth_time" name="birth_time" placeholder="чч:мм" 
+             pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" />
+      <div class="field-hint">Формат: чч:мм (24-часовой)</div>
+      <div class="error-message" id="birth_time-error">Пожалуйста, введите время в формате чч:мм</div>
+    </div>
+
+    <div class="form-group">
+      <label for="birth_city">Город рождения:</label>
+      <input type="text" id="birth_city" name="birth_city" required />
+      <div class="error-message" id="birth_city-error">Пожалуйста, укажите город рождения</div>
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Пол:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Выберите</option>
+        <option value="м">Мужской</option>
+        <option value="ж">Женский</option>
       </select>
-    </label>
-    <label>Интерес:
-      <select name="interest" required>
-        <option value="">Выбери</option>
+      <div class="error-message" id="gender-error">Пожалуйста, выберите пол</div>
+    </div>
+
+    <div class="form-group">
+      <label for="interest">Интерес:</label>
+      <select id="interest" name="interest" required>
+        <option value="">Выберите</option>
         <option value="Любовь">Любовь</option>
         <option value="Карьера">Карьера</option>
         <option value="Здоровье">Здоровье</option>
         <option value="Финансы">Финансы</option>
         <option value="Общее">Общее</option>
       </select>
-    </label>
-    <label>Семейное положение:
-      <select name="relationship" required>
-        <option value="">Выбери</option>
-        <option value="В паре">В отношениях</option>
-        <option value="Не в паре">Свободен/свободна</option>
+      <div class="error-message" id="interest-error">Пожалуйста, выберите интерес</div>
+    </div>
+
+    <div class="form-group">
+      <label for="relationship">Семейное положение:</label>
+      <select id="relationship" name="relationship" required>
+        <option value="">Выберите</option>
+        <option value="В паре">В паре</option>
+        <option value="Не в паре">Не в паре</option>
       </select>
-    </label>
-    <label>Есть ли дети:
-      <select name="children" required>
-        <option value="">Выбери</option>
+      <div class="error-message" id="relationship-error">Пожалуйста, укажите семейное положение</div>
+    </div>
+
+    <div class="form-group">
+      <label for="children">Есть ли дети:</label>
+      <select id="children" name="children" required>
+        <option value="">Выберите</option>
         <option value="Да">Да</option>
         <option value="Нет">Нет</option>
       </select>
-    </label>
-    <label>Любимый цвет:
-      <input type="text" name="favorite_color" required />
-    </label>
-    <label>Опиши свои страхи или тревоги:
-      <input type="text" name="fears" />
-    </label>
-    <button type="submit">Отправить</button>
+      <div class="error-message" id="children-error">Пожалуйста, укажите, есть ли у вас дети</div>
+    </div>
+
+    <div class="form-group">
+      <label for="favorite_color">Любимый цвет:</label>
+      <input type="text" id="favorite_color" name="favorite_color" required />
+      <div class="error-message" id="favorite_color-error">Пожалуйста, укажите любимый цвет</div>
+    </div>
+
+    <div class="form-group">
+      <label for="fears">Страхи или тревоги (необязательно):</label>
+      <input type="text" id="fears" name="fears" />
+    </div>
+
+    <button type="submit" id="submitBtn">
+      Отправить
+      <span class="loader" id="loader"></span>
+    </button>
   </form>
 
   <script>
     const tg = window.Telegram.WebApp;
     const form = document.getElementById('astroForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loader = document.getElementById('loader');
 
+    // Валидация формы перед отправкой
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      // Проверка валидности формы
+      if (!form.checkValidity()) {
+        // Показываем сообщения об ошибках
+        Array.from(form.elements).forEach(element => {
+          if (element.required && !element.value) {
+            const errorElement = document.getElementById(`${element.id}-error`);
+            if (errorElement) errorElement.style.display = 'block';
+          }
+        });
+        return;
+      }
+
+      // Скрываем сообщения об ошибках
+      document.querySelectorAll('.error-message').forEach(el => {
+        el.style.display = 'none';
+      });
+
+      // Показываем индикатор загрузки
+      submitBtn.disabled = true;
+      loader.style.display = 'block';
+
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      // пример отправки на сервер
-      const res = await fetch("https://example.com/api/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
+      try {
+        // Пример отправки на сервер
+        const res = await fetch("https://example.com/api/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
 
-      if (res.ok) {
-        tg.close();
-      } else {
-        alert("Произошла ошибка при отправке данных");
+        if (res.ok) {
+          const result = await res.json();
+          tg.close();
+        } else {
+          throw new Error('Ошибка сервера');
+        }
+      } catch (error) {
+        alert("Произошла ошибка при отправке данных. Пожалуйста, попробуйте позже.");
+        console.error('Ошибка:', error);
+      } finally {
+        submitBtn.disabled = false;
+        loader.style.display = 'none';
       }
+    });
+
+    // Валидация при вводе
+    form.addEventListener('input', (e) => {
+      const element = e.target;
+      if (element.required && element.value) {
+        const errorElement = document.getElementById(`${element.id}-error`);
+        if (errorElement) errorElement.style.display = 'none';
+      }
+    });
+
+    // Маска для даты рождения
+    document.getElementById('birth_date').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 2 && value.length <= 4) {
+        value = value.slice(0, 2) + '.' + value.slice(2);
+      } else if (value.length > 4) {
+        value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4, 8);
+      }
+      e.target.value = value;
+    });
+
+    // Маска для времени
+    document.getElementById('birth_time').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 2) {
+        value = value.slice(0, 2) + ':' + value.slice(2, 4);
+      }
+      e.target.value = value;
     });
   </script>
 </body>
