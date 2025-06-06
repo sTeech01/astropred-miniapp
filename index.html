@@ -1,326 +1,752 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Астрологический прогноз</title>
-    <style>
-        .error {
-            color: red;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AstroPred Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.css">
+  <style>
+    :root {
+      --primary-color: #9370db;
+      --secondary-color: #6a5acd;
+      --text-color: #f0f0f0;
+      --bg-color: #0a0a1a;
+      --card-color: rgba(22, 33, 62, 0.8);
+      --error-color: #ff6b6b;
+      --success-color: #4caf50;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-color);
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* Звездный фон */
+    #stars-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .star {
+      position: absolute;
+      background-color: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration) infinite ease-in-out;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    
+    .theme-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      z-index: 10;
+      color: var(--primary-color);
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background: var(--card-color);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .form-group {
+      position: relative;
+    }
+    
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-color);
+    }
+    
+    label i {
+      margin-right: 8px;
+      color: var(--primary-color);
+      width: 20px;
+      text-align: center;
+    }
+    
+    .field-hint {
+      font-size: 12px;
+      color: var(--primary-color);
+      margin-top: 4px;
+      font-style: italic;
+    }
+    
+    input, select, button, textarea {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 16px;
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(0,0,0,0.3);
+      color: var(--text-color);
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
+      outline: none;
+    }
+    
+    input:invalid, select:invalid {
+      border-color: var(--error-color);
+    }
+    
+    button {
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      margin-top: 10px;
+      padding: 14px;
+    }
+    
+    button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .loader {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    @keyframes spin {
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+    
+    .error-message {
+      color: var(--error-color);
+      font-size: 13px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .success-message {
+      color: var(--success-color);
+      text-align: center;
+      margin-top: 15px;
+      display: none;
+    }
+    
+    .example-reports {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(106, 90, 205, 0.2);
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+    
+    .recommendations {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(255,255,255,0.2);
+    }
+    
+    .recommendations label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    
+    .recommendations input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+    }
+    
+    /* Анимации */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-group {
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+    
+    /* Прогноз */
+    .forecast-container {
+      display: none;
+      background: var(--card-color);
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .forecast-header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    
+    .forecast-content {
+      line-height: 1.6;
+    }
+    
+    .forecast-section {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+    }
+    
+    .forecast-section h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    /* Анимация появления прогноза */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .forecast-container {
+      animation: slideUp 0.5s ease forwards;
+    }
+    
+    /* Адаптация для мобильных */
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+      
+      form {
+        padding: 15px;
+      }
+      
+      .theme-switch, .language-switcher {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
 </head>
-<body style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;100&quot; height=&quot;100&quot; viewBox=&quot;0 0 100 100&quot;><rect fill=&quot;#f5f5f5&quot; width=&quot;100&quot; height=&quot;100&quot;/><path d=&quot;M10 90 L90 10 M10 10 L90 90&quot; stroke=&quot;#ddd&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;5&quot; fill=&quot;#aaa&quot;/></svg>'); background-repeat: repeat;">
-    <div>
-        <select id="language" onchange="changeLanguage()">
-            <option value="ru">Русский</option>
-            <option value="en">English</option>
-        </select>
+<body>
+  <div id="stars-container"></div>
+  
+  <div class="theme-switch" id="themeSwitch">
+    <i class="fas fa-moon"></i>
+  </div>
+  
+  <div class="language-switcher">
+    <select id="languageSelect">
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+
+  <h1 id="formTitle">Астрологический прогноз</h1>
+  
+  <form id="astroForm">
+    <div class="form-group">
+      <label for="name"><i class="fas fa-user"></i>Имя:</label>
+      <input type="text" id="name" name="name" required />
+      <div class="error-message" id="name-error">Пожалуйста, введите ваше имя</div>
     </div>
 
-    <h1>Астрологический прогноз</h1>
-
-    <div id="form-section">
-        <form id="astroForm" onsubmit="handleSubmit(event)">
-            <div>
-                <label for="name">Имя:</label><br>
-                <input type="text" id="name" name="name" placeholder="Пожалуйста, введите ваше имя" required>
-                <br>
-                <span class="error" id="name-error">Пожалуйста, введите ваше имя</span>
-            </div>
-
-            <div>
-                <label for="birthdate">Дата рождения:</label><br>
-                <input type="date" id="birthdate" name="birthdate" required onchange="calculateZodiac()">
-                <br>
-                <span class="error" id="birthdate-error">Пожалуйста, введите корректную дату</span>
-            </div>
-
-            <div>
-                <label for="birthtime">Время рождения (необязательно):</label><br>
-                <input type="time" id="birthtime" name="birthtime" placeholder="Формат: чч:мм (24-часовой)">
-                <br>
-            </div>
-
-            <div>
-                <label for="birthcity">Город рождения:</label><br>
-                <input type="text" id="birthcity" name="birthcity" placeholder="Пожалуйста, укажите город рождения" required>
-                <br>
-                <span class="error" id="birthcity-error">Пожалуйста, укажите город рождения</span>
-            </div>
-
-            <div>
-                <label for="gender">Пол:</label><br>
-                <select id="gender" name="gender" required>
-                    <option value="" disabled selected>Выберите</option>
-                    <option value="male">Мужской</option>
-                    <option value="female">Женский</option>
-                </select>
-                <br>
-                <span class="error" id="gender-error">Пожалуйста, выберите пол</span>
-            </div>
-
-            <div>
-                <label for="interest">Интерес:</label><br>
-                <select id="interest" name="interest" required>
-                    <option value="" disabled selected>Выберите</option>
-                    <option value="love">Любовь и отношения</option>
-                    <option value="career">Карьера и бизнес</option>
-                    <option value="finance">Финансы и инвестиции</option>
-                    <option value="health">Здоровье и благополучие</option>
-                    <option value="family">Семья и дети</option>
-                    <option value="growth">Личностный рост</option>
-                    <option value="creativity">Творчество и вдохновение</option>
-                    <option value="travel">Путешествия и переезды</option>
-                    <option value="spiritual">Духовное развитие</option>
-                    <option value="education">Образование и обучение</option>
-                    <option value="decisions">Важные решения</option>
-                    <option value="general">Общий прогноз</option>
-                </select>
-                <br>
-                <span class="error" id="interest-error">Пожалуйста, выберите интерес</span>
-            </div>
-
-            <div>
-                <label for="zodiac">Знак зодиака:</label><br>
-                <input type="text" id="zodiac" name="zodiac" readonly>
-            </div>
-
-            <div>
-                <label for="marital">Семейное положение:</label><br>
-                <select id="marital" name="marital" required>
-                    <option value="" disabled selected>Выберите</option>
-                    <option value="in_relationship">В отношениях</option>
-                    <option value="not_in_relationship">Не в отношениях</option>
-                    <option value="searching">В поиске</option>
-                    <option value="complicated">В сложных отношениях</option>
-                </select>
-                <br>
-                <span class="error" id="marital-error">Пожалуйста, укажите семейное положение</span>
-            </div>
-
-            <div>
-                <label for="children">Есть ли дети:</label><br>
-                <select id="children" name="children" required>
-                    <option value="" disabled selected>Выберите</option>
-                    <option value="yes">Да</option>
-                    <option value="no">Нет</option>
-                    <option value="planning">Планируем</option>
-                </select>
-                <br>
-                <span class="error" id="children-error">Пожалуйста, укажите, есть ли у вас дети</span>
-            </div>
-
-            <div>
-                <label for="favorite_color">Любимый цвет:</label><br>
-                <input type="color" id="favorite_color" name="favorite_color" required>
-                <br>
-                <span class="error" id="color-error">Пожалуйста, выберите цвет</span>
-            </div>
-
-            <div>
-                <label for="fears">Страхи или тревоги (необязательно):</label><br>
-                <textarea id="fears" name="fears"></textarea>
-            </div>
-
-            <div>
-                <p>Дополнительные возможности:</p>
-                <div>
-                    <label><input type="checkbox" id="weekly" name="weekly"> Получать еженедельный астропрогноз</label>
-                </div>
-                <div>
-                    <label><input type="checkbox" id="compatibility" name="compatibility"> Анализ совместимости с партнером</label>
-                </div>
-            </div>
-
-            <div>
-                <button type="submit">Получить прогноз</button>
-            </div>
-        </form>
+    <div class="form-group">
+      <label for="birth_date"><i class="fas fa-calendar-day"></i>Дата рождения:</label>
+      <input type="date" id="birth_date" name="birth_date" required />
+      <div class="error-message" id="birth_date-error">Пожалуйста, введите корректную дату</div>
     </div>
 
-    <div id="result" style="display: none;">
-        <h2>Ваш персональный астропрогноз</h2>
-        <p id="result-text">Здесь будет ваш прогноз...</p>
-        <div>
-            <button onclick="document.getElementById('result').style.display='none'; document.getElementById('form-section').style.display='block';">Вернуться к форме</button>
+    <div class="form-group">
+      <label for="birth_time"><i class="fas fa-clock"></i>Время рождения (необязательно):</label>
+      <input type="time" id="birth_time" name="birth_time" />
+      <div class="field-hint">Формат: чч:мм (24-часовой)</div>
+    </div>
+
+    <div class="form-group">
+      <label for="birth_city"><i class="fas fa-city"></i>Город рождения:</label>
+      <input type="text" id="birth_city" name="birth_city" required />
+      <div class="error-message" id="birth_city-error">Пожалуйста, укажите город рождения</div>
+    </div>
+
+    <div class="form-group">
+      <label for="gender"><i class="fas fa-venus-mars"></i>Пол:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Выберите</option>
+        <option value="м">Мужской</option>
+        <option value="ж">Женский</option>        
+      </select>
+      <div class="error-message" id="gender-error">Пожалуйста, выберите пол</div>
+    </div>
+
+    <div class="form-group">
+      <label for="interest"><i class="fas fa-star"></i>Интерес:</label>
+      <select id="interest" name="interest" required>
+        <option value="">Выберите</option>
+        <option value="Любовь и отношения">Любовь и отношения</option>
+        <option value="Карьера и бизнес">Карьера и бизнес</option>
+        <option value="Финансы и инвестиции">Финансы и инвестиции</option>
+        <option value="Здоровье и благополучие">Здоровье и благополучие</option>
+        <option value="Семья и дети">Семья и дети</option>
+        <option value="Личностный рост">Личностный рост</option>
+        <option value="Творчество и вдохновение">Творчество и вдохновение</option>
+        <option value="Путешествия и переезды">Путешествия и переезды</option>
+        <option value="Духовное развитие">Духовное развитие</option>
+        <option value="Образование и обучение">Образование и обучение</option>
+        <option value="Важные решения">Важные решения</option>
+        <option value="Общий прогноз">Общий прогноз</option>
+      </select>
+      <div class="error-message" id="interest-error">Пожалуйста, выберите интерес</div>
+    </div>
+
+    <div class="form-group">
+      <label for="zodiac"><i class="fas fa-sun"></i>Знак зодиака:</label>
+      <select id="zodiac" name="zodiac">
+        <option value="">Не знаю</option>
+        <option value="Овен">Овен (21.03 - 19.04)</option>
+        <option value="Телец">Телец (20.04 - 20.05)</option>
+        <option value="Близнецы">Близнецы (21.05 - 20.06)</option>
+        <option value="Рак">Рак (21.06 - 22.07)</option>
+        <option value="Лев">Лев (23.07 - 22.08)</option>
+        <option value="Дева">Дева (23.08 - 22.09)</option>
+        <option value="Весы">Весы (23.09 - 22.10)</option>
+        <option value="Скорпион">Скорпион (23.10 - 21.11)</option>
+        <option value="Стрелец">Стрелец (22.11 - 21.12)</option>
+        <option value="Козерог">Козерог (22.12 - 19.01)</option>
+        <option value="Водолей">Водолей (20.01 - 18.02)</option>
+        <option value="Рыбы">Рыбы (19.02 - 20.03)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="relationship"><i class="fas fa-heart"></i>Семейное положение:</label>
+      <select id="relationship" name="relationship" required>
+        <option value="">Выберите</option>
+        <option value="В паре">В отношениях</option>
+        <option value="Не в паре">Не в отношениях</option>
+        <option value="В поиске">В поиске</option>
+        <option value="В сложных отношениях">В сложных отношениях</option>
+      </select>
+      <div class="error-message" id="relationship-error">Пожалуйста, укажите семейное положение</div>
+    </div>
+
+    <div class="form-group">
+      <label for="children"><i class="fas fa-baby"></i>Есть ли дети:</label>
+      <select id="children" name="children" required>
+        <option value="">Выберите</option>
+        <option value="Да">Да</option>
+        <option value="Нет">Нет</option>
+        <option value="Планируем">Планируем</option>
+      </select>
+      <div class="error-message" id="children-error">Пожалуйста, укажите, есть ли у вас дети</div>
+    </div>
+
+    <div class="form-group">
+      <label for="favorite_color"><i class="fas fa-palette"></i>Любимый цвет:</label>
+      <input type="color" id="favorite_color" name="favorite_color" value="#6a5acd" required />
+      <div class="error-message" id="favorite_color-error">Пожалуйста, выберите цвет</div>
+    </div>
+
+    <div class="form-group">
+      <label for="fears"><i class="fas fa-flushed"></i>Страхи или тревоги (необязательно):</label>
+      <textarea id="fears" name="fears" rows="2"></textarea>
+    </div>
+
+    <div class="recommendations">
+      <h3><i class="fas fa-gift"></i> Дополнительные возможности:</h3>
+      <label>
+        <input type="checkbox" name="receive_newsletter"> Получать еженедельный астропрогноз
+      </label>
+      <label>
+        <input type="checkbox" name="personal_consultation"> Записаться на персональную консультацию
+      </label>
+      <label>
+        <input type="checkbox" name="compatibility_analysis"> Анализ совместимости с партнером
+      </label>
+    </div>
+
+    <button type="submit" id="submitBtn">
+      <i class="fas fa-paper-plane"></i> Получить прогноз
+      <span class="loader" id="loader"></span>
+    </button>
+  </form>
+
+  <div class="forecast-container" id="forecastContainer">
+    <div class="forecast-header">
+      <h2><i class="fas fa-crystal-ball"></i> Ваш персональный астропрогноз</h2>
+      <p id="forecastDate"></p>
+    </div>
+    
+    <div class="forecast-content" id="forecastContent">
+      <!-- Сюда будет вставлен прогноз -->
+    </div>
+    
+    <button id="backToFormBtn" style="margin-top: 20px;">
+      <i class="fas fa-arrow-left"></i> Вернуться к форме
+    </button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+  <script>
+    // Инициализация WebApp Telegram
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    
+    // Основные элементы
+    const form = document.getElementById('astroForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loader = document.getElementById('loader');
+    const forecastContainer = document.getElementById('forecastContainer');
+    const forecastContent = document.getElementById('forecastContent');
+    const forecastDate = document.getElementById('forecastDate');
+    const backToFormBtn = document.getElementById('backToFormBtn');
+    const themeSwitch = document.getElementById('themeSwitch');
+    const languageSelect = document.getElementById('languageSelect');
+    const starsContainer = document.getElementById('stars-container');
+    
+    // Создание звездного фона
+    function createStars() {
+      const starsCount = 200;
+      const containerWidth = window.innerWidth;
+      const containerHeight = window.innerHeight;
+      
+      for (let i = 0; i < starsCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // Случайные параметры звезды
+        const size = Math.random() * 3;
+        const x = Math.random() * containerWidth;
+        const y = Math.random() * containerHeight;
+        const duration = 2 + Math.random() * 3 + 's';
+        const delay = Math.random() * 5 + 's';
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${x}px`;
+        star.style.top = `${y}px`;
+        star.style.setProperty('--duration', duration);
+        star.style.animationDelay = delay;
+        
+        starsContainer.appendChild(star);
+      }
+    }
+    
+    // Список городов для автодополнения
+    const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 
+                   'Нижний Новгород', 'Челябинск', 'Самара', 'Омск', 'Ростов-на-Дону', 'Кострома', 'Тарко-Сале', 'Губкинский'];
+    
+    // Инициализация Awesomplete для поля города
+    new Awesomplete(document.getElementById('birth_city'), {
+      list: cities,
+      minChars: 1,
+      maxItems: 5,
+      autoFirst: true
+    });
+    
+    // Темная тема (уже включена по умолчанию)
+    themeSwitch.addEventListener('click', function() {
+      document.body.classList.toggle('light-mode');
+      const icon = this.querySelector('i');
+      if (document.body.classList.contains('light-mode')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+        document.documentElement.style.setProperty('--bg-color', '#f9f9ff');
+        document.documentElement.style.setProperty('--text-color', '#333');
+        document.documentElement.style.setProperty('--card-color', '#fff');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+        document.documentElement.style.setProperty('--bg-color', '#0a0a1a');
+        document.documentElement.style.setProperty('--text-color', '#f0f0f0');
+        document.documentElement.style.setProperty('--card-color', 'rgba(22, 33, 62, 0.8)');
+      }
+    });
+    
+    // Определение знака зодиака по дате рождения
+    document.getElementById('birth_date').addEventListener('change', function() {
+      const date = new Date(this.value);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      
+      let zodiac = '';
+      if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) zodiac = 'Овен';
+      else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) zodiac = 'Телец';
+      else if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) zodiac = 'Близнецы';
+      else if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) zodiac = 'Рак';
+      else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) zodiac = 'Лев';
+      else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) zodiac = 'Дева';
+      else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) zodiac = 'Весы';
+      else if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) zodiac = 'Скорпион';
+      else if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) zodiac = 'Стрелец';
+      else if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) zodiac = 'Козерог';
+      else if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) zodiac = 'Водолей';
+      else if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) zodiac = 'Рыбы';
+      
+      if (zodiac) {
+        document.getElementById('zodiac').value = zodiac;
+      }
+    });
+    
+    // Генерация прогноза на основе введенных данных
+    function generateForecast(data) {
+      const today = new Date();
+      const forecastTexts = {
+        'Любовь и отношения': [
+          `Для ${data.name}, родившегося под знаком ${data.zodiac || 'неизвестным знаком'}, этот период обещает интересные встречи.`,
+          `Ваш любимый цвет (${data.favorite_color}) говорит о том, что вам стоит быть более открытым в общении.`,
+          data.relationship === 'В паре' ? 
+            'Ваши отношения скоро перейдут на новый уровень, будьте готовы к важным решениям.' : 
+            'В ближайшее время вас ждет встреча, которая может изменить вашу личную жизнь.'
+        ],
+        'Карьера и бизнес': [
+          `Как представитель знака ${data.zodiac || 'неизвестного знака'}, вы сейчас находитесь в фазе профессионального роста.`,
+          'Меркурий в вашем секторе карьеры указывает на благоприятное время для переговоров.',
+          'Не бойтесь проявлять инициативу - звезды благоволят смелым решениям.'
+        ],
+        'Финансы и инвестиции': [
+          `Ваш знак зодиака (${data.zodiac || 'неизвестный'}) указывает на необходимость осторожности в финансовых вопросах.`,
+          'Юпитер в вашем денежном секторе обещает неожиданные поступления, но будьте бдительны.',
+          'Избегайте крупных трат в середине месяца - это не лучшее время для инвестиций.'
+        ],
+        'Общий прогноз': [
+          `Дорогой ${data.name}, как представитель знака ${data.zodiac || 'неизвестного знака'}, вы сейчас находитесь под влиянием Марса.`,
+          'Это придает вам энергии, но может вызывать некоторую импульсивность.',
+          'Ваш любимый цвет указывает на то, что вам стоит больше времени уделять творчеству.'
+        ]
+      };
+      
+      // Выбираем соответствующий текст прогноза
+      const baseTexts = forecastTexts[data.interest] || forecastTexts['Общий прогноз'];
+      
+      // Добавляем персонализированные элементы
+      let forecastHTML = `
+        <div class="forecast-section">
+          <h3><i class="fas fa-user-astronaut"></i> Персональные данные</h3>
+          <p>Имя: ${data.name}</p>
+          <p>Дата рождения: ${data.birth_date}</p>
+          ${data.zodiac ? `<p>Знак зодиака: ${data.zodiac}</p>` : ''}
+          ${data.relationship ? `<p>Семейное положение: ${data.relationship}</p>` : ''}
         </div>
-        <div>
-            <button onclick="requestConsultation()">Записаться на персональную консультацию</button>
+        
+        <div class="forecast-section">
+          <h3><i class="fas fa-star"></i> Основной прогноз</h3>
+      `;
+      
+      // Добавляем основные прогнозы
+      baseTexts.forEach(text => {
+        forecastHTML += `<p>${text}</p>`;
+      });
+      
+      forecastHTML += `</div>`;
+      
+      // Добавляем дополнительные рекомендации
+      forecastHTML += `
+        <div class="forecast-section">
+          <h3><i class="fas fa-lightbulb"></i> Рекомендации</h3>
+          <p>Благоприятные дни: ${getLuckyDays(data.zodiac)}</p>
+          <p>Совет: ${getAdvice(data.zodiac, data.interest)}</p>
+          <p>Цвет удачи: ${getLuckyColor(data.zodiac)}</p>
         </div>
-    </div>
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        // Инициализация Telegram Web App
-        if (window.Telegram) {
-            Telegram.WebApp.ready();
-            const user = Telegram.WebApp.initDataUnsafe.user;
-            if (user) {
-                document.getElementById('name').value = user.first_name || '';
-            }
+      `;
+      
+      return forecastHTML;
+    }
+    
+    // Вспомогательные функции для генерации прогноза
+    function getLuckyDays(zodiac) {
+      const daysMap = {
+        'Овен': '5, 12, 19 числа месяца',
+        'Телец': '3, 10, 17 числа месяца',
+        'Близнецы': '7, 14, 21 числа месяца',
+        'Рак': '2, 9, 16 числа месяца',
+        'Лев': '6, 13, 20 числа месяца',
+        'Дева': '4, 11, 18 числа месяца',
+        'Весы': '8, 15, 22 числа месяца',
+        'Скорпион': '5, 12, 19 числа месяца',
+        'Стрелец': '3, 10, 17 числа месяца',
+        'Козерог': '7, 14, 21 числа месяца',
+        'Водолей': '2, 9, 16 числа месяца',
+        'Рыбы': '6, 13, 20 числа месяца'
+      };
+      return zodiac && daysMap[zodiac] ? daysMap[zodiac] : '8, 15, 22 числа месяца';
+    }
+    
+    function getAdvice(zodiac, interest) {
+      if (interest === 'Любовь и отношения') {
+        return zodiac ? 
+          `Для ${zodiac} сейчас лучшее время для романтических знакомств` : 
+          'Проявите инициативу в личных отношениях';
+      } else if (interest === 'Карьера и бизнес') {
+        return 'Следующая неделя - лучшее время для важных переговоров';
+      } else {
+        return 'Прислушивайтесь к своей интуиции в этот период';
+      }
+    }
+    
+    function getLuckyColor(zodiac) {
+      const colorsMap = {
+        'Овен': 'красный',
+        'Телец': 'зеленый',
+        'Близнецы': 'желтый',
+        'Рак': 'серебристый',
+        'Лев': 'золотой',
+        'Дева': 'бежевый',
+        'Весы': 'розовый',
+        'Скорпион': 'бордовый',
+        'Стрелец': 'фиолетовый',
+        'Козерог': 'черный',
+        'Водолей': 'голубой',
+        'Рыбы': 'синий'
+      };
+      return zodiac && colorsMap[zodiac] ? colorsMap[zodiac] : 'ваш любимый цвет';
+    }
+    
+    // Обработка отправки формы
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Проверка валидности формы
+      if (!form.checkValidity()) {
+        Array.from(form.elements).forEach(element => {
+          if (element.required && !element.value) {
+            const errorElement = document.getElementById(`${element.id}-error`);
+            if (errorElement) errorElement.style.display = 'block';
+          }
+        });
+        return;
+      }
+      
+      // Скрываем сообщения об ошибках
+      document.querySelectorAll('.error-message').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      // Показываем индикатор загрузки
+      submitBtn.disabled = true;
+      loader.style.display = 'block';
+      
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Имитация загрузки (в реальном приложении здесь будет запрос к серверу)
+      setTimeout(() => {
+        // Генерируем прогноз
+        const forecastHTML = generateForecast(data);
+        
+        // Устанавливаем дату прогноза
+        const today = new Date();
+        forecastDate.textContent = `Прогноз на ${today.toLocaleDateString('ru-RU', { 
+          day: 'numeric', 
+          month: 'long', 
+          year: 'numeric' 
+        })}`;
+        
+        // Вставляем прогноз
+        forecastContent.innerHTML = forecastHTML;
+        
+        // Показываем прогноз и скрываем форму
+        form.style.display = 'none';
+        forecastContainer.style.display = 'block';
+        
+        // Скрываем индикатор загрузки
+        submitBtn.disabled = false;
+        loader.style.display = 'none';
+      }, 1500);
+    });
+    
+    // Кнопка "Вернуться к форме"
+    backToFormBtn.addEventListener('click', function() {
+      forecastContainer.style.display = 'none';
+      form.style.display = 'flex';
+    });
+    
+    // Создаем звездный фон при загрузке
+    window.addEventListener('load', function() {
+      createStars();
+      
+      // Восстановление данных из localStorage
+      const savedData = localStorage.getItem('astroFormData');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        for (const key in data) {
+          if (form.elements[key]) {
+            form.elements[key].value = data[key];
+          }
         }
-
-        // Определение знака зодиака
-        function calculateZodiac() {
-            const birthdate = new Date(document.getElementById('birthdate').value);
-            if (!birthdate) return;
-            const day = birthdate.getDate();
-            const month = birthdate.getMonth() + 1; // Месяцы в JS начинаются с 0
-            let zodiac = '';
-            if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) zodiac = 'Овен';
-            else if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) zodiac = 'Телец';
-            else if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) zodiac = 'Близнецы';
-            else if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) zodiac = 'Рак';
-            else if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) zodiac = 'Лев';
-            else if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) zodiac = 'Дева';
-            else if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) zodiac = 'Весы';
-            else if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) zodiac = 'Скорпион';
-            else if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) zodiac = 'Стрелец';
-            else if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) zodiac = 'Козерог';
-            else if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) zodiac = 'Водолей';
-            else if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) zodiac = 'Рыбы';
-            document.getElementById('zodiac').value = zodiac;
-        }
-
-        // Переключение языка
-        function changeLanguage() {
-            const lang = document.getElementById('language').value;
-            if (lang === 'en') {
-                document.querySelector('h1').textContent = 'Astrological Forecast';
-                document.querySelector('label[for="name"]').textContent = 'Name:';
-                document.querySelector('label[for="birthdate"]').textContent = 'Date of Birth:';
-                document.querySelector('label[for="birthtime"]').textContent = 'Time of Birth (optional):';
-                document.querySelector('label[for="birthcity"]').textContent = 'City of Birth:';
-                document.querySelector('label[for="gender"]').textContent = 'Gender:';
-                document.querySelector('label[for="interest"]').textContent = 'Interest:';
-                document.querySelector('label[for="zodiac"]').textContent = 'Zodiac Sign:';
-                document.querySelector('label[for="marital"]').textContent = 'Marital Status:';
-                document.querySelector('label[for="children"]').textContent = 'Do You Have Children:';
-                document.querySelector('label[for="favorite_color"]').textContent = 'Favorite Color:';
-                document.querySelector('label[for="fears"]').textContent = 'Fears or Concerns (optional):';
-                document.querySelector('p').textContent = 'Additional Options:';
-                document.querySelector('label[for="weekly"]').textContent = ' Receive Weekly Forecast';
-                document.querySelector('label[for="compatibility"]').textContent = ' Partner Compatibility Analysis';
-                document.querySelector('button[type="submit"]').textContent = 'Get Forecast';
-                document.querySelector('#result h2').textContent = 'Your Personal Astrological Forecast';
-                document.querySelector('button[onclick="document.getElementById(\'result\').style.display=\'none\'; document.getElementById(\'form-section\').style.display=\'block\';"]').textContent = 'Back to Form';
-                document.querySelector('button[onclick="requestConsultation()"]').textContent = 'Book a Personal Consultation';
-                document.getElementById('name').placeholder = 'Please enter your name';
-                document.getElementById('birthdate-error').textContent = 'Please enter a valid date';
-                document.getElementById('birthcity').placeholder = 'Please enter your city of birth';
-                document.getElementById('gender-error').textContent = 'Please select your gender';
-                document.getElementById('interest-error').textContent = 'Please select an interest';
-                document.getElementById('marital-error').textContent = 'Please select your marital status';
-                document.getElementById('children-error').textContent = 'Please indicate if you have children';
-                document.getElementById('color-error').textContent = 'Please select a color';
-            } else {
-                document.querySelector('h1').textContent = 'Астрологический прогноз';
-                document.querySelector('label[for="name"]').textContent = 'Имя:';
-                document.querySelector('label[for="birthdate"]').textContent = 'Дата рождения:';
-                document.querySelector('label[for="birthtime"]').textContent = 'Время рождения (необязательно):';
-                document.querySelector('label[for="birthcity"]').textContent = 'Город рождения:';
-                document.querySelector('label[for="gender"]').textContent = 'Пол:';
-                document.querySelector('label[for="interest"]').textContent = 'Интерес:';
-                document.querySelector('label[for="zodiac"]').textContent = 'Знак зодиака:';
-                document.querySelector('label[for="marital"]').textContent = 'Семейное положение:';
-                document.querySelector('label[for="children"]').textContent = 'Есть ли дети:';
-                document.querySelector('label[for="favorite_color"]').textContent = 'Любимый цвет:';
-                document.querySelector('label[for="fears"]').textContent = 'Страхи или тревоги (необязательно):';
-                document.querySelector('p').textContent = 'Дополнительные возможности:';
-                document.querySelector('label[for="weekly"]').textContent = ' Получать еженедельный астропрогноз';
-                document.querySelector('label[for="compatibility"]').textContent = ' Анализ совместимости с партнером';
-                document.querySelector('button[type="submit"]').textContent = 'Получить прогноз';
-                document.querySelector('#result h2').textContent = 'Ваш персональный астропрогноз';
-                document.querySelector('button[onclick="document.getElementById(\'result\').style.display=\'none\'; document.getElementById(\'form-section\').style.display=\'block\';"]').textContent = 'Вернуться к форме';
-                document.querySelector('button[onclick="requestConsultation()"]').textContent = 'Записаться на персональную консультацию';
-                document.getElementById('name').placeholder = 'Пожалуйста, введите ваше имя';
-                document.getElementById('birthdate-error').textContent = 'Пожалуйста, введите корректную дату';
-                document.getElementById('birthcity').placeholder = 'Пожалуйста, укажите город рождения';
-                document.getElementById('gender-error').textContent = 'Пожалуйста, выберите пол';
-                document.getElementById('interest-error').textContent = 'Пожалуйста, выберите интерес';
-                document.getElementById('marital-error').textContent = 'Пожалуйста, укажите семейное положение';
-                document.getElementById('children-error').textContent = 'Пожалуйста, укажите, есть ли у вас дети';
-                document.getElementById('color-error').textContent = 'Пожалуйста, выберите цвет';
-            }
-        }
-
-        // Обработка формы
-        function handleSubmit(event) {
-            event.preventDefault();
-            const form = document.getElementById('astroForm');
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
-
-            // Базовая валидация
-            let valid = true;
-            if (!data.name) {
-                document.getElementById('name-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('name-error').style.display = 'none';
-            }
-            if (!data.birthdate) {
-                document.getElementById('birthdate-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('birthdate-error').style.display = 'none';
-            }
-            if (!data.birthcity) {
-                document.getElementById('birthcity-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('birthcity-error').style.display = 'none';
-            }
-            if (!data.gender) {
-                document.getElementById('gender-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('gender-error').style.display = 'none';
-            }
-            if (!data.interest) {
-                document.getElementById('interest-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('interest-error').style.display = 'none';
-            }
-            if (!data.marital) {
-                document.getElementById('marital-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('marital-error').style.display = 'none';
-            }
-            if (!data.children) {
-                document.getElementById('children-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('children-error').style.display = 'none';
-            }
-            if (!data.favorite_color) {
-                document.getElementById('color-error').style.display = 'block';
-                valid = false;
-            } else {
-                document.getElementById('color-error').style.display = 'none';
-            }
-
-            if (valid) {
-                // Пример отображения результата
-                const resultText = `Привет, ${data.name}! Ваш знак зодиака: ${data.zodiac}. Ваш интерес: ${data.interest}. Прогноз скоро будет готов!`;
-                document.getElementById('result-text').textContent = resultText;
-                document.getElementById('form-section').style.display = 'none';
-                document.getElementById('result').style.display = 'block';
-            }
-        }
-
-        // Функция для кнопки консультации
-        function requestConsultation() {
-            alert('Функция записи на консультацию в разработке. Скоро вы сможете записаться!');
-            // Здесь можно добавить логику для отправки запроса на сервер
-        }
-    </script>
+      }
+    });
+    
+    // Сохранение данных формы в localStorage
+    form.addEventListener('input', function() {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      localStorage.setItem('astroFormData', JSON.stringify(data));
+    });
+  </script>
 </body>
 </html>
