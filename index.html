@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AstroPred Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f2f2f2;
+      color: #333;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: 600;
+    }
+    input, select, button {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background-color: #0088cc;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #007ab8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Астрологический прогноз</h1>
+  <form id="astroForm">
+    <label>Имя:
+      <input type="text" name="name" required />
+    </label>
+    <label>Дата рождения (ДД.ММ.ГГГГ):
+      <input type="text" name="birth_date" required />
+    </label>
+    <label>Время рождения (чч:мм, можно пропустить):
+      <input type="text" name="birth_time" />
+    </label>
+    <label>Город рождения:
+      <input type="text" name="birth_city" required />
+    </label>
+    <label>Пол:
+      <select name="gender" required>
+        <option value="">Выбери</option>
+        <option value="м">М</option>
+        <option value="ж">Ж</option>
+      </select>
+    </label>
+    <label>Интерес:
+      <select name="interest" required>
+        <option value="">Выбери</option>
+        <option value="Любовь">Любовь</option>
+        <option value="Карьера">Карьера</option>
+        <option value="Здоровье">Здоровье</option>
+        <option value="Финансы">Финансы</option>
+        <option value="Общее">Общее</option>
+      </select>
+    </label>
+    <label>Семейное положение:
+      <select name="relationship" required>
+        <option value="">Выбери</option>
+        <option value="В паре">В паре</option>
+        <option value="Не в паре">Не в паре</option>
+      </select>
+    </label>
+    <label>Есть ли дети:
+      <select name="children" required>
+        <option value="">Выбери</option>
+        <option value="Да">Да</option>
+        <option value="Нет">Нет</option>
+      </select>
+    </label>
+    <label>Любимый цвет:
+      <input type="text" name="favorite_color" required />
+    </label>
+    <label>Страхи или тревоги (можно пропустить):
+      <input type="text" name="fears" />
+    </label>
+    <button type="submit">Отправить</button>
+  </form>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    const form = document.getElementById('astroForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // пример отправки на сервер
+      const res = await fetch("https://example.com/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        tg.close();
+      } else {
+        alert("Произошла ошибка при отправке данных");
+      }
+    });
+  </script>
+</body>
+</html>
