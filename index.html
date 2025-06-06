@@ -5,65 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AstroPred Mini App</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.css">
   <style>
+    :root {
+      --primary-color: #6a5acd;
+      --secondary-color: #9370db;
+      --text-color: #333;
+      --bg-color: #f9f9ff;
+      --card-color: #fff;
+      --error-color: #ff6b6b;
+      --success-color: #4caf50;
+    }
+    
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: #f2f2f2;
-      color: #333;
+      background: var(--bg-color);
+      color: var(--text-color);
       padding: 20px;
+      transition: all 0.3s ease;
     }
+    
+    body.dark-mode {
+      --text-color: #f0f0f0;
+      --bg-color: #1a1a2e;
+      --card-color: #16213e;
+    }
+    
     h1 {
       text-align: center;
       margin-bottom: 20px;
+      color: var(--primary-color);
     }
+    
+    .theme-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+    }
+    
     form {
       display: flex;
       flex-direction: column;
       gap: 15px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: var(--card-color);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
     }
+    
+    .form-group {
+      position: relative;
+    }
+    
     label {
       font-weight: 600;
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      color: var(--text-color);
     }
+    
+    label i {
+      margin-right: 8px;
+      color: var(--primary-color);
+      width: 20px;
+      text-align: center;
+    }
+    
     .field-hint {
       font-size: 12px;
-      color: #666;
-      margin-top: 2px;
+      color: var(--secondary-color);
+      margin-top: 4px;
+      font-style: italic;
     }
-    input, select, button {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    
+    input, select, button, textarea {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
       font-size: 16px;
       width: 100%;
       box-sizing: border-box;
+      background: rgba(255,255,255,0.1);
+      color: var(--text-color);
+      transition: all 0.3s ease;
     }
+    
+    input:focus, select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.2);
+      outline: none;
+    }
+    
     input:invalid, select:invalid {
-      border-color: #ff6b6b;
+      border-color: var(--error-color);
     }
+    
     button {
-      background-color: #0088cc;
+      background-color: var(--primary-color);
       color: #fff;
       border: none;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: all 0.3s ease;
       position: relative;
+      margin-top: 10px;
+      padding: 14px;
     }
+    
     button:hover {
-      background-color: #007ab8;
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
+    
     button:disabled {
-      background-color: #ccc;
+      background-color: #aaa;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
+    
     .loader {
       display: none;
       width: 20px;
@@ -77,115 +143,345 @@
       top: 50%;
       transform: translateY(-50%);
     }
+    
     @keyframes spin {
       to { transform: translateY(-50%) rotate(360deg); }
     }
+    
     .error-message {
-      color: #ff6b6b;
-      font-size: 14px;
+      color: var(--error-color);
+      font-size: 13px;
       margin-top: 5px;
       display: none;
     }
+    
+    .success-message {
+      color: var(--success-color);
+      text-align: center;
+      margin-top: 15px;
+      display: none;
+    }
+    
+    .example-reports {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(106, 90, 205, 0.1);
+      border-radius: 10px;
+    }
+    
+    .example-reports h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    
+    .recommendations {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed #ddd;
+    }
+    
+    .recommendations label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    
+    .recommendations input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+    }
+    
+    /* Анимации */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-group {
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+    
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    /* ... и так далее для всех полей */
   </style>
 </head>
 <body>
-  <h1>Астрологический прогноз</h1>
+  <div class="theme-switch" id="themeSwitch">
+    <i class="fas fa-moon"></i>
+  </div>
+  
+  <div class="language-switcher">
+    <select id="languageSelect">
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+
+  <h1 id="formTitle">Астрологический прогноз</h1>
+  
   <form id="astroForm">
     <div class="form-group">
-      <label for="name">Имя:</label>
+      <label for="name"><i class="fas fa-user"></i>Имя:</label>
       <input type="text" id="name" name="name" required />
       <div class="error-message" id="name-error">Пожалуйста, введите ваше имя</div>
     </div>
 
     <div class="form-group">
-      <label for="birth_date">Дата рождения:</label>
-      <input type="text" id="birth_date" name="birth_date" placeholder="ДД.ММ.ГГГГ" required 
-             pattern="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d" />
-      <div class="field-hint">Формат: ДД.ММ.ГГГГ</div>
-      <div class="error-message" id="birth_date-error">Пожалуйста, введите корректную дату в формате ДД.ММ.ГГГГ</div>
+      <label for="birth_date"><i class="fas fa-calendar-day"></i>Дата рождения:</label>
+      <input type="date" id="birth_date" name="birth_date" required />
+      <div class="error-message" id="birth_date-error">Пожалуйста, введите корректную дату</div>
     </div>
 
     <div class="form-group">
-      <label for="birth_time">Время рождения (необязательно):</label>
-      <input type="text" id="birth_time" name="birth_time" placeholder="чч:мм" 
-             pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" />
+      <label for="birth_time"><i class="fas fa-clock"></i>Время рождения (необязательно):</label>
+      <input type="time" id="birth_time" name="birth_time" />
       <div class="field-hint">Формат: чч:мм (24-часовой)</div>
-      <div class="error-message" id="birth_time-error">Пожалуйста, введите время в формате чч:мм</div>
     </div>
 
     <div class="form-group">
-      <label for="birth_city">Город рождения:</label>
+      <label for="birth_city"><i class="fas fa-city"></i>Город рождения:</label>
       <input type="text" id="birth_city" name="birth_city" required />
       <div class="error-message" id="birth_city-error">Пожалуйста, укажите город рождения</div>
     </div>
 
     <div class="form-group">
-      <label for="gender">Пол:</label>
+      <label for="gender"><i class="fas fa-venus-mars"></i>Пол:</label>
       <select id="gender" name="gender" required>
         <option value="">Выберите</option>
         <option value="м">Мужской</option>
         <option value="ж">Женский</option>
+        <option value="другой">Другой</option>
       </select>
       <div class="error-message" id="gender-error">Пожалуйста, выберите пол</div>
     </div>
 
     <div class="form-group">
-      <label for="interest">Интерес:</label>
+      <label for="interest"><i class="fas fa-star"></i>Интерес:</label>
       <select id="interest" name="interest" required>
         <option value="">Выберите</option>
-        <option value="Любовь">Любовь</option>
-        <option value="Карьера">Карьера</option>
-        <option value="Здоровье">Здоровье</option>
-        <option value="Финансы">Финансы</option>
-        <option value="Общее">Общее</option>
+        <option value="Любовь и отношения">Любовь и отношения</option>
+        <option value="Карьера и бизнес">Карьера и бизнес</option>
+        <option value="Финансы и инвестиции">Финансы и инвестиции</option>
+        <option value="Здоровье и благополучие">Здоровье и благополучие</option>
+        <option value="Семья и дети">Семья и дети</option>
+        <option value="Личностный рост">Личностный рост</option>
+        <option value="Творчество и вдохновение">Творчество и вдохновение</option>
+        <option value="Путешествия и переезды">Путешествия и переезды</option>
+        <option value="Духовное развитие">Духовное развитие</option>
+        <option value="Образование и обучение">Образование и обучение</option>
+        <option value="Важные решения">Важные решения</option>
+        <option value="Общий прогноз">Общий прогноз</option>
       </select>
       <div class="error-message" id="interest-error">Пожалуйста, выберите интерес</div>
     </div>
 
     <div class="form-group">
-      <label for="relationship">Семейное положение:</label>
+      <label for="zodiac"><i class="fas fa-sun"></i>Знак зодиака:</label>
+      <select id="zodiac" name="zodiac">
+        <option value="">Не знаю</option>
+        <option value="Овен">Овен (21.03 - 19.04)</option>
+        <option value="Телец">Телец (20.04 - 20.05)</option>
+        <option value="Близнецы">Близнецы (21.05 - 20.06)</option>
+        <option value="Рак">Рак (21.06 - 22.07)</option>
+        <option value="Лев">Лев (23.07 - 22.08)</option>
+        <option value="Дева">Дева (23.08 - 22.09)</option>
+        <option value="Весы">Весы (23.09 - 22.10)</option>
+        <option value="Скорпион">Скорпион (23.10 - 21.11)</option>
+        <option value="Стрелец">Стрелец (22.11 - 21.12)</option>
+        <option value="Козерог">Козерог (22.12 - 19.01)</option>
+        <option value="Водолей">Водолей (20.01 - 18.02)</option>
+        <option value="Рыбы">Рыбы (19.02 - 20.03)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="relationship"><i class="fas fa-heart"></i>Семейное положение:</label>
       <select id="relationship" name="relationship" required>
         <option value="">Выберите</option>
         <option value="В паре">В отношениях</option>
         <option value="Не в паре">Не в отношениях</option>
+        <option value="В поиске">В поиске</option>
+        <option value="В сложных отношениях">В сложных отношениях</option>
       </select>
       <div class="error-message" id="relationship-error">Пожалуйста, укажите семейное положение</div>
     </div>
 
     <div class="form-group">
-      <label for="children">Есть ли дети:</label>
+      <label for="children"><i class="fas fa-baby"></i>Есть ли дети:</label>
       <select id="children" name="children" required>
         <option value="">Выберите</option>
         <option value="Да">Да</option>
         <option value="Нет">Нет</option>
+        <option value="Планируем">Планируем</option>
       </select>
       <div class="error-message" id="children-error">Пожалуйста, укажите, есть ли у вас дети</div>
     </div>
 
     <div class="form-group">
-      <label for="favorite_color">Любимый цвет:</label>
-      <input type="text" id="favorite_color" name="favorite_color" required />
-      <div class="error-message" id="favorite_color-error">Пожалуйста, укажите любимый цвет</div>
+      <label for="favorite_color"><i class="fas fa-palette"></i>Любимый цвет:</label>
+      <input type="color" id="favorite_color" name="favorite_color" value="#6a5acd" required />
+      <div class="error-message" id="favorite_color-error">Пожалуйста, выберите цвет</div>
     </div>
 
     <div class="form-group">
-      <label for="fears">Расскажи о своих страхах или тревогах:</label>
-      <input type="text" id="fears" name="fears" />
+      <label for="fears"><i class="fas fa-flushed"></i>Страхи или тревоги (необязательно):</label>
+      <textarea id="fears" name="fears" rows="2"></textarea>
+    </div>
+
+    <div class="recommendations">
+      <h3><i class="fas fa-gift"></i> Дополнительные возможности:</h3>
+      <label>
+        <input type="checkbox" name="receive_newsletter"> Получать еженедельный астропрогноз
+      </label>
+      <label>
+        <input type="checkbox" name="personal_consultation"> Записаться на персональную консультацию
+      </label>
+      <label>
+        <input type="checkbox" name="compatibility_analysis"> Анализ совместимости с партнером
+      </label>
     </div>
 
     <button type="submit" id="submitBtn">
-      Отправить
+      <i class="fas fa-paper-plane"></i> Получить прогноз
       <span class="loader" id="loader"></span>
     </button>
+    
+    <div class="success-message" id="successMessage">
+      <i class="fas fa-check-circle"></i> Ваша заявка принята! Ожидайте результат...
+    </div>
   </form>
 
+  <div class="example-reports" id="exampleReports">
+    <h3><i class="fas fa-images"></i> Примеры отчетов:</h3>
+    <div id="reportExamples"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
   <script>
+    // Инициализация WebApp Telegram
     const tg = window.Telegram.WebApp;
+    tg.expand();
+    
+    // Основные элементы
     const form = document.getElementById('astroForm');
     const submitBtn = document.getElementById('submitBtn');
     const loader = document.getElementById('loader');
-
-    // Валидация формы перед отправкой
+    const successMessage = document.getElementById('successMessage');
+    const exampleReports = document.getElementById('exampleReports');
+    const reportExamples = document.getElementById('reportExamples');
+    const themeSwitch = document.getElementById('themeSwitch');
+    const languageSelect = document.getElementById('languageSelect');
+    
+    // Список городов для автодополнения
+    const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 
+                   'Нижний Новгород', 'Челябинск', 'Самара', 'Омск', 'Ростов-на-Дону'];
+    
+    // Инициализация Awesomplete для поля города
+    new Awesomplete(document.getElementById('birth_city'), {
+      list: cities,
+      minChars: 1,
+      maxItems: 5,
+      autoFirst: true
+    });
+    
+    // Темная тема
+    themeSwitch.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      const icon = this.querySelector('i');
+      if (document.body.classList.contains('dark-mode')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+      }
+    });
+    
+    // Определение знака зодиака по дате рождения
+    document.getElementById('birth_date').addEventListener('change', function() {
+      const date = new Date(this.value);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      
+      let zodiac = '';
+      if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) zodiac = 'Овен';
+      else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) zodiac = 'Телец';
+      else if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) zodiac = 'Близнецы';
+      else if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) zodiac = 'Рак';
+      else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) zodiac = 'Лев';
+      else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) zodiac = 'Дева';
+      else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) zodiac = 'Весы';
+      else if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) zodiac = 'Скорпион';
+      else if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) zodiac = 'Стрелец';
+      else if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) zodiac = 'Козерог';
+      else if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) zodiac = 'Водолей';
+      else if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) zodiac = 'Рыбы';
+      
+      if (zodiac) {
+        document.getElementById('zodiac').value = zodiac;
+      }
+    });
+    
+    // Показ примеров отчетов при выборе интереса
+    document.getElementById('interest').addEventListener('change', function() {
+      if (this.value) {
+        showExampleReports(this.value);
+      } else {
+        exampleReports.style.display = 'none';
+      }
+    });
+    
+    function showExampleReports(interest) {
+      // Здесь можно загружать разные примеры в зависимости от выбранного интереса
+      let examples = '';
+      
+      switch(interest) {
+        case 'Любовь и отношения':
+          examples = '<p>Пример отчета по любовной совместимости и перспективам отношений...</p>';
+          break;
+        case 'Карьера и бизнес':
+          examples = '<p>Пример анализа карьерных перспектив и благоприятных периодов...</p>';
+          break;
+        // Добавьте другие варианты
+        default:
+          examples = '<p>Общий астрологический прогноз на месяц...</p>';
+      }
+      
+      reportExamples.innerHTML = examples;
+      exampleReports.style.display = 'block';
+    }
+    
+    // Сохранение данных формы в localStorage
+    form.addEventListener('input', function() {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      localStorage.setItem('astroFormData', JSON.stringify(data));
+    });
+    
+    // Восстановление данных при загрузке
+    window.addEventListener('load', function() {
+      const savedData = localStorage.getItem('astroFormData');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        for (const key in data) {
+          if (form.elements[key]) {
+            form.elements[key].value = data[key];
+          }
+        }
+      }
+    });
+    
+    // Обработка отправки формы
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -200,21 +496,21 @@
         });
         return;
       }
-
+      
       // Скрываем сообщения об ошибках
       document.querySelectorAll('.error-message').forEach(el => {
         el.style.display = 'none';
       });
-
+      
       // Показываем индикатор загрузки
       submitBtn.disabled = true;
       loader.style.display = 'block';
-
+      
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
-
+      
       try {
-        // Пример отправки на сервер
+        // Отправка данных на сервер
         const res = await fetch("https://example.com/api/submit", {
           method: "POST",
           headers: {
@@ -222,10 +518,17 @@
           },
           body: JSON.stringify(data)
         });
-
+        
         if (res.ok) {
           const result = await res.json();
-          tg.close();
+          // Показываем сообщение об успехе
+          form.style.display = 'none';
+          successMessage.style.display = 'block';
+          
+          // Закрываем WebApp через 3 секунды
+          setTimeout(() => {
+            tg.close();
+          }, 3000);
         } else {
           throw new Error('Ошибка сервера');
         }
@@ -237,7 +540,7 @@
         loader.style.display = 'none';
       }
     });
-
+    
     // Валидация при вводе
     form.addEventListener('input', (e) => {
       const element = e.target;
@@ -246,25 +549,12 @@
         if (errorElement) errorElement.style.display = 'none';
       }
     });
-
-    // Маска для даты рождения
-    document.getElementById('birth_date').addEventListener('input', function(e) {
-      let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 2 && value.length <= 4) {
-        value = value.slice(0, 2) + '.' + value.slice(2);
-      } else if (value.length > 4) {
-        value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4, 8);
-      }
-      e.target.value = value;
-    });
-
-    // Маска для времени
-    document.getElementById('birth_time').addEventListener('input', function(e) {
-      let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 2) {
-        value = value.slice(0, 2) + ':' + value.slice(2, 4);
-      }
-      e.target.value = value;
+    
+    // Анимация загрузки страницы
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        document.body.style.opacity = '1';
+      }, 100);
     });
   </script>
 </body>
