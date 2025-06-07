@@ -192,6 +192,7 @@
     .form-group {
       margin: 15px 0;
       text-align: left;
+      position: relative;
     }
     .form-group label {
       display: block;
@@ -222,13 +223,17 @@
       border-color: var(--primary-color);
       box-shadow: 0 0 5px rgba(103, 58, 183, 0.3);
     }
+    .zodiac-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: var(--primary-color);
+    }
     .success { color: var(--success-color); }
     .error { color: var(--error-color); }
     .info { color: var(--info-color); }
-    .zodiac-option::before {
-      content: attr(data-emoji);
-      margin-right: 8px;
-    }
     .button {
       background: var(--primary-color);
       color: white;
@@ -238,7 +243,7 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       margin: 5px;
       display: block;
       width: 200px;
@@ -246,7 +251,8 @@
       margin-right: auto;
     }
     .button:hover {
-      transform: scale(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px var(--shadow-color);
     }
     .button:active {
       transform: scale(0.95);
@@ -261,15 +267,12 @@
       background: rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      animation: ripple 0.6s ease-out;
-      pointer-events: none;
+      transition: width 0.3s ease, height 0.3s ease;
     }
-    @keyframes ripple {
-      to {
-        width: 200%;
-        height: 200%;
-        opacity: 0;
-      }
+    .button:active::after {
+      width: 200%;
+      height: 200%;
+      opacity: 0;
     }
     .share-buttons {
       display: flex;
@@ -485,7 +488,8 @@
       </div>
       <div class="form-group">
         <label for="partnerBirthDate">Дата рождения партнера:</label>
-        <input type="date" id="partnerBirthDate" aria-required="true">
+        <input type="date" id="partnerBirthDate" aria-required="true" oninput="displayZodiac()">
+        <span id="partnerZodiacIcon" class="zodiac-icon"></span>
       </div>
       <div class="form-group">
         <label for="partnerGender">Пол партнера:</label>
@@ -493,24 +497,6 @@
           <option value="">Выберите</option>
           <option value="male">Мужской</option>
           <option value="female">Женский</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="partnerZodiac">Знак зодиака партнера:</label>
-        <select id="partnerZodiac" aria-required="true">
-          <option value="unknown">Не знаю</option>
-          <option value="aries" class="zodiac-option" data-emoji="♈">Овен</option>
-          <option value="taurus" class="zodiac-option" data-emoji="♉">Телец</option>
-          <option value="gemini" class="zodiac-option" data-emoji="♊">Близнецы</option>
-          <option value="cancer" class="zodiac-option" data-emoji="♋">Рак</option>
-          <option value="leo" class="zodiac-option" data-emoji="♌">Лев</option>
-          <option value="virgo" class="zodiac-option" data-emoji="♍">Дева</option>
-          <option value="libra" class="zodiac-option" data-emoji="♎">Весы</option>
-          <option value="scorpio" class="zodiac-option" data-emoji="♏">Скорпион</option>
-          <option value="sagittarius" class="zodiac-option" data-emoji="♐">Стрелец</option>
-          <option value="capricorn" class="zodiac-option" data-emoji="♑">Козерог</option>
-          <option value="aquarius" class="zodiac-option" data-emoji="♒">Водолей</option>
-          <option value="pisces" class="zodiac-option" data-emoji="♓">Рыбы</option>
         </select>
       </div>
       <div class="form-group">
@@ -530,10 +516,10 @@
         <div>Любовь: <div class="chart-bar love" id="loveBar" style="width: 0;"></div></div>
         <div>Дружба: <div class="chart-bar friendship" id="friendshipBar" style="width: 0;"></div></div>
         <div>Работа: <div class="chart-bar work" id="workBar" style="width: 0;"></div></div>
-      </div>
-      <div class="share-buttons">
-        <button class="button" onclick="share('WhatsApp', 'compat')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
-        <button class="button" onclick="share('Telegram', 'compat')" aria-label="Поделиться в Telegram">Telegram</button>
+        <div class="share-buttons">
+          <button class="button" onclick="share('WhatsApp', 'compat')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
+          <button class="button" onclick="share('Telegram', 'compat')" aria-label="Поделиться в Telegram">Telegram</button>
+        </div>
       </div>
       <button class="button" onclick="closeModal('compatibility')" aria-label="Вернуться в меню">Вернуться в меню</button>
     </div>
@@ -628,7 +614,6 @@
           document.getElementById('monthlyForecast').className = 'error';
         }
         if (section === 'compatibility') loadUserData();
-        if (section === 'history') loadHistory();
       }, 300);
     }
 
@@ -723,6 +708,32 @@
         : 'Данные не заполнены';
     }
 
+    function getZodiacSign(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return '♈ Овен';
+      if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return '♉ Телец';
+      if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return '♊ Близнецы';
+      if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return '♋ Рак';
+      if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return '♌ Лев';
+      if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return '♍ Дева';
+      if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return '♎ Весы';
+      if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return '♏ Скорпион';
+      if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return '♐ Стрелец';
+      if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return '♑ Козерог';
+      if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return '♒ Водолей';
+      if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return '♓ Рыбы';
+      return '';
+    }
+
+    function displayZodiac() {
+      const birthDate = document.getElementById('partnerBirthDate').value;
+      const zodiacIcon = document.getElementById('partnerZodiacIcon');
+      zodiacIcon.textContent = getZodiacSign(birthDate);
+    }
+
     function saveToHistory(type, forecast) {
       const history = JSON.parse(localStorage.getItem('forecastHistory') || '[]');
       history.push({ type, forecast, date: new Date().toLocaleString() });
@@ -742,16 +753,9 @@
     }
 
     function analyzeCompatibility() {
-      const love = Math.floor(Math.random() * 100);
-      const friendship = Math.floor(Math.random() * 100);
-      const work = Math.floor(Math.random() * 100);
       const chart = document.getElementById('compatChart');
-      chart.style.display = 'block';
-      document.getElementById('loveBar').style.width = `${love}%`;
-      document.getElementById('friendshipBar').style.width = `${friendship}%`;
-      document.getElementById('workBar').style.width = `${work}%`;
-      const result = `Совместимость: Любовь ${love}%, Дружба ${friendship}%, Работа ${work}%`;
-      saveToHistory('compatibility', result);
+      chart.style.display = 'none';
+      alert('Функция анализа совместимости пока недоступна.');
     }
 
     function share(platform, type = 'main') {
