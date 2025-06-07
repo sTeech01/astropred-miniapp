@@ -32,13 +32,15 @@
       color: var(--text-color);
       line-height: 1.6;
       padding: 20px;
-      transition: opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
+      transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
       position: relative;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
     }
     body.dark {
-      background: radial-gradient(circle at center, #1C2526 0%, #0A0A23 70%);
+      background: radial-gradient(circle at center, #1C2526 0%, #0A0A23 100%);
     }
     .stars {
       position: absolute;
@@ -47,11 +49,10 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      display: none;
     }
     body.dark .stars {
-      opacity: 1;
+      display: block;
     }
     .star {
       position: absolute;
@@ -74,9 +75,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 2000;
+      z-index: 1000;
+      transition: opacity 0.4s ease;
       opacity: 1;
-      transition: opacity 0.5s ease;
     }
     .loader.hidden {
       opacity: 0;
@@ -110,6 +111,7 @@
       text-align: center;
       position: relative;
       z-index: 10;
+      flex-grow: 1;
     }
     .theme-toggle {
       position: absolute;
@@ -203,6 +205,8 @@
     .form-group label {
       display: block;
       margin-bottom: 5px;
+      font-size: 14px;
+      color: var(--text-color);
     }
     .form-group input, .form-group select {
       width: 100%;
@@ -220,6 +224,7 @@
     }
     .dark .form-group input, .dark .form-group select {
       border-color: #555;
+      background: var(--card-bg);
     }
     .dark .form-group input:disabled, .dark .form-group select:disabled {
       background: #444;
@@ -231,11 +236,12 @@
     }
     .zodiac-icon {
       position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
+      right: 12px;
+      top: 38px;
+      font-size: 16px;
       color: var(--primary-color);
+      pointer-events: none;
+      opacity: 0.8;
     }
     .success { color: var(--success-color); }
     .error { color: var(--error-color); }
@@ -255,6 +261,7 @@
       width: 200px;
       margin-left: auto;
       margin-right: auto;
+      font-size: 16px;
     }
     .button:hover {
       transform: translateY(-2px);
@@ -395,7 +402,7 @@
       <div id="step2" class="form-step">
         <div class="form-group">
           <label for="birthCity">Город рождения:</label>
-          <input type="text" id="birthCity" aria-required="true" placeholder="Пожалуйста, укажите город рождения" disabled>
+          <input type="text" id="birthCity" aria-required="true" placeholder="Пожалуйста, укажите город ваш" disabled>
           <p id="birthCityError" class="error" style="display: none;">Пожалуйста, укажите город рождения</p>
         </div>
         <div class="form-group">
@@ -442,7 +449,7 @@
         </div>
         <div class="form-group">
           <label for="children">Есть ли дети:</label>
-          <select id="children" aria-required="true">
+          <select id="children" aria-required="true" disabled>
             <option value="">Выберите</option>
             <option value="yes">Да</option>
             <option value="no">Нет</option>
@@ -470,10 +477,6 @@
     <div class="modal-content">
       <h2 id="dailyTitle">Ваш персональный астропрогноз</h2>
       <p id="dailyForecast">Данная функция в разработке. Приносим свои извинения</p>
-      <div class="share-buttons">
-        <button class="button" onclick="share('WhatsApp', 'daily')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
-        <button class="button" onclick="share('Telegram', 'daily')" aria-label="Поделиться в Telegram">Telegram</button>
-      </div>
       <button class="button" onclick="closeModal('daily')" aria-label="Вернуться в меню">Вернуться в меню</button>
     </div>
   </div>
@@ -482,10 +485,6 @@
     <div class="modal-content">
       <h2 id="weeklyTitle">Ваш персональный астропрогноз</h2>
       <p id="weeklyForecast">Данная функция в разработке. Приносим свои извинения</p>
-      <div class="share-buttons">
-        <button class="button" onclick="share('WhatsApp', 'weekly')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
-        <button class="button" onclick="share('Telegram', 'weekly')" aria-label="Поделиться в Telegram">Telegram</button>
-      </div>
       <button class="button" onclick="closeModal('weekly')" aria-label="Вернуться в меню">Вернуться в меню</button>
     </div>
   </div>
@@ -494,10 +493,6 @@
     <div class="modal-content">
       <h2 id="monthlyTitle">Ваш персональный астропрогноз</h2>
       <p id="monthlyForecast">Данная функция в разработке. Приносим свои извинения</p>
-      <div class="share-buttons">
-        <button class="button" onclick="share('WhatsApp', 'monthly')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
-        <button class="button" onclick="share('Telegram', 'monthly')" aria-label="Поделиться в Telegram">Telegram</button>
-      </div>
       <button class="button" onclick="closeModal('monthly')" aria-label="Вернуться в меню">Вернуться в меню</button>
     </div>
   </div>
@@ -529,6 +524,7 @@
       <div class="form-group">
         <label for="relationshipDuration">Как долго вы вместе (если применимо):</label>
         <select id="relationshipDuration">
+          <option value="not_dating">Мы не встречаемся</option>
           <option value="not_applicable">Не применимо</option>
           <option value="less_6m">Менее 6 месяцев</option>
           <option value="6m_1y">6-12 месяцев</option>
@@ -538,15 +534,12 @@
         </select>
       </div>
       <button class="button" onclick="analyzeCompatibility()" aria-label="Анализировать совместимость">Анализировать совместимость</button>
+      <p id="compatMessage" class="error" style="display: none;"></p>
       <div class="compatibility-chart" id="compatChart" style="display: none;">
         <h3>Результаты совместимости</h3>
         <div>Любовь: <div class="chart-bar love" id="loveBar" style="width: 0;"></div></div>
         <div>Дружба: <div class="chart-bar friendship" id="friendshipBar" style="width: 0;"></div></div>
         <div>Работа: <div class="chart-bar work" id="workBar" style="width: 0;"></div></div>
-        <div class="share-buttons">
-          <button class="button" onclick="share('WhatsApp', 'compat')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
-          <button class="button" onclick="share('Telegram', 'compat')" aria-label="Поделиться в Telegram">Telegram</button>
-        </div>
       </div>
       <button class="button" onclick="closeModal('compatibility')" aria-label="Вернуться в меню">Вернуться в меню</button>
     </div>
@@ -646,7 +639,10 @@
           document.getElementById('monthlyForecast').textContent = 'Данная функция в разработке. Приносим свои извинения';
           document.getElementById('monthlyForecast').className = 'error';
         }
-        if (section === 'compatibility') loadUserData();
+        if (section === 'compatibility') {
+          loadUserData();
+          document.getElementById('compatMessage').style.display = 'none';
+        }
         if (section === 'history') loadHistory();
       }, 300);
     }
@@ -747,18 +743,18 @@
       const date = new Date(dateString);
       const month = date.getMonth() + 1;
       const day = date.getDate();
-      if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return '♈ Овен';
-      if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return '♉ Телец';
-      if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return '♊ Близнецы';
-      if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return '♋ Рак';
-      if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return '♌ Лев';
-      if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return '♍ Дева';
-      if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return '♎ Весы';
-      if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return '♏ Скорпион';
-      if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return '♐ Стрелец';
-      if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return '♑ Козерог';
-      if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return '♒ Водолей';
-      if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return '♓ Рыбы';
+      if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return '♈';
+      if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return '♉';
+      if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return '♊';
+      if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return '♋';
+      if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return '♌';
+      if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return '♍';
+      if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return '♎';
+      if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return '♏';
+      if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return '♐';
+      if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return '♑';
+      if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return '♒';
+      if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return '♓';
       return '';
     }
 
@@ -791,20 +787,17 @@
     }
 
     function analyzeCompatibility() {
-      const chart = document.getElementById('compatChart');
-      chart.style.display = 'none';
-      alert('Функция анализа совместимости пока недоступна.');
+      const message = document.getElementById('compatMessage');
+      message.textContent = 'Данная функция в разработке. Приносим свои извинения';
+      message.style.display = 'block';
+      document.getElementById('compatChart').style.display = 'none';
+      setTimeout(() => {
+        message.style.display = 'none';
+      }, 3000);
     }
 
     function share(platform, type = 'main') {
-      let text = type === 'main' 
-        ? 'Хочу поделиться с тобой этим астроботом — реально интересно! Прогноз на день, месяц, совместимость и ещё куча всего.\nВот ссылка: @astropred_bot'
-        : document.getElementById(`${type}Forecast`)?.textContent || 
-          document.getElementById('compatChart').style.display !== 'none' 
-          ? `Совместимость: Любовь ${document.getElementById('loveBar').style.width}, ` +
-            `Дружба ${document.getElementById('friendshipBar').style.width}, ` +
-            `Работа ${document.getElementById('workBar').style.width}` 
-          : 'Прогноз от AstroPred';
+      let text = 'Хочу поделиться с тобой этим астроботом — реально интересно! Прогноз на день, месяц, совместимость и ещё куча всего.\nВот ссылка: @astropred_bot';
       const url = platform === 'WhatsApp' 
         ? `https://wa.me/?text=${encodeURIComponent(text)}`
         : `https://t.me/share/url?url=${encodeURIComponent(text)}`;
