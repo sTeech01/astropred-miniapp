@@ -439,7 +439,7 @@
   <div id="dailyModal" class="modal" role="dialog" aria-labelledby="dailyTitle">
     <div class="modal-content">
       <h2 id="dailyTitle">Ваш персональный астропрогноз</h2>
-      <p id="dailyForecast">Загрузка прогноза на день...</p>
+      <p id="dailyForecast">Данная функция в разработке. Приносим свои извинения</p>
       <div class="share-buttons">
         <button class="button" onclick="share('WhatsApp', 'daily')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
         <button class="button" onclick="share('Telegram', 'daily')" aria-label="Поделиться в Telegram">Telegram</button>
@@ -451,7 +451,7 @@
   <div id="weeklyModal" class="modal" role="dialog" aria-labelledby="weeklyTitle">
     <div class="modal-content">
       <h2 id="weeklyTitle">Ваш персональный астропрогноз</h2>
-      <p id="weeklyForecast">Загрузка прогноза на неделю...</p>
+      <p id="weeklyForecast">Данная функция в разработке. Приносим свои извинения</p>
       <div class="share-buttons">
         <button class="button" onclick="share('WhatsApp', 'weekly')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
         <button class="button" onclick="share('Telegram', 'weekly')" aria-label="Поделиться в Telegram">Telegram</button>
@@ -463,7 +463,7 @@
   <div id="monthlyModal" class="modal" role="dialog" aria-labelledby="monthlyTitle">
     <div class="modal-content">
       <h2 id="monthlyTitle">Ваш персональный астропрогноз</h2>
-      <p id="monthlyForecast">Загрузка прогноза на месяц...</p>
+      <p id="monthlyForecast">Данная функция в разработке. Приносим свои извинения</p>
       <div class="share-buttons">
         <button class="button" onclick="share('WhatsApp', 'monthly')" aria-label="Поделиться в WhatsApp">WhatsApp</button>
         <button class="button" onclick="share('Telegram', 'monthly')" aria-label="Поделиться в Telegram">Telegram</button>
@@ -516,7 +516,7 @@
       <div class="form-group">
         <label for="relationshipDuration">Как долго вы вместе (если применимо):</label>
         <select id="relationshipDuration">
-          <option value="not_applicable">Не примени  мо</option>
+          <option value="not_applicable">Не применимо</option>
           <option value="less_6m">Менее 6 месяцев</option>
           <option value="6m_1y">6-12 месяцев</option>
           <option value="1y_3y">1-3 года</option>
@@ -615,8 +615,17 @@
           updateProgress();
           loadProfile();
         }
-        if (section === 'daily' || section === 'weekly' || section === 'monthly') {
-          checkProfileAndLoad(section);
+        if (section === 'daily') {
+          document.getElementById('dailyForecast').textContent = 'Данная функция в разработке. Приносим свои извинения';
+          document.getElementById('dailyForecast').className = 'error';
+        }
+        if (section === 'weekly') {
+          document.getElementById('weeklyForecast').textContent = 'Данная функция в разработке. Приносим свои извинения';
+          document.getElementById('weeklyForecast').className = 'error';
+        }
+        if (section === 'monthly') {
+          document.getElementById('monthlyForecast').textContent = 'Данная функция в разработке. Приносим свои извинения';
+          document.getElementById('monthlyForecast').className = 'error';
         }
         if (section === 'compatibility') loadUserData();
         if (section === 'history') loadHistory();
@@ -712,28 +721,6 @@
       document.getElementById('userData').textContent = profile.name 
         ? `Имя: ${profile.name}, Дата рождения: ${profile.birthDate}, Город: ${profile.birthCity}`
         : 'Данные не заполнены';
-    }
-
-    function checkProfileAndLoad(type) {
-      const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-      if (!profile.name || !profile.birthDate || !profile.birthCity || !profile.gender || 
-          !profile.interest || !profile.maritalStatus || !profile.children || !profile.favoriteColor) {
-        document.getElementById(`${type}Forecast`).textContent = 'Заполните пожалуйста анкету';
-        document.getElementById(`${type}Forecast`).className = 'error';
-      } else {
-        loadForecast(type);
-      }
-    }
-
-    function loadForecast(type) {
-      const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-      const forecast = type === 'daily' ? 'Прогноз на день: Удача в делах и гармония в отношениях.'
-        : type === 'weekly' ? 'Прогноз на неделю: Новая возможность в карьере, будьте внимательны.'
-        : 'Прогноз на месяц: Стабильность в финансах, время для личностного роста.';
-      document.getElementById(`${type}Forecast`).textContent = profile.name 
-        ? `${profile.name}, ${forecast}` : forecast;
-      document.getElementById(`${type}Forecast`).className = '';
-      saveToHistory(type, forecast);
     }
 
     function saveToHistory(type, forecast) {
