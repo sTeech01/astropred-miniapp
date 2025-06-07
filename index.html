@@ -118,23 +118,26 @@
       background: none;
       border: none;
       cursor: pointer;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 100;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+      transform: rotate(15deg);
+    }
+    .theme-toggle:active {
+      transform: scale(0.9);
     }
     .theme-icon {
-      width: 40px;
-      height: 40px;
-      transition: transform 0.3s ease;
-    }
-    .theme-toggle:hover .theme-icon {
-      transform: scale(1.1);
-    }
-    .theme-toggle:active .theme-icon {
-      transform: scale(0.9);
+      width: 24px;
+      height: 24px;
+      stroke: var(--text-color);
+      transition: stroke 0.3s ease;
     }
     .modal {
       display: none;
@@ -203,8 +206,16 @@
       background: var(--card-bg);
       color: var(--text-color);
     }
+    .form-group input:disabled, .form-group select:disabled {
+      background: #eee;
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
     .dark .form-group input, .dark .form-group select {
       border-color: #555;
+    }
+    .dark .form-group input:disabled, .dark .form-group select:disabled {
+      background: #444;
     }
     .form-group input:focus, .form-group select:focus {
       outline: none;
@@ -310,31 +321,9 @@
   <div class="container">
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Переключить тему">
       <svg class="theme-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 3V5M12 19V21M5.636 5.636L7.05 7.05M16.95 16.95L18.364 18.364M3 12H5M19 12H21M5.636 18.364L7.05 16.95M16.95 7.05L18.364 5.636M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z" stroke="var(--text-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 3V5M12 19V21M5.636 5.636L7.05 7.05M16.95 16.95L18.364 18.364M3 12H5M19 12H21M5.636 18.364L7.05 16.95M16.95 7.05L18.364 5.636M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z" stroke="var(--text-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
-    <svg width="200" height="200" viewBox="0 0 200 200" aria-label="Astromir Logo">
-      <defs>
-        <radialGradient id="grad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#673AB7" />
-          <stop offset="100%" style="stop-color:#311B92" />
-        </radialGradient>
-      </defs>
-      <circle cx="100" cy="100" r="80" fill="url(#grad)" />
-      <text x="100" y="110" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Astromir</text>
-      <circle cx="60" cy="60" r="5" fill="white">
-        <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" />
-      </circle>
-      <circle cx="140" cy="60" r="5" fill="white">
-        <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" begin="0.5s" />
-      </circle>
-      <circle cx="60" cy="140" r="5" fill="white">
-        <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" begin="1s" />
-      </circle>
-      <circle cx="140" cy="140" r="5" fill="white">
-        <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" begin="1.5s" />
-      </circle>
-    </svg>
     <h1>AstroPred</h1>
 
     <button class="button" onclick="openModal('profile')" aria-label="Открыть анкету">Анкета</button>
@@ -352,36 +341,36 @@
   <div id="profileModal" class="modal" role="dialog" aria-labelledby="profileTitle">
     <div class="modal-content">
       <h2 id="profileTitle">Анкета</h2>
-      <button class="button" onclick="openModal('profile')" aria-label="Редактировать анкету">Редактировать</button>
+      <button class="button" onclick="enableEdit()" aria-label="Редактировать анкету">Редактировать</button>
       <div class="progress-bar">
         <div class="progress" id="progress"></div>
       </div>
       <div id="step1" class="form-step active">
         <div class="form-group">
           <label for="name">Имя:</label>
-          <input type="text" id="name" aria-required="true" placeholder="Пожалуйста, введите ваше имя">
+          <input type="text" id="name" aria-required="true" placeholder="Пожалуйста, введите ваше имя" disabled>
           <p id="nameError" class="error" style="display: none;">Пожалуйста, введите ваше имя</p>
         </div>
         <div class="form-group">
           <label for="birthDate">Дата рождения:</label>
-          <input type="date" id="birthDate" aria-required="true" placeholder="Пожалуйста, введите корректную дату">
+          <input type="date" id="birthDate" aria-required="true" placeholder="Пожалуйста, введите корректную дату" disabled>
           <p id="birthDateError" class="error" style="display: none;">Пожалуйста, введите корректную дату</p>
         </div>
         <div class="form-group">
           <label for="birthTime">Время рождения (необязательно):</label>
-          <input type="time" id="birthTime" placeholder="Формат: чч:мм (24-часовой)">
+          <input type="time" id="birthTime" placeholder="Формат: чч:мм (24-часовой)" disabled>
         </div>
         <button class="button" onclick="nextStep(1)" aria-label="Перейти к следующему шагу">Далее</button>
       </div>
       <div id="step2" class="form-step">
         <div class="form-group">
           <label for="birthCity">Город рождения:</label>
-          <input type="text" id="birthCity" aria-required="true" placeholder="Пожалуйста, укажите город рождения">
+          <input type="text" id="birthCity" aria-required="true" placeholder="Пожалуйста, укажите город рождения" disabled>
           <p id="birthCityError" class="error" style="display: none;">Пожалуйста, укажите город рождения</p>
         </div>
         <div class="form-group">
           <label for="gender">Пол:</label>
-          <select id="gender" aria-required="true">
+          <select id="gender" aria-required="true" disabled>
             <option value="">Выберите</option>
             <option value="male">Мужской</option>
             <option value="female">Женский</option>
@@ -394,7 +383,7 @@
       <div id="step3" class="form-step">
         <div class="form-group">
           <label for="interest">Основной интерес:</label>
-          <select id="interest" aria-required="true">
+          <select id="interest" aria-required="true" disabled>
             <option value="">Выберите</option>
             <option value="love">Любовь и отношения</option>
             <option value="career">Карьера и бизнес</option>
@@ -412,7 +401,7 @@
         </div>
         <div class="form-group">
           <label for="maritalStatus">Семейное положение:</label>
-          <select id="maritalStatus" aria-required="true">
+          <select id="maritalStatus" aria-required="true" disabled>
             <option value="">Выберите</option>
             <option value="in_relationship">В отношениях</option>
             <option value="single">Не в отношениях</option>
@@ -423,7 +412,7 @@
         </div>
         <div class="form-group">
           <label for="children">Есть ли дети:</label>
-          <select id="children" aria-required="true">
+          <select id="children" aria-required="true" disabled>
             <option value="">Выберите</option>
             <option value="yes">Да</option>
             <option value="no">Нет</option>
@@ -433,12 +422,12 @@
         </div>
         <div class="form-group">
           <label for="favoriteColor">Любимый цвет:</label>
-          <input type="color" id="favoriteColor" aria-required="true">
+          <input type="color" id="favoriteColor" aria-required="true" disabled>
           <p id="favoriteColorError" class="error" style="display: none;">Пожалуйста, выберите цвет</p>
         </div>
         <div class="form-group">
           <label for="fears">Страхи или тревоги (необязательно):</label>
-          <input type="text" id="fears" placeholder="">
+          <input type="text" id="fears" placeholder="" disabled>
         </div>
         <button class="button" onclick="prevStep(3)" aria-label="Вернуться к предыдущему шагу">Назад</button>
         <button class="button" onclick="saveProfile()" aria-label="Сохранить анкету">Сохранить анкету</button>
@@ -527,7 +516,7 @@
       <div class="form-group">
         <label for="relationshipDuration">Как долго вы вместе (если применимо):</label>
         <select id="relationshipDuration">
-          <option value="not_applicable">Не применимо</option>
+          <option value="not_applicable">Не примени  мо</option>
           <option value="less_6m">Менее 6 месяцев</option>
           <option value="6m_1y">6-12 месяцев</option>
           <option value="1y_3y">1-3 года</option>
@@ -561,6 +550,7 @@
   <script>
     let currentStep = 1;
     const totalSteps = 3;
+    let isEditing = false;
 
     // Create stars for dark mode
     function createStars() {
@@ -586,7 +576,31 @@
       if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
       }
+      loadProfile();
     };
+
+    function loadProfile() {
+      const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+      if (profile.name) {
+        document.getElementById('name').value = profile.name;
+        document.getElementById('birthDate').value = profile.birthDate;
+        document.getElementById('birthTime').value = profile.birthTime || '';
+        document.getElementById('birthCity').value = profile.birthCity;
+        document.getElementById('gender').value = profile.gender;
+        document.getElementById('interest').value = profile.interest;
+        document.getElementById('maritalStatus').value = profile.maritalStatus;
+        document.getElementById('children').value = profile.children;
+        document.getElementById('favoriteColor').value = profile.favoriteColor;
+        document.getElementById('fears').value = profile.fears || '';
+      }
+    }
+
+    function enableEdit() {
+      isEditing = true;
+      document.querySelectorAll('#profileModal input, #profileModal select').forEach(el => {
+        el.disabled = false;
+      });
+    }
 
     function openModal(section) {
       document.body.style.opacity = '0';
@@ -599,10 +613,11 @@
         if (section === 'profile') {
           currentStep = 1;
           updateProgress();
+          loadProfile();
         }
-        if (section === 'daily') loadForecast('daily');
-        if (section === 'weekly') loadForecast('weekly');
-        if (section === 'monthly') loadForecast('monthly');
+        if (section === 'daily' || section === 'weekly' || section === 'monthly') {
+          checkProfileAndLoad(section);
+        }
         if (section === 'compatibility') loadUserData();
         if (section === 'history') loadHistory();
       }, 300);
@@ -682,7 +697,13 @@
         success.className = 'success';
         success.textContent = 'Анкета успешно сохранена!';
         document.getElementById('step3').appendChild(success);
-        setTimeout(() => success.remove(), 3000);
+        setTimeout(() => {
+          success.remove();
+          document.querySelectorAll('#profileModal input, #profileModal select').forEach(el => {
+            el.disabled = true;
+          });
+          isEditing = false;
+        }, 3000);
       }
     }
 
@@ -693,6 +714,17 @@
         : 'Данные не заполнены';
     }
 
+    function checkProfileAndLoad(type) {
+      const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+      if (!profile.name || !profile.birthDate || !profile.birthCity || !profile.gender || 
+          !profile.interest || !profile.maritalStatus || !profile.children || !profile.favoriteColor) {
+        document.getElementById(`${type}Forecast`).textContent = 'Заполните пожалуйста анкету';
+        document.getElementById(`${type}Forecast`).className = 'error';
+      } else {
+        loadForecast(type);
+      }
+    }
+
     function loadForecast(type) {
       const profile = JSON.parse(localStorage.getItem('profile') || '{}');
       const forecast = type === 'daily' ? 'Прогноз на день: Удача в делах и гармония в отношениях.'
@@ -700,6 +732,7 @@
         : 'Прогноз на месяц: Стабильность в финансах, время для личностного роста.';
       document.getElementById(`${type}Forecast`).textContent = profile.name 
         ? `${profile.name}, ${forecast}` : forecast;
+      document.getElementById(`${type}Forecast`).className = '';
       saveToHistory(type, forecast);
     }
 
