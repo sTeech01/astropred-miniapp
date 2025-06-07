@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astromir</title>
+    <title>StarPulse</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/font-awesome.min.css" rel="stylesheet" />
+    <link rel="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.css" rel="stylesheet" />
     <style>
       :root {
         --primary-color: #9370db;
@@ -17,7 +17,6 @@
         --card-bg: rgba(22, 33, 62, 0.8);
         --error-color: #ff6b6b;
         --success-color: #4caf50;
-        --info-color: #2196f3;
       }
 
       [data-theme="light"] {
@@ -33,7 +32,7 @@
       }
 
       body {
-        font-family: 'Arial', sans-serif;
+        font-family: 'Inter', sans-serif;
         color: var(--text-color);
         background: var(--bg-color);
         min-height: 100vh;
@@ -83,19 +82,16 @@
       }
 
       .splash-logo {
-        width: 200px;
-        height: 100px;
-      }
-
-      .splash-logo text {
         font-size: 36px;
-        font-weight: bold;
+        font-weight: 600;
+        color: var(--primary-color);
         text-transform: uppercase;
         letter-spacing: 2px;
+        animation: pulse 1.5s infinite ease-in-out;
       }
 
-      .splash-logo .star-anim {
-        animation: twinkle 1s infinite ease-in-out;
+      @keyframes pulse {
+        50% { transform: scale(1.05); }
       }
 
       @keyframes fadeOut {
@@ -157,8 +153,6 @@
         font-weight: 600;
         font-size: 14px;
         transition: background 0.3s, color 0.3s;
-        position: relative;
-        overflow: hidden;
       }
 
       nav button.active, nav button:hover {
@@ -166,83 +160,22 @@
         color: #fff;
       }
 
-      nav button::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 0;
-        background: rgba(255,255,255,0.3);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.5s, height 0.5s;
-      }
-
-      nav button:active::after {
-        width: 200px;
-        height: 200px;
-      }
-
-      .side-panel {
-        position: fixed;
-        top: 0;
-        right: -80%;
-        width: 80%;
-        max-width: 480px;
-        height: 100%;
-        background: var(--card-bg);
-        padding: 20px;
-        box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-        z-index: 1000;
-        transition: right 0.3s ease;
-        overflow-y: auto;
-      }
-
-      .side-panel.active {
-        right: 0;
-      }
-
-      .side-panel .close-btn {
-        background: none;
-        color: var(--text-color);
-        font-size: 24px;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-      }
-
       .page {
         display: none;
-        opacity: 0;
-        transition: opacity 0.3s, transform 0.3s;
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        animation: fadeIn 0.5s ease;
       }
 
       .page.active {
         display: block;
-        opacity: 1;
-        transform: translateX(0);
       }
 
-      .progress-bar {
-        height: 5px;
-        background: rgba(0,0,0,0.2);
-        border-radius: 5px;
-        margin-bottom: 10px;
-      }
-
-      .progress {
-        height: 100%;
-        background: var(--primary-color);
-        border-radius: 5px;
-        transition: width 0.3s;
-      }
-
-      .form-step {
-        display: none;
-      }
-
-      .form-step.active {
-        display: block;
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .profile-header {
@@ -261,28 +194,10 @@
         cursor: pointer;
         font-size: 14px;
         transition: background 0.3s;
-        position: relative;
-        overflow: hidden;
       }
 
       .edit-btn:hover {
         background: var(--secondary-color);
-      }
-
-      .edit-btn::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 0;
-        background: rgba(255,255,255,0.3);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.5s, height 0.5s;
-      }
-
-      .edit-btn:active::after {
-        width: 200px;
-        height: 200px;
       }
 
       form {
@@ -333,8 +248,7 @@
 
       input:focus, select:focus, textarea:focus {
         border-color: var(--primary-color);
-        outline: 2px solid var(--primary-color);
-        outline-offset: 2px;
+        outline: none;
       }
 
       .error-message {
@@ -375,8 +289,6 @@
         justify-content: center;
         gap: 6px;
         transition: background 0.3s, transform 0.2s;
-        position: relative;
-        overflow: hidden;
       }
 
       button:hover {
@@ -388,22 +300,6 @@
         background: #666;
         cursor: not-allowed;
         transform: none;
-      }
-
-      button::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 0;
-        background: rgba(255,255,255,0.3);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.5s, height 0.5s;
-      }
-
-      button:active::after {
-        width: 200px;
-        height: 200px;
       }
 
       .loader {
@@ -460,16 +356,13 @@
         transition: width 1s ease;
       }
 
-      .compat-chart {
-        margin-top: 15px;
-        max-height: 200px;
-      }
-
       .notification {
         position: fixed;
         bottom: 15px;
         left: 50%;
         transform: translateX(-50%);
+        background: var(--primary-color);
+        color: #fff;
         padding: 8px 16px;
         border-radius: 8px;
         display: none;
@@ -477,10 +370,6 @@
         font-size: 14px;
         animation: slideIn 0.3s ease;
       }
-
-      .notification.success { background: var(--success-color); color: #fff; }
-      .notification.error { background: var(--error-color); color: #fff; }
-      .notification.info { background: var(--info-color); color: #fff; }
 
       @keyframes slideIn {
         from { opacity: 0; transform: translateX(-50%) translateY(20px); }
@@ -497,26 +386,14 @@
         display: none;
       }
 
-      .share-buttons {
-        display: flex;
-        gap: 10px;
+      .share-btn {
+        background: #4caf50;
         margin-top: 10px;
       }
-
-      .share-btn {
-        flex: 1;
-        background: #4caf50;
-      }
-
-      .share-btn.whatsapp { background: #25D366; }
-      .share-btn.telegram { background: #0088cc; }
 
       .share-btn:hover {
         background: #388e3c;
       }
-
-      .share-btn.whatsapp:hover { background: #1ebe57; }
-      .share-btn.telegram:hover { background: #0077b6; }
 
       .home-actions {
         display: flex;
@@ -524,308 +401,262 @@
         margin-top: 20px;
       }
 
-      .step-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 15px;
-      }
-
       @media (max-width: 600px) {
         .container { padding: 10px; }
-        .side-panel { width: 100%; max-width: none; }
+        .page { padding: 15px; }
         nav { gap: 5px; }
         nav button { padding: 8px 12px; font-size: 13px; }
         .star { animation: none; opacity: 0.3; }
-        .splash-logo { width: 150px; }
+        .splash-logo { font-size: 28px; }
       }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="splash-screen">
-        <svg class="splash-logo" viewBox="0 0 200 100">
-            <text x="50%" y="60%" text-anchor="middle" fill="var(--primary-color)">Astromir</text>
-            <circle cx="20" cy="20" r="3" fill="#fff" class="star-anim" style="animation-delay: 0s"/>
-            <circle cx="180" cy="80" r="3" fill="#fff" class="star-anim" style="animation-delay: 0.5s"/>
-            <circle cx="50" cy="30" r="2" fill="#fff" class="star-anim" style="animation-delay: 0.3s"/>
-        </svg>
+      <div class="splash-logo">Astromir</div>
     </div>
     <div id="stars-container"></div>
 
     <div class="container">
-        <div class="controls">
-            <div class="language-switcher">
-                <select id="language" aria-label="Выберите язык">
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
-            <div class="theme-switch" id="themeSwitch" role="button" aria-label="Переключить тему">
-                <i class="fas fa-moon"></i>
-            </div>
+      <div class="controls">
+        <div class="language-switcher">
+          <select id="language">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select>
         </div>
-
-        <h1>Astromir</h1>
-
-        <nav>
-            <button class="active" data-page="home" data-lang="home" aria-label="Открыть главную страницу">Главная</button>
-            <button data-page="profile" data-lang="profile" aria-label="Открыть анкету">Анкета</button>
-            <button data-page="daily" data-lang="daily" aria-label="Открыть прогноз на день">Прогноз на день</button>
-            <button data-page="weekly" data-lang="weekly" aria-label="Открыть прогноз на неделю">Прогноз на неделю</button>
-            <button data-page="monthly" data-lang="monthly" aria-label="Открыть прогноз на месяц">Прогноз на месяц</button>
-            <button data-page="compatibility" data-lang="compatibility" aria-label="Открыть совместимость">Совместимость</button>
-            <button data-page="history" data-lang="history" aria-label="Открыть историю прогнозов">История</button>
-        </nav>
-
-        <div class="side-panel" id="sidePanel">
-            <button class="close-btn" id="closePanel" aria-label="Закрыть панель"><i class="fas fa-times"></i></button>
-            <div class="page active" id="homePage">
-                <div class="home-actions">
-                    <button id="shareApp" class="share-btn" aria-label="Поделиться приложением"><i class="fas fa-share"></i><span data-lang="share_app">Поделиться приложением</span></button>
-                </div>
-            </div>
-
-            <div class="page" id="profilePage">
-                <div class="profile-header">
-                    <h2 data-lang="profile">Анкета</h2>
-                    <button class="edit-btn" id="editProfile" data-lang="edit" aria-label="Редактировать анкету">Редактировать</button>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress" id="formProgress" style="width: 33%"></div>
-                </div>
-                <form id="profileForm">
-                    <div class="form-step active" id="step1">
-                        <div class="form-group">
-                            <label for="name"><i class="fas fa-user"></i><span data-lang="name">Имя:</span></label>
-                            <input type="text" id="name" required disabled aria-required="true">
-                            <div class="error-message" data-lang="name-error">Пожалуйста, введите имя</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="gender"><i class="fas fa-venus-mars"></i><span data-lang="gender">Пол:</span></label>
-                            <select id="gender" required disabled aria-required="true">
-                                <option value="" data-lang="select">Выберите</option>
-                                <option value="male" data-lang="male">Мужской</option>
-                                <option value="female" data-lang="female">Женский</option>
-                            </select>
-                            <div class="error-message" data-lang="gender-error">Пожалуйста, выберите пол</div>
-                        </div>
-                    </div>
-                    <div class="form-step" id="step2">
-                        <div class="form-group">
-                            <label for="birthDate"><i class="fas fa-calendar"></i><span data-lang="birth_date">Дата рождения:</span></label>
-                            <input type="date" id="birthDate" required disabled aria-required="true">
-                            <div class="error-message" data-lang="birth_date-error">Пожалуйста, введите дату</div>
-                            <div class="zodiac-display" id="zodiac"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="birthTime"><i class="fas fa-clock"></i><span data-lang="birth_time">Время рождения:</span></label>
-                            <input type="time" id="birthTime" disabled>
-                            <div class="field-hint" data-lang="time_format">Формат: чч:мм</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="birthCity"><i class="fas fa-city"></i><span data-lang="birth_city">Город рождения:</span></label>
-                            <input type="text" id="birthCity" required disabled aria-required="true">
-                            <div class="error-message" data-lang="birth_city-error">Пожалуйста, укажите город</div>
-                        </div>
-                    </div>
-                    <div class="form-step" id="step3">
-                        <div class="form-group">
-                            <label for="interest"><i class="fas fa-star"></i><span data-lang="interest">Интерес:</span></label>
-                            <select id="interest" required disabled aria-required="true">
-                                <option value="" data-lang="select">Выберите</option>
-                                <option value="love" data-lang="love">Любовь и отношения</option>
-                                <option value="career" data-lang="career">Карьера и бизнес</option>
-                                <option value="finance" data-lang="finance">Финансы и инвестиции</option>
-                                <option value="health" data-lang="health">Здоровье и благополучие</option>
-                                <option value="family" data-lang="family">Семья и дети</option>
-                                <option value="growth" data-lang="growth">Личностный рост</option>
-                                <option value="creativity" data-lang="creativity">Творчество и вдохновение</option>
-                                <option value="travel" data-lang="travel">Путешествия и переезды</option>
-                                <option value="spiritual" data-lang="spiritual">Духовное развитие</option>
-                                <option value="education" data-lang="education">Образование и обучение</option>
-                                <option value="decisions" data-lang="decisions">Важные решения</option>
-                            </select>
-                            <div class="error-message" data-lang="interest-error">Пожалуйста, выберите интерес</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="relationship"><i class="fas fa-heart"></i><span data-lang="relationship">Семейное положение:</span></label>
-                            <select id="relationship" required disabled aria-required="true">
-                                <option value="" data-lang="select">Выберите</option>
-                                <option value="in_relationship" data-lang="in_relationship">В отношениях</option>
-                                <option value="single" data-lang="not_in_relationship">Не в отношениях</option>
-                                <option value="searching" data-lang="searching">В поиске</option>
-                                <option value="complicated" data-lang="complicated">В сложных отношениях</option>
-                            </select>
-                            <div class="error-message" data-lang="relationship-error">Пожалуйста, укажите статус</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="children"><i class="fas fa-baby"></i><span data-lang="children">Есть ли дети:</span></label>
-                            <select id="children" required disabled aria-required="true">
-                                <option value="" data-lang="select">Выберите</option>
-                                <option value="yes" data-lang="yes">Да</option>
-                                <option value="no" data-lang="no">Нет</option>
-                                <option value="planning" data-lang="planning">Планируем</option>
-                            </select>
-                            <div class="error-message" data-lang="children-error">Пожалуйста, укажите</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="color"><i class="fas fa-palette"></i><span data-lang="favorite_color">Любимый цвет:</span></label>
-                            <input type="color" id="color" value="#6a5acd" required disabled aria-required="true">
-                            <div class="error-message" data-lang="color-error">Пожалуйста, выберите цвет</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="fears"><i class="fas fa-flushed"></i><span data-lang="fears">Страхи или тревоги:</span></label>
-                            <textarea id="fears" disabled></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label><input type="checkbox" id="newsletter" disabled aria-label="Получать прогнозы"><span data-lang="newsletter">Получать прогнозы</span></label>
-                        </div>
-                    </div>
-                    <div class="step-buttons">
-                        <button type="button" id="prevStep" disabled data-lang="previous" aria-label="Предыдущий шаг">Предыдущий</button>
-                        <button type="button" id="nextStep" data-lang="next" aria-label="Следующий шаг">Следующий</button>
-                        <button type="submit" id="saveProfile" disabled data-lang="save_profile" aria-label="Сохранить анкету"><i class="fas fa-save"></i><span>Сохранить</span><span class="loader" id="profileLoader"></span></button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="page" id="dailyPage">
-                <h2 data-lang="daily">Прогноз на день</h2>
-                <div class="forecast-container">
-                    <div class="forecast-header">
-                        <h3 data-lang="daily_forecast">Прогноз на день</h3>
-                        <p id="dailyDate"></p>
-                    </div>
-                    <div class="forecast-content" id="dailyContent"></div>
-                    <button id="consultDaily" aria-label="Запросить консультацию"><i class="fas fa-calendar-check"></i><span data-lang="consultation">Консультация</span></button>
-                    <div class="consultation-message" id="consultDailyMsg" data-lang="consultation_message"></div>
-                    <div class="share-buttons">
-                        <button id="shareDailyWeb" class="share-btn" aria-label="Поделиться прогнозом через веб"><i class="fas fa-share"></i><span data-lang="share_forecast">Поделиться</span></button>
-                        <button id="shareDailyWhatsApp" class="share-btn whatsapp" aria-label="Поделиться прогнозом через WhatsApp"><i class="fab fa-whatsapp"></i>WhatsApp</button>
-                        <button id="shareDailyTelegram" class="share-btn telegram" aria-label="Поделиться прогнозом через Telegram"><i class="fab fa-telegram"></i>Telegram</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page" id="weeklyPage">
-                <h2 data-lang="weekly">Прогноз на неделю</h2>
-                <div class="forecast-container">
-                    <div class="forecast-header">
-                        <h3 data-lang="weekly_forecast">Прогноз на неделю</h3>
-                        <p id="weeklyDate"></p>
-                    </div>
-                    <div class="forecast-content" id="weeklyContent"></div>
-                    <button id="consultWeekly" aria-label="Запросить консультацию"><i class="fas fa-calendar-check"></i><span data-lang="consultation">Консультация</span></button>
-                    <div class="consultation-message" id="consultWeeklyMsg" data-lang="consultation_message"></div>
-                    <div class="share-buttons">
-                        <button id="shareWeeklyWeb" class="share-btn" aria-label="Поделиться прогнозом через веб"><i class="fas fa-share"></i><span data-lang="share_forecast">Поделиться</span></button>
-                        <button id="shareWeeklyWhatsApp" class="share-btn whatsapp" aria-label="Поделиться прогнозом через WhatsApp"><i class="fab fa-whatsapp"></i>WhatsApp</button>
-                        <button id="shareWeeklyTelegram" class="share-btn telegram" aria-label="Поделиться прогнозом через Telegram"><i class="fab fa-telegram"></i>Telegram</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page" id="monthlyPage">
-                <h2 data-lang="monthly">Прогноз на месяц</h2>
-                <div class="forecast-container">
-                    <div class="forecast-header">
-                        <h3 data-lang="monthly_forecast">Прогноз на месяц</h3>
-                        <p id="monthlyDate"></p>
-                    </div>
-                    <div class="forecast-content" id="monthlyContent"></div>
-                    <button id="consultMonthly" aria-label="Запросить консультацию"><i class="fas fa-calendar-check"></i><span data-lang="consultation">Консультация</span></button>
-                    <div class="consultation-message" id="consultMonthlyMsg" data-lang="consultation_message"></div>
-                    <div class="share-buttons">
-                        <button id="shareMonthlyWeb" class="share-btn" aria-label="Поделиться прогнозом через веб"><i class="fas fa-share"></i><span data-lang="share_forecast">Поделиться</span></button>
-                        <button id="shareMonthlyWhatsApp" class="share-btn whatsapp" aria-label="Поделиться прогнозом через WhatsApp"><i class="fab fa-whatsapp"></i>WhatsApp</button>
-                        <button id="shareMonthlyTelegram" class="share-btn telegram" aria-label="Поделиться прогнозом через Telegram"><i class="fab fa-telegram"></i>Telegram</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page" id="compatibilityPage">
-                <h2 data-lang="compatibility">Совместимость</h2>
-                <div class="compatibility-container">
-                    <div class="form-group">
-                        <label><i class="fas fa-user"></i><span data-lang="your_data">Ваши данные:</span></label>
-                        <p id="userData"></p>
-                    </div>
-                    <form id="compatForm">
-                        <div class="form-group">
-                            <label for="partnerName"><i class="fas fa-user"></i><span data-lang="partner_name">Имя партнера:</span></label>
-                            <input type="text" id="partnerName" required aria-required="true">
-                            <div class="error-message" data-lang="partner_name-error">Пожалуйста, введите имя</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="partnerBirthDate"><i class="fas fa-calendar"></i><span data-lang="partner_birth_date">Дата рождения:</span></label>
-                            <input type="date" id="partnerBirthDate" required aria-required="true">
-                            <div class="error-message" data-lang="partner_birth_date-error">Пожалуйста, введите дату</div>
-                            <div class="zodiac-display" id="partnerZodiac"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="partnerGender"><i class="fas fa-venus-mars"></i><span data-lang="partner_gender">Пол:</span></label>
-                            <select id="partnerGender" required aria-required="true">
-                                <option value="" data-lang="select">Выберите</option>
-                                <option value="male" data-lang="male">Мужской</option>
-                                <option value="female" data-lang="female">Женский</option>
-                            </select>
-                            <div class="error-message" data-lang="gender-error">Пожалуйста, выберите пол</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="partnerZodiacSelect"><i class="fas fa-star"></i><span data-lang="partner_zodiac">Знак зодиака:</span></label>
-                            <select id="partnerZodiacSelect">
-                                <option value="" data-lang="dont_know">Не знаю</option>
-                                <option value="Овен">♈ Овен</option>
-                                <option value="Телец">♉ Телец</option>
-                                <option value="Близнецы">♊ Близнецы</option>
-                                <option value="Рак">♋ Рак</option>
-                                <option value="Лев">♌ Лев</option>
-                                <option value="Дева">♍ Дева</option>
-                                <option value="Весы">♎ Весы</option>
-                                <option value="Скорпион">♏ Скорпион</option>
-                                <option value="Стрелец">♐ Стрелец</option>
-                                <option value="Козерог">♑ Козерог</option>
-                                <option value="Водолей">♒ Водолей</option>
-                                <option value="Рыбы">♓ Рыбы</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="relationshipDuration"><i class="fas fa-clock"></i><span data-lang="relationship_duration">Как долго вместе:</span></label>
-                            <select id="relationshipDuration">
-                                <option value="" data-lang="not_applicable">Не применимо</option>
-                                <option value="less_6m" data-lang="less_6m">Менее 6 месяцев</option>
-                                <option value="6_12m" data-lang="6_12m">6-12 месяцев</option>
-                                <option value="1_3y" data-lang="1_3y">1-3 года</option>
-                                <option value="3_5y" data-lang="3_5y">3-5 лет</option>
-                                <option value="more_5y" data-lang="more_5y">Более 5 лет</option>
-                            </select>
-                        </div>
-                        <button type="submit" id="analyzeCompat" aria-label="Анализировать совместимость"><i class="fas fa-heart"></i><span data-lang="analyze_compatibility">Анализировать</span><span class="loader" id="compatLoader"></span></button>
-                    </form>
-                    <div class="compatibility-result" id="compatResult" style="display: none;">
-                        <p data-lang="compatibility_with">Совместимость:</p>
-                        <div class="compatibility-meter">
-                            <div class="compatibility-progress" id="compatProgress"></div>
-                        </div>
-                        <p id="compatText"></p>
-                        <canvas id="compatChart" class="compat-chart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page" id="historyPage">
-                <h2 data-lang="history">История прогнозов</h2>
-                <div id="historyContent"></div>
-            </div>
+        <div class="theme-switch" id="themeSwitch">
+          <i class="fas fa-moon"></i>
         </div>
+      </div>
 
-        <div class="notification" id="notification"></div>
+      <h1>StarPulse</h1>
+
+      <nav>
+        <button class="active" data-page="home" data-lang="home">Главная</button>
+        <button data-page="profile" data-lang="profile">Анкета</button>
+        <button data-page="daily" data-lang="daily">Прогноз на день</button>
+        <button data-page="weekly" data-lang="weekly">Прогноз на неделю</button>
+        <button data-page="monthly" data-lang="monthly">Прогноз на месяц</button>
+        <button data-page="compatibility" data-lang="compatibility">Совместимость</button>
+      </nav>
+
+      <div class="page active" id="homePage">
+        <div class="home-actions">
+          <button id="shareApp" class="share-btn"><i class="fas fa-share"></i><span data-lang="share_app">Поделиться приложением</span></button>
+        </div>
+      </div>
+
+      <div class="page" id="profilePage">
+        <div class="profile-header">
+          <h2 data-lang="profile">Анкета</h2>
+          <button class="edit-btn" id="editProfile" data-lang="edit">Редактировать</button>
+        </div>
+        <form id="profileForm">
+          <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i><span data-lang="name">Имя:</span></label>
+            <input type="text" id="name" required disabled>
+            <div class="error-message" data-lang="name-error">Пожалуйста, введите имя</div>
+          </div>
+          <div class="form-group">
+            <label for="birthDate"><i class="fas fa-calendar"></i><span data-lang="birth_date">Дата рождения:</span></label>
+            <input type="date" id="birthDate" required disabled>
+            <div class="error-message" data-lang="birth_date-error">Пожалуйста, введите дату</div>
+            <div class="zodiac-display" id="zodiac"></div>
+          </div>
+          <div class="form-group">
+            <label for="birthTime"><i class="fas fa-clock"></i><span data-lang="birth_time">Время рождения:</span></label>
+            <input type="time" id="birthTime" disabled>
+            <div class="field-hint" data-lang="time_format">Формат: чч:мм</div>
+          </div>
+          <div class="form-group">
+            <label for="birthCity"><i class="fas fa-city"></i><span data-lang="birth_city">Город рождения:</span></label>
+            <input type="text" id="birthCity" required disabled>
+            <div class="error-message" data-lang="birth_city-error">Пожалуйста, укажите город</div>
+          </div>
+          <div class="form-group">
+            <label for="gender"><i class="fas fa-venus-mars"></i><span data-lang="gender">Пол:</span></label>
+            <select id="gender" required disabled>
+              <option value="" data-lang="select">Выберите</option>
+              <option value="male" data-lang="male">Мужской</option>
+              <option value="female" data-lang="female">Женский</option>
+            </select>
+            <div class="error-message" data-lang="gender-error">Пожалуйста, выберите пол</div>
+          </div>
+          <div class="form-group">
+            <label for="interest"><i class="fas fa-star"></i><span data-lang="interest">Интерес:</span></label>
+            <select id="interest" required disabled>
+              <option value="" data-lang="select">Выберите</option>
+              <option value="love" data-lang="love">Любовь и отношения</option>
+              <option value="career" data-lang="career">Карьера и бизнес</option>
+              <option value="finance" data-lang="finance">Финансы и инвестиции</option>
+              <option value="health" data-lang="health">Здоровье и благополучие</option>
+              <option value="family" data-lang="family">Семья и дети</option>
+              <option value="growth" data-lang="growth">Личностный рост</option>
+              <option value="creativity" data-lang="creativity">Творчество и вдохновение</option>
+              <option value="travel" data-lang="travel">Путешествия и переезды</option>
+              <option value="spiritual" data-lang="spiritual">Духовное развитие</option>
+              <option value="education" data-lang="education">Образование и обучение</option>
+              <option value="decisions" data-lang="decisions">Важные решения</option>
+            </select>
+            <div class="error-message" data-lang="interest-error">Пожалуйста, выберите интерес</div>
+          </div>
+          <div class="form-group">
+            <label for="relationship"><i class="fas fa-heart"></i><span data-lang="relationship">Семейное положение:</span></label>
+            <select id="relationship" required disabled>
+              <option value="" data-lang="select">Выберите</option>
+              <option value="in_relationship" data-lang="in_relationship">В отношениях</option>
+              <option value="single" data-lang="not_in_relationship">Не в отношениях</option>
+              <option value="searching" data-lang="searching">В поиске</option>
+              <option value="complicated" data-lang="complicated">В сложных отношениях</option>
+            </select>
+            <div class="error-message" data-lang="relationship-error">Пожалуйста, укажите статус</div>
+          </div>
+          <div class="form-group">
+            <label for="children"><i class="fas fa-baby"></i><span data-lang="children">Есть ли дети:</span></label>
+            <select id="children" required disabled>
+              <option value="" data-lang="select">Выберите</option>
+              <option value="yes" data-lang="yes">Да</option>
+              <option value="no" data-lang="no">Нет</option>
+              <option value="planning" data-lang="planning">Планируем</option>
+            </select>
+            <div class="error-message" data-lang="children-error">Пожалуйста, укажите</div>
+          </div>
+          <div class="form-group">
+            <label for="color"><i class="fas fa-palette"></i><span data-lang="favorite_color">Любимый цвет:</span></label>
+            <input type="color" id="color" value="#6a5acd" required disabled>
+            <div class="error-message" data-lang="color-error">Пожалуйста, выберите цвет</div>
+          </div>
+          <div class="form-group">
+            <label for="fears"><i class="fas fa-flushed"></i><span data-lang="fears">Страхи или тревоги:</span></label>
+            <textarea id="fears" disabled></textarea>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="newsletter" disabled><span data-lang="newsletter">Получать прогнозы</span></label>
+          </div>
+          <button type="submit" id="saveProfile" disabled><i class="fas fa-save"></i><span data-lang="save_profile">Сохранить</span><span class="loader" id="profileLoader"></span></button>
+        </form>
+      </div>
+
+      <div class="page" id="dailyPage">
+        <h2 data-lang="daily">Прогноз на день</h2>
+        <div class="forecast-container">
+          <div class="forecast-header">
+            <h3 data-lang="daily_forecast">Прогноз на день</h3>
+            <p id="dailyDate"></p>
+          </div>
+          <div class="forecast-content" id="dailyContent"></div>
+          <button id="consultDaily"><i class="fas fa-calendar-check"></i><span data-lang="consultation">Консультация</span></button>
+          <div class="consultation-message" id="consultDailyMsg" data-lang="consultation_message"></div>
+          <button id="shareDaily" class="share-btn"><i class="fas fa-share"></i><span data-lang="share_forecast">Поделиться прогнозом</span></button>
+        </div>
+      </div>
+
+      <div class="page" id="weeklyPage">
+        <h2 data-lang="weekly">Прогноз на неделю</h2>
+        <div class="forecast-container">
+          <div class="forecast-header">
+            <h3 data-lang="weekly_forecast">Прогноз на неделю</h3>
+            <p id="weeklyDate"></p>
+          </div>
+          <div class="forecast-content" id="weeklyContent"></div>
+          <button id="consultWeekly"><i class="fas fa-calendar-check"></i><span data-lang="consultation">Консультация</span></button>
+          <div class="consultation-message" id="consultWeeklyMsg" data-lang="consultation_message"></div>
+          <button id="shareWeekly" class="share-btn"><i class="fas fa-share"></i><span data-lang="share_forecast">Поделиться прогнозом</span></button>
+        </div>
+      </div>
+
+      <div class="page" id="monthlyPage">
+        <h2 data-lang="monthly">Прогноз на месяц</h2>
+        <div class="forecast-container">
+          <div class="forecast-header">
+            <h3 data-lang="monthly_forecast">Прогноз на месяц</h3>
+            <p id="monthlyDate"></p>
+          </div>
+          <div class="forecast-content" id="monthlyContent"></div>
+          <button id="consultMonthly"><i class="fas fa-calendar-check"></i><span data-lang="consultation">Консультация</span></button>
+          <div class="consultation-message" id="consultMonthlyMsg" data-lang="consultation_message"></div>
+          <button id="shareMonthly" class="share-btn"><i class="fas fa-share"></i><span data-lang="share_forecast">Поделиться прогнозом</span></button>
+        </div>
+      </div>
+
+      <div class="page" id="compatibilityPage">
+        <h2 data-lang="compatibility">Совместимость</h2>
+        <div class="compatibility-container">
+          <div class="form-group">
+            <label><i class="fas fa-user"></i><span data-lang="your_data">Ваши данные:</span></label>
+            <p id="userData"></p>
+          </div>
+          <form id="compatForm">
+            <div class="form-group">
+              <label for="partnerName"><i class="fas fa-user"></i><span data-lang="partner_name">Имя партнера:</span></label>
+              <input type="text" id="partnerName" required>
+              <div class="error-message" data-lang="partner_name-error">Пожалуйста, введите имя</div>
+            </div>
+            <div class="form-group">
+              <label for="partnerBirthDate"><i class="fas fa-calendar"></i><span data-lang="partner_birth_date">Дата рождения:</span></label>
+              <input type="date" id="partnerBirthDate" required>
+              <div class="error-message" data-lang="partner_birth_date-error">Пожалуйста, введите дату</div>
+              <div class="zodiac-display" id="partnerZodiac"></div>
+            </div>
+            <div class="form-group">
+              <label for="partnerGender"><i class="fas fa-venus-mars"></i><span data-lang="partner_gender">Пол:</span></label>
+              <select id="partnerGender" required>
+                <option value="" data-lang="select">Выберите</option>
+                <option value="male" data-lang="male">Мужской</option>
+                <option value="female" data-lang="female">Женский</option>
+              </select>
+              <div class="error-message" data-lang="gender-error">Пожалуйста, выберите пол</div>
+            </div>
+            <div class="form-group">
+              <label for="partnerZodiacSelect"><i class="fas fa-star"></i><span data-lang="partner_zodiac">Знак зодиака:</span></label>
+              <select id="partnerZodiacSelect">
+                <option value="" data-lang="dont_know">Не знаю</option>
+                <option value="Овен">Овен</option>
+                <option value="Телец">Телец</option>
+                <option value="Близнецы">Близнецы</option>
+                <option value="Рак">Рак</option>
+                <option value="Лев">Лев</option>
+                <option value="Дева">Дева</option>
+                <option value="Весы">Весы</option>
+                <option value="Скорпион">Скорпион</option>
+                <option value="Стрелец">Стрелец</option>
+                <option value="Козерог">Козерог</option>
+                <option value="Водолей">Водолей</option>
+                <option value="Рыбы">Рыбы</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="relationshipDuration"><i class="fas fa-clock"></i><span data-lang="relationship_duration">Как долго вместе:</span></label>
+              <select id="relationshipDuration">
+                <option value="" data-lang="not_applicable">Не применимо</option>
+                <option value="less_6m" data-lang="less_6m">Менее 6 месяцев</option>
+                <option value="6_12m" data-lang="6_12m">6-12 месяцев</option>
+                <option value="1_3y" data-lang="1_3y">1-3 года</option>
+                <option value="3_5y" data-lang="3_5y">3-5 лет</option>
+                <option value="more_5y" data-lang="more_5y">Более 5 лет</option>
+              </select>
+            </div>
+            <button type="submit" id="analyzeCompat"><i class="fas fa-heart"></i><span data-lang="analyze_compatibility">Анализировать</span><span class="loader" id="compatLoader"></span></button>
+          </form>
+          <div class="compatibility-result" id="compatResult" style="display: none;">
+            <p data-lang="compatibility_with">Совместимость:</p>
+            <div class="compatibility-meter">
+              <div class="compatibility-progress" id="compatProgress"></div>
+            </div>
+            <p id="compatText"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notification" id="notification"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
     <script>
       const translations = {
         ru: {
-          home: 'Главная', profile: 'Анкета', daily: 'Прогноз на день', weekly: 'Прогноз на неделю', monthly: 'Прогноз на месяц', compatibility: 'Совместимость', history: 'История',
+          home: 'Главная', profile: 'Анкета', daily: 'Прогноз на день', weekly: 'Прогноз на неделю', monthly: 'Прогноз на месяц', compatibility: 'Совместимость',
           name: 'Имя:', 'name-error': 'Пожалуйста, введите имя',
           birth_date: 'Дата рождения:', 'birth_date-error': 'Пожалуйста, введите дату',
           birth_time: 'Время рождения:', time_format: 'Формат: чч:мм',
@@ -854,11 +685,10 @@
           profile_saved: 'Анкета сохранена!', forecast_ready: 'Прогноз готов!', compatibility_ready: 'Анализ готов!',
           no_data: 'Заполните анкету сначала.', high_compat: '{z1} и {z2} — отличная пара!',
           mid_compat: '{z1} и {z2} — возможны разногласия.', low_compat: '{z1} и {z2} — нужна работа над отношениями.',
-          edit: 'Редактировать', share_app: 'Поделиться приложением', share_forecast: 'Поделиться прогнозом',
-          previous: 'Предыдущий', next: 'Следующий', history_empty: 'История прогнозов пуста.'
+          edit: 'Редактировать', share_app: 'Поделиться приложением', share_forecast: 'Поделиться прогнозом'
         },
         en: {
-          home: 'Home', profile: 'Profile', daily: 'Daily Forecast', weekly: 'Weekly Forecast', monthly: 'Monthly Forecast', compatibility: 'Compatibility', history: 'History',
+          home: 'Home', profile: 'Profile', daily: 'Daily Forecast', weekly: 'Weekly Forecast', monthly: 'Monthly Forecast', compatibility: 'Compatibility',
           name: 'Name:', 'name-error': 'Please enter name',
           birth_date: 'Date of Birth:', 'birth_date-error': 'Please enter date',
           birth_time: 'Time of Birth:', time_format: 'Format: hh:mm',
@@ -887,31 +717,20 @@
           profile_saved: 'Profile saved!', forecast_ready: 'Forecast ready!', compatibility_ready: 'Analysis ready!',
           no_data: 'Fill out the profile first.', high_compat: '{z1} and {z2} — great match!',
           mid_compat: '{z1} and {z2} — some differences possible.', low_compat: '{z1} and {z2} — needs effort.',
-          edit: 'Edit', share_app: 'Share App', share_forecast: 'Share Forecast',
-          previous: 'Previous', next: 'Next', history_empty: 'Forecast history is empty.'
+          edit: 'Edit', share_app: 'Share App', share_forecast: 'Share Forecast'
         }
-      };
-
-      const zodiacIcons = {
-        'Овен': '♈', 'Телец': '♉', 'Близнецы': '♊', 'Рак': '♋', 'Лев': '♌', 'Дева': '♍',
-        'Весы': '♎', 'Скорпион': '♏', 'Стрелец': '♐', 'Козерог': '♑', 'Водолей': '♒', 'Рыбы': '♓'
       };
 
       const elements = {
         themeSwitch: document.getElementById('themeSwitch'),
         language: document.getElementById('language'),
         navButtons: document.querySelectorAll('nav button'),
-        sidePanel: document.getElementById('sidePanel'),
-        closePanel: document.getElementById('closePanel'),
         pages: document.querySelectorAll('.page'),
         editProfile: document.getElementById('editProfile'),
         profileForm: document.getElementById('profileForm'),
         saveProfile: document.getElementById('saveProfile'),
         profileLoader: document.getElementById('profileLoader'),
         zodiac: document.getElementById('zodiac'),
-        prevStep: document.getElementById('prevStep'),
-        nextStep: document.getElementById('nextStep'),
-        formProgress: document.getElementById('formProgress'),
         compatForm: document.getElementById('compatForm'),
         analyzeCompat: document.getElementById('analyzeCompat'),
         compatLoader: document.getElementById('compatLoader'),
@@ -919,7 +738,6 @@
         compatResult: document.getElementById('compatResult'),
         compatProgress: document.getElementById('compatProgress'),
         compatText: document.getElementById('compatText'),
-        compatChart: document.getElementById('compatChart'),
         userData: document.getElementById('userData'),
         notification: document.getElementById('notification'),
         consultDaily: document.getElementById('consultDaily'),
@@ -928,17 +746,10 @@
         consultDailyMsg: document.getElementById('consultDailyMsg'),
         consultWeeklyMsg: document.getElementById('consultWeeklyMsg'),
         consultMonthlyMsg: document.getElementById('consultMonthlyMsg'),
-        shareDailyWeb: document.getElementById('shareDailyWeb'),
-        shareWeeklyWeb: document.getElementById('shareWeeklyWeb'),
-        shareMonthlyWeb: document.getElementById('shareMonthlyWeb'),
-        shareDailyWhatsApp: document.getElementById('shareDailyWhatsApp'),
-        shareWeeklyWhatsApp: document.getElementById('shareWeeklyWhatsApp'),
-        shareMonthlyWhatsApp: document.getElementById('shareMonthlyWhatsApp'),
-        shareDailyTelegram: document.getElementById('shareDailyTelegram'),
-        shareWeeklyTelegram: document.getElementById('shareWeeklyTelegram'),
-        shareMonthlyTelegram: document.getElementById('shareMonthlyTelegram'),
-        shareApp: document.getElementById('shareApp'),
-        historyContent: document.getElementById('historyContent')
+        shareDaily: document.getElementById('shareDaily'),
+        shareWeekly: document.getElementById('shareWeekly'),
+        shareMonthly: document.getElementById('shareMonthly'),
+        shareApp: document.getElementById('shareApp')
       };
 
       const tg = window.Telegram?.WebApp;
@@ -989,10 +800,9 @@
         const lang = elements.language.value;
         document.querySelectorAll('[data-lang]').forEach(el => {
           const key = el.getAttribute('data-lang');
-          el.textContent = translations[lang][key] || el.textContent;
+          el.textContent = translations[lang][key];
         });
         updateUserData();
-        updateHistory();
         localStorage.setItem('language', lang);
       }
 
@@ -1006,13 +816,6 @@
         elements.pages.forEach(p => p.classList.remove('active'));
         document.querySelector(`[data-page="${page}"]`).classList.add('active');
         document.getElementById(`${page}Page`).classList.add('active');
-        elements.sidePanel.classList.add('active');
-      }
-
-      function closePanel() {
-        elements.sidePanel.classList.remove('active');
-        elements.navButtons.forEach(btn => btn.classList.remove('active'));
-        elements.pages.forEach(p => p.classList.remove('active'));
       }
 
       elements.navButtons.forEach(btn => {
@@ -1020,48 +823,7 @@
           const page = btn.getAttribute('data-page');
           switchPage(page);
           if (['daily', 'weekly', 'monthly'].includes(page)) loadForecast(page);
-          if (page === 'history') updateHistory();
         });
-      });
-
-      elements.closePanel.addEventListener('click', closePanel);
-
-      let currentStep = 1;
-      function updateFormStep() {
-        document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-        document.getElementById(`step${currentStep}`).classList.add('active');
-        elements.formProgress.style.width = `${currentStep * 33}%`;
-        elements.prevStep.disabled = currentStep === 1;
-        elements.nextStep.style.display = currentStep < 3 ? 'flex' : 'none';
-        elements.saveProfile.style.display = currentStep === 3 ? 'flex' : 'none';
-      }
-
-      elements.prevStep.addEventListener('click', () => {
-        if (currentStep > 1) {
-          currentStep--;
-          updateFormStep();
-        }
-      });
-
-      elements.nextStep.addEventListener('click', () => {
-        if (currentStep < 3) {
-          const stepInputs = document.getElementById(`step${currentStep}`).querySelectorAll('[required]');
-          let valid = true;
-          stepInputs.forEach(input => {
-            const error = input.nextElementSibling.classList.contains('error-message') ?
-              input.nextElementSibling : input.nextElementSibling.nextElementSibling;
-            if (!input.value) {
-              error.style.display = 'block';
-              valid = false;
-            } else {
-              error.style.display = 'none';
-            }
-          });
-          if (valid) {
-            currentStep++;
-            updateFormStep();
-          }
-        }
       });
 
       function getZodiac(day, month) {
@@ -1084,7 +846,7 @@
         const date = new Date(document.getElementById(inputId).value);
         const zodiac = getZodiac(date.getDate(), date.getMonth() + 1);
         const display = document.getElementById(displayId);
-        display.innerHTML = `${zodiacIcons[zodiac] || ''} ${zodiac}`;
+        display.textContent = zodiac;
         display.style.display = zodiac ? 'block' : 'none';
         if (inputId === 'partnerBirthDate') {
           document.getElementById('partnerZodiacSelect').value = zodiac;
@@ -1107,7 +869,7 @@
         document.getElementById('color').value = data.color || '#6a5acd';
         document.getElementById('fears').value = data.fears || '';
         document.getElementById('newsletter').checked = data.newsletter || false;
-        elements.zodiac.innerHTML = `${zodiacIcons[data.zodiac] || ''} ${data.zodiac}`;
+        elements.zodiac.textContent = data.zodiac || '';
         elements.zodiac.style.display = data.zodiac ? 'block' : 'none';
         if (data.name) toggleEditMode(false);
         updateUserData();
@@ -1117,21 +879,15 @@
         const data = JSON.parse(localStorage.getItem('profile') || '{}');
         const lang = elements.language.value;
         elements.userData.textContent = data.name && data.zodiac ?
-          `${data.name}, ${zodiacIcons[data.zodiac] || ''} ${data.zodiac} (${translations[lang][data.gender]})` :
+          `${data.name}, ${data.zodiac} (${translations[lang][data.gender]})` :
           translations[lang].no_data;
       }
 
       function toggleEditMode(enable) {
-        const inputs = elements.profileForm.querySelectorAll('input, select, textarea');
+        const inputs = elements.profileForm.querySelectorAll('input, select, textarea, button');
         inputs.forEach(input => input.disabled = !enable);
         elements.editProfile.style.display = enable ? 'none' : 'block';
-        elements.prevStep.disabled = !enable || currentStep === 1;
-        elements.nextStep.disabled = !enable;
         elements.saveProfile.disabled = !enable;
-        if (enable) {
-          currentStep = 1;
-          updateFormStep();
-        }
       }
 
       elements.editProfile.addEventListener('click', () => toggleEditMode(true));
@@ -1168,57 +924,28 @@
             color: document.getElementById('color').value,
             fears: document.getElementById('fears').value,
             newsletter: document.getElementById('newsletter').checked,
-            zodiac: elements.zodiac.textContent.replace(/�[♈-♓]\s/, '')
+            zodiac: elements.zodiac.textContent
           };
           localStorage.setItem('profile', JSON.stringify(data));
           setTimeout(() => {
             elements.saveProfile.disabled = true;
             elements.profileLoader.style.display = 'none';
-            showNotification(translations[elements.language.value].profile_saved, 'success');
+            elements.notification.textContent = translations[elements.language.value].profile_saved;
+            elements.notification.style.display = 'block';
             toggleEditMode(false);
             updateUserData();
+            setTimeout(() => elements.notification.style.display = 'none', 2000);
           }, 1000);
-        } else {
-          showNotification('Заполните все обязательные поля', 'error');
         }
       });
-
-      function showNotification(message, type = 'success') {
-        elements.notification.textContent = message;
-        elements.notification.className = `notification ${type}`;
-        elements.notification.style.display = 'block';
-        setTimeout(() => elements.notification.style.display = 'none', 2000);
-      }
-
-      function saveForecast(type, text) {
-        const history = JSON.parse(localStorage.getItem('forecastHistory') || '{}');
-        history[type] = history[type] || [];
-        history[type].unshift({ date: new Date().toISOString(), text });
-        if (history[type].length > 10) history[type].pop();
-        localStorage.setItem('forecastHistory', JSON.stringify(history));
-      }
-
-      function updateHistory() {
-        const history = JSON.parse(localStorage.getItem('forecastHistory') || '{}');
-        const lang = elements.language.value;
-        let content = '';
-        ['daily', 'weekly', 'monthly'].forEach(type => {
-          if (history[type]?.length) {
-            content += `<h3>${translations[lang][`${type}_forecast`]}</h3>`;
-            history[type].forEach(item => {
-              const date = new Date(item.date).toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US');
-              content += `<p><strong>${date}</strong>: ${item.text}</p>`;
-            });
-          }
-        });
-        elements.historyContent.innerHTML = content || `<p>${translations[lang].history_empty}</p>`;
-      }
 
       function loadForecast(type) {
         const data = JSON.parse(localStorage.getItem('profile') || '{}');
         if (!data.name || !data.birthDate) {
-          showNotification(translations[elements.language.value].no_data, 'error');
+          elements.notification.textContent = translations[elements.language.value].no_data;
+          elements.notification.style.display = 'block';
           setTimeout(() => {
+            elements.notification.style.display = 'none';
             switchPage('profile');
           }, 2000);
           return;
@@ -1246,60 +973,60 @@
 
         content.innerHTML = `<p>${text}</p>`;
         dateEl.textContent = dateText;
-        saveForecast(type, text);
-        showNotification(translations[lang].forecast_ready, 'success');
+        elements.notification.textContent = translations[lang].forecast_ready;
+        elements.notification.style.display = 'block';
+        setTimeout(() => elements.notification.style.display = 'none', 2000);
       }
 
-      function shareForecast(type, platform) {
+      function shareForecast(type) {
         const content = document.getElementById(`${type}Content`).textContent;
         const lang = elements.language.value;
         const title = translations[lang][`${type}_forecast`];
-        const text = `${title}: ${content}\n\nAstromir — персональные астрологические прогнозы!`;
-        const url = 'https://t.me/AstromirBot';
-
-        if (platform === 'web') {
-          if (navigator.share) {
-            navigator.share({ title, text, url }).catch(() => {
-              showNotification('Ошибка при попытке поделиться', 'error');
-            });
-          } else {
-            navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
-              showNotification('Прогноз скопирован в буфер обмена', 'info');
-            });
-          }
-        } else if (platform === 'whatsapp') {
-          window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${text}\n${url}`)}`);
-        } else if (platform === 'telegram') {
-          window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
+        const text = `${title}: ${content}\n\nПоделитесь своим прогнозом с помощью StarPulse!`;
+        if (navigator.share) {
+          navigator.share({ title, text }).catch(() => {
+            elements.notification.textContent = 'Ошибка при попытке поделиться';
+            elements.notification.style.display = 'block';
+            setTimeout(() => elements.notification.style.display = 'none', 2000);
+          });
+        } else {
+          navigator.clipboard.writeText(text).then(() => {
+            elements.notification.textContent = 'Прогноз скопирован в буфер обмена';
+            elements.notification.style.display = 'block';
+            setTimeout(() => elements.notification.style.display = 'none', 2000);
+          });
         }
       }
 
-      ['daily', 'weekly', 'monthly'].forEach(type => {
-        elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}Web`].addEventListener('click', () => shareForecast(type, 'web'));
-        elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}WhatsApp`].addEventListener('click', () => shareForecast(type, 'whatsapp'));
-        elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}Telegram`].addEventListener('click', () => shareForecast(type, 'telegram'));
-      });
+      elements.shareDaily.addEventListener('click', () => shareForecast('daily'));
+      elements.shareWeekly.addEventListener('click', () => shareForecast('weekly'));
+      elements.shareMonthly.addEventListener('click', () => shareForecast('monthly'));
 
       elements.shareApp.addEventListener('click', () => {
         const lang = elements.language.value;
-        const title = 'Astromir';
-        const text = lang === 'ru' ? 'Попробуйте Astromir — персональные астрологические прогнозы и анализ совместимости!' :
-                                   'Try Astromir — personalized astrological forecasts and compatibility analysis!';
-        const url = 'https://t.me/AstromirBot';
+        const title = 'StarPulse';
+        const text = translations[lang].share_app_text || 'Попробуйте StarPulse — персональные астрологические прогнозы и анализ совместимости!';
+        const url = 'https://t.me/StarPulseBot'; // Заглушка для Telegram Mini App
         if (navigator.share) {
           navigator.share({ title, text, url }).catch(() => {
-            showNotification('Ошибка при попытке поделиться', 'error');
+            elements.notification.textContent = 'Ошибка при попытке поделиться';
+            elements.notification.style.display = 'block';
+            setTimeout(() => elements.notification.style.display = 'none', 2000);
           });
         } else {
           navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
-            showNotification('Ссылка скопирована в буфер обмена', 'info');
+            elements.notification.textContent = 'Ссылка скопирована в буфер обмена';
+            elements.notification.style.display = 'block';
+            setTimeout(() => elements.notification.style.display = 'none', 2000);
           });
         }
       });
 
-      let compatChart = null;
+      translations.ru.share_app_text = 'Попробуйте StarPulse — персональные астрологические прогнозы и анализ совместимости!';
+      translations.en.share_app_text = 'Try StarPulse — personalized astrological forecasts and compatibility analysis!';
+
       function calculateCompatibility(z1, z2) {
-        if (!z1 || !z2) return { score: 0, text: translations[elements.language.value].no_data, chartData: [0, 0, 0] };
+        if (!z1 || !z2) return { score: 0, text: translations[elements.language.value].no_data };
         const map = {
           'Овен': { 'Овен': 70, 'Телец': 40, 'Близнецы': 80, 'Рак': 30, 'Лев': 90, 'Дева': 50, 'Весы': 60, 'Скорпион': 45, 'Стрелец': 85, 'Козерог': 55, 'Водолей': 75, 'Рыбы': 35 },
           'Телец': { 'Овен': 40, 'Телец': 75, 'Близнецы': 50, 'Рак': 85, 'Лев': 45, 'Дева': 90, 'Весы': 65, 'Скорпион': 80, 'Стрелец': 55, 'Козерог': 95, 'Водолей': 60, 'Рыбы': 70 },
@@ -1315,11 +1042,10 @@
           'Рыбы': { 'Овен': 35, 'Телец': 70, 'Близнецы': 50, 'Рак': 95, 'Лев': 60, 'Дева': 65, 'Весы': 65, 'Скорпион': 85, 'Стрелец': 60, 'Козерог': 90, 'Водолей': 70, 'Рыбы': 80 }
         };
         const score = map[z1][z2] || 50;
-        const chartData = [score, score * 0.9, score * 0.8];
         const text = score >= 80 ? translations[elements.language.value].high_compat.replace('{z1}', z1).replace('{z2}', z2) :
                      score >= 60 ? translations[elements.language.value].mid_compat.replace('{z1}', z1).replace('{z2}', z2) :
                      translations[elements.language.value].low_compat.replace('{z1}', z1).replace('{z2}', z2);
-        return { score, text, chartData };
+        return { score, text };
       }
 
       elements.compatForm.addEventListener('submit', e => {
@@ -1340,38 +1066,19 @@
         if (valid) {
           elements.analyzeCompat.disabled = true;
           elements.compatLoader.style.display = 'block';
-          const userZodiac = elements.zodiac.textContent.replace(/�[♈-♓]\s/, '');
-          const partnerZodiac = document.getElementById('partnerZodiacSelect').value || elements.partnerZodiac.textContent.replace(/�[♈-♓]\s/, '');
+          const userZodiac = elements.zodiac.textContent;
+          const partnerZodiac = document.getElementById('partnerZodiacSelect').value || elements.partnerZodiac.textContent;
           setTimeout(() => {
-            const { score, text, chartData } = calculateCompatibility(userZodiac, partnerZodiac);
+            const { score, text } = calculateCompatibility(userZodiac, partnerZodiac);
             elements.compatProgress.style.width = `${score}%`;
             elements.compatText.textContent = text;
             elements.compatResult.style.display = 'block';
-
-            if (compatChart) compatChart.destroy();
-            compatChart = new Chart(elements.compatChart, {
-              type: 'bar',
-              data: {
-                labels: translations[elements.language.value].love ? ['Любовь', 'Дружба', 'Работа'] : ['Love', 'Friendship', 'Work'],
-                datasets: [{
-                  label: translations[elements.language.value].compatibility_with,
-                  data: chartData,
-                  backgroundColor: ['#9370db', '#6a5acd', '#4caf50']
-                }]
-              },
-              options: {
-                scales: { y: { beginAtZero: true, max: 100 } },
-                responsive: true,
-                maintainAspectRatio: false
-              }
-            });
-
             elements.analyzeCompat.disabled = false;
             elements.compatLoader.style.display = 'none';
-            showNotification(translations[elements.language.value].compatibility_ready, 'success');
+            elements.notification.textContent = translations[elements.language.value].compatibility_ready;
+            elements.notification.style.display = 'block';
+            setTimeout(() => elements.notification.style.display = 'none', 2000);
           }, 1000);
-        } else {
-          showNotification('Заполните все обязательные поля', 'error');
         }
       });
 
@@ -1382,5 +1089,5 @@
         });
       });
     </script>
-</body>
+  </body>
 </html>
