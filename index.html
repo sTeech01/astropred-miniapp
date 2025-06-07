@@ -823,343 +823,231 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js" async></script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const translations = {
-          ru: {
-            home: 'Главная', profile: 'Анкета', daily: 'Прогноз на день', weekly: 'Прогноз на неделю', monthly: 'Прогноз на месяц', compatibility: 'Совместимость', history: 'История',
-            name: 'Имя:', 'name-error': 'Пожалуйста, введите имя',
-            birth_date: 'Дата рождения:', 'birth_date-error': 'Пожалуйста, введите дату',
-            birth_time: 'Время рождения:', time_format: 'Формат: чч:мм',
-            birth_city: 'Город рождения:', 'birth_city-error': 'Пожалуйста, укажите город',
-            gender: 'Пол:', 'gender-error': 'Пожалуйста, выберите пол',
-            interest: 'Интерес:', 'interest-error': 'Пожалуйста, выберите интерес',
-            relationship: 'Семейное положение:', 'relationship-error': 'Пожалуйста, укажите статус',
-            children: 'Есть ли дети:', 'children-error': 'Пожалуйста, укажите',
-            favorite_color: 'Любимый цвет:', 'color-error': 'Пожалуйста, выберите цвет',
-            fears: 'Страхи или тревоги:', newsletter: 'Получать прогнозы',
-            save_profile: 'Сохранить', daily_forecast: 'Прогноз на день',
-            weekly_forecast: 'Прогноз на неделю', monthly_forecast: 'Прогноз на месяц',
-            your_data: 'Ваши данные:', partner_name: 'Имя партнера:', 'partner_name-error': 'Пожалуйста, введите имя',
-            partner_birth_date: 'Дата рождения:', 'partner_birth_date-error': 'Пожалуйста, введите дату',
-            partner_gender: 'Пол:', partner_zodiac: 'Знак зодиака:', relationship_duration: 'Как долго вместе:',
-            analyze_compatibility: 'Анализировать', compatibility_with: 'Совместимость:', consultation: 'Консультация',
-            consultation_message: 'Консультация будет доступна в следующем обновлении.', select: 'Выберите',
-            male: 'Мужской', female: 'Женский', love: 'Любовь и отношения', career: 'Карьера и бизнес',
-            finance: 'Финансы и инвестиции', health: 'Здоровье и благополучие', family: 'Семья и дети',
-            growth: 'Личностный рост', creativity: 'Творчество и вдохновение', travel: 'Путешествия и переезды',
-            spiritual: 'Духовное развитие', education: 'Образование и обучение', decisions: 'Важные решения',
-            in_relationship: 'В отношениях', not_in_relationship: 'Не в отношениях', searching: 'В поиске',
-            complicated: 'В сложных отношениях', yes: 'Да', no: 'Нет', planning: 'Планируем',
-            dont_know: 'Не знаю', not_applicable: 'Не применимо', less_6m: 'Менее 6 месяцев',
-            '6_12m': '6-12 месяцев', '1_3y': '1-3 года', '3_5y': '3-5 лет', more_5y: 'Более 5 лет',
-            profile_saved: 'Анкета сохранена!', forecast_ready: 'Прогноз готов!', compatibility_ready: 'Анализ готов!',
-            no_data: 'Заполните анкету сначала.', high_compat: '{z1} и {z2} — отличная пара!',
-            mid_compat: '{z1} и {z2} — возможны разногласия.', low_compat: '{z1} и {z2} — нужна работа над отношениями.',
-            edit: 'Редактировать', share_app: 'Поделиться приложением', share_forecast: 'Поделиться прогнозом',
-            previous: 'Предыдущий', next: 'Следующий', history_empty: 'История прогнозов пуста.'
-          },
-          en: {
-            home: 'Home', profile: 'Profile', daily: 'Daily Forecast', weekly: 'Weekly Forecast', monthly: 'Monthly Forecast', compatibility: 'Compatibility', history: 'History',
-            name: 'Name:', 'name-error': 'Please enter name',
-            birth_date: 'Date of Birth:', 'birth_date-error': 'Please enter date',
-            birth_time: 'Time of Birth:', time_format: 'Format: hh:mm',
-            birth_city: 'City of Birth:', 'birth_city-error': 'Please specify city',
-            gender: 'Gender:', 'gender-error': 'Please select gender',
-            interest: 'Interest:', 'interest-error': 'Please select interest',
-            relationship: 'Relationship Status:', 'relationship-error': 'Please specify status',
-            children: 'Do you have children:', 'children-error': 'Please specify',
-            favorite_color: 'Favorite Color:', 'color-error': 'Please select color',
-            fears: 'Fears or Worries:', newsletter: 'Receive forecasts',
-            save_profile: 'Save', daily_forecast: 'Daily Forecast',
-            weekly_forecast: 'Weekly Forecast', monthly_forecast: 'Monthly Forecast',
-            your_data: 'Your Details:', partner_name: 'Partner Name:', 'partner_name-error': 'Please enter name',
-            partner_birth_date: 'Partner Date of Birth:', 'partner_birth_date-error': 'Please enter date',
-            partner_gender: 'Partner Gender:', partner_zodiac: 'Partner Zodiac Sign:', relationship_duration: 'How long together:',
-            analyze_compatibility: 'Analyze', compatibility_with: 'Compatibility:', consultation: 'Consultation',
-            consultation_message: 'Consultation will be available in the next update.', select: 'Select',
-            male: 'Male', female: 'Female', love: 'Love and Relationships', career: 'Career and Business',
-            finance: 'Finance and Investments', health: 'Health and Well-being', family: 'Family and Children',
-            growth: 'Personal Growth', creativity: 'Creativity and Inspiration', travel: 'Travel and Relocation',
-            spiritual: 'Spiritual Development', education: 'Education and Learning', decisions: 'Important Decisions',
-            in_relationship: 'In a relationship', not_in_relationship: 'Not in a relationship', searching: 'Searching',
-            complicated: 'In complicated relationship', yes: 'Yes', no: 'No', planning: 'Planning',
-            dont_know: 'I don’t know', not_applicable: 'Not applicable', less_6m: 'Less than 6 months',
-            '6_12m': '6-12 months', '1_3y': '1-3 years', '3_5y': '3-5 years', more_5y: 'More than 5 years',
-            profile_saved: 'Profile saved!', forecast_ready: 'Forecast ready!', compatibility_ready: 'Analysis ready!',
-            no_data: 'Fill out the profile first.', high_compat: '{z1} and {z2} — great match!',
-            mid_compat: '{z1} and {z2} — some differences possible.', low_compat: '{z1} and {z2} — needs effort.',
-            edit: 'Edit', share_app: 'Share App', share_forecast: 'Share Forecast',
-            previous: 'Previous', next: 'Next', history_empty: 'Forecast history is empty.'
-          }
-        };
-
-        const zodiacIcons = {
-          'Овен': '♈', 'Телец': '♉', 'Близнецы': '♊', 'Рак': '♋', 'Лев': '♌', 'Дева': '♍',
-          'Весы': '♎', 'Скорпион': '♏', 'Стрелец': '♐', 'Козерог': '♑', 'Водолей': '♒', 'Рыбы': '♓'
-        };
-
-        const elements = {
-          themeSwitch: document.getElementById('themeSwitch'),
-          language: document.getElementById('language'),
-          navButtons: document.querySelectorAll('nav button'),
-          sidePanel: document.getElementById('sidePanel'),
-          closePanel: document.getElementById('closePanel'),
-          pages: document.querySelectorAll('.page'),
-          editProfile: document.getElementById('editProfile'),
-          profileForm: document.getElementById('profileForm'),
-          saveProfile: document.getElementById('saveProfile'),
-          profileLoader: document.getElementById('profileLoader'),
-          zodiac: document.getElementById('zodiac'),
-          prevStep: document.getElementById('prevStep'),
-          nextStep: document.getElementById('nextStep'),
-          formProgress: document.getElementById('formProgress'),
-          compatForm: document.getElementById('compatForm'),
-          analyzeCompat: document.getElementById('analyzeCompat'),
-          compatLoader: document.getElementById('compatLoader'),
-          partnerZodiac: document.getElementById('partnerZodiac'),
-          compatResult: document.getElementById('compatResult'),
-          compatProgress: document.getElementById('compatProgress'),
-          compatText: document.getElementById('compatText'),
-          compatChart: document.getElementById('compatChart'),
-          userData: document.getElementById('userData'),
-          notification: document.getElementById('notification'),
-          consultDaily: document.getElementById('consultDaily'),
-          consultWeekly: document.getElementById('consultWeekly'),
-          consultMonthly: document.getElementById('consultMonthly'),
-          consultDailyMsg: document.getElementById('consultDailyMsg'),
-          consultWeeklyMsg: document.getElementById('consultWeeklyMsg'),
-          consultMonthlyMsg: document.getElementById('consultMonthlyMsg'),
-          shareDailyWeb: document.getElementById('shareDailyWeb'),
-          shareWeeklyWeb: document.getElementById('shareWeeklyWeb'),
-          shareMonthlyWeb: document.getElementById('shareMonthlyWeb'),
-          shareDailyWhatsApp: document.getElementById('shareDailyWhatsApp'),
-          shareWeeklyWhatsApp: document.getElementById('shareWeeklyWhatsApp'),
-          shareMonthlyWhatsApp: document.getElementById('shareMonthlyWhatsApp'),
-          shareDailyTelegram: document.getElementById('shareDailyTelegram'),
-          shareWeeklyTelegram: document.getElementById('shareWeeklyTelegram'),
-          shareMonthlyTelegram: document.getElementById('shareMonthlyTelegram'),
-          shareApp: document.getElementById('shareApp'),
-          historyContent: document.getElementById('historyContent')
-        };
-
-        const tg = window.Telegram?.WebApp;
-        if (tg) {
-          tg.expand();
-          tg.enableClosingConfirmation();
-          if (tg.initDataUnsafe.user) {
-            document.getElementById('name').value = tg.initDataUnsafe.user.first_name || '';
-          }
+      const translations = {
+        ru: {
+          home: 'Главная', profile: 'Анкета', daily: 'Прогноз на день', weekly: 'Прогноз на неделю', monthly: 'Прогноз на месяц', compatibility: 'Совместимость', history: 'История',
+          name: 'Имя:', 'name-error': 'Пожалуйста, введите имя',
+          birth_date: 'Дата рождения:', 'birth_date-error': 'Пожалуйста, введите дату',
+          birth_time: 'Время рождения:', time_format: 'Формат: чч:мм',
+          birth_city: 'Город рождения:', 'birth_city-error': 'Пожалуйста, укажите город',
+          gender: 'Пол:', 'gender-error': 'Пожалуйста, выберите пол',
+          interest: 'Интерес:', 'interest-error': 'Пожалуйста, выберите интерес',
+          relationship: 'Семейное положение:', 'relationship-error': 'Пожалуйста, укажите статус',
+          children: 'Есть ли дети:', 'children-error': 'Пожалуйста, укажите',
+          favorite_color: 'Любимый цвет:', 'color-error': 'Пожалуйста, выберите цвет',
+          fears: 'Страхи или тревоги:', newsletter: 'Получать прогнозы',
+          save_profile: 'Сохранить', daily_forecast: 'Прогноз на день',
+          weekly_forecast: 'Прогноз на неделю', monthly_forecast: 'Прогноз на месяц',
+          your_data: 'Ваши данные:', partner_name: 'Имя партнера:', 'partner_name-error': 'Пожалуйста, введите имя',
+          partner_birth_date: 'Дата рождения:', 'partner_birth_date-error': 'Пожалуйста, введите дату',
+          partner_gender: 'Пол:', partner_zodiac: 'Знак зодиака:', relationship_duration: 'Как долго вместе:',
+          analyze_compatibility: 'Анализировать', compatibility_with: 'Совместимость:', consultation: 'Консультация',
+          consultation_message: 'Консультация будет доступна в следующем обновлении.', select: 'Выберите',
+          male: 'Мужской', female: 'Женский', love: 'Любовь и отношения', career: 'Карьера и бизнес',
+          finance: 'Финансы и инвестиции', health: 'Здоровье и благополучие', family: 'Семья и дети',
+          growth: 'Личностный рост', creativity: 'Творчество и вдохновение', travel: 'Путешествия и переезды',
+          spiritual: 'Духовное развитие', education: 'Образование и обучение', decisions: 'Важные решения',
+          in_relationship: 'В отношениях', not_in_relationship: 'Не в отношениях', searching: 'В поиске',
+          complicated: 'В сложных отношениях', yes: 'Да', no: 'Нет', planning: 'Планируем',
+          dont_know: 'Не знаю', not_applicable: 'Не применимо', less_6m: 'Менее 6 месяцев',
+          '6_12m': '6-12 месяцев', '1_3y': '1-3 года', '3_5y': '3-5 лет', more_5y: 'Более 5 лет',
+          profile_saved: 'Анкета сохранена!', forecast_ready: 'Прогноз готов!', compatibility_ready: 'Анализ готов!',
+          no_data: 'Заполните анкету сначала.', high_compat: '{z1} и {z2} — отличная пара!',
+          mid_compat: '{z1} и {z2} — возможны разногласия.', low_compat: '{z1} и {z2} — нужна работа над отношениями.',
+          edit: 'Редактировать', share_app: 'Поделиться приложением', share_forecast: 'Поделиться прогнозом',
+          previous: 'Предыдущий', next: 'Следующий', history_empty: 'История прогнозов пуста.'
+        },
+        en: {
+          home: 'Home', profile: 'Profile', daily: 'Daily Forecast', weekly: 'Weekly Forecast', monthly: 'Monthly Forecast', compatibility: 'Compatibility', history: 'History',
+          name: 'Name:', 'name-error': 'Please enter name',
+          birth_date: 'Date of Birth:', 'birth_date-error': 'Please enter date',
+          birth_time: 'Time of Birth:', time_format: 'Format: hh:mm',
+          birth_city: 'City of Birth:', 'birth_city-error': 'Please specify city',
+          gender: 'Gender:', 'gender-error': 'Please select gender',
+          interest: 'Interest:', 'interest-error': 'Please select interest',
+          relationship: 'Relationship Status:', 'relationship-error': 'Please specify status',
+          children: 'Do you have children:', 'children-error': 'Please specify',
+          favorite_color: 'Favorite Color:', 'color-error': 'Please select color',
+          fears: 'Fears or Worries:', newsletter: 'Receive forecasts',
+          save_profile: 'Save', daily_forecast: 'Daily Forecast',
+          weekly_forecast: 'Weekly Forecast', monthly_forecast: 'Monthly Forecast',
+          your_data: 'Your Details:', partner_name: 'Partner Name:', 'partner_name-error': 'Please enter name',
+          partner_birth_date: 'Partner Date of Birth:', 'partner_birth_date-error': 'Please enter date',
+          partner_gender: 'Partner Gender:', partner_zodiac: 'Partner Zodiac Sign:', relationship_duration: 'How long together:',
+          analyze_compatibility: 'Analyze', compatibility_with: 'Compatibility:', consultation: 'Consultation',
+          consultation_message: 'Consultation will be available in the next update.', select: 'Select',
+          male: 'Male', female: 'Female', love: 'Love and Relationships', career: 'Career and Business',
+          finance: 'Finance and Investments', health: 'Health and Well-being', family: 'Family and Children',
+          growth: 'Personal Growth', creativity: 'Creativity and Inspiration', travel: 'Travel and Relocation',
+          spiritual: 'Spiritual Development', education: 'Education and Learning', decisions: 'Important Decisions',
+          in_relationship: 'In a relationship', not_in_relationship: 'Not in a relationship', searching: 'Searching',
+          complicated: 'In complicated relationship', yes: 'Yes', no: 'No', planning: 'Planning',
+          dont_know: 'I don’t know', not_applicable: 'Not applicable', less_6m: 'Less than 6 months',
+          '6_12m': '6-12 months', '1_3y': '1-3 years', '3_5y': '3-5 years', more_5y: 'More than 5 years',
+          profile_saved: 'Profile saved!', forecast_ready: 'Forecast ready!', compatibility_ready: 'Analysis ready!',
+          no_data: 'Fill out the profile first.', high_compat: '{z1} and {z2} — great match!',
+          mid_compat: '{z1} and {z2} — some differences possible.', low_compat: '{z1} and {z2} — needs effort.',
+          edit: 'Edit', share_app: 'Share App', share_forecast: 'Share Forecast',
+          previous: 'Previous', next: 'Next', history_empty: 'Forecast history is empty.'
         }
+      };
 
-        function createStars() {
-          const container = document.getElementById('stars-container');
-          container.innerHTML = '';
-          const count = window.innerWidth < 600 ? 50 : 100;
-          for (let i = 0; i < count; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = star.style.height = Math.random() * 2 + 'px';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 2 + 's';
-            container.appendChild(star);
-          }
+      const zodiacIcons = {
+        'Овен': '♈', 'Телец': '♉', 'Близнецы': '♊', 'Рак': '♋', 'Лев': '♌', 'Дева': '♍',
+        'Весы': '♎', 'Скорпион': '♏', 'Стрелец': '♐', 'Козерог': '♑', 'Водолей': '♒', 'Рыбы': '♓'
+      };
+
+      const elements = {
+        themeSwitch: document.getElementById('themeSwitch'),
+        language: document.getElementById('language'),
+        navButtons: document.querySelectorAll('nav button'),
+        sidePanel: document.getElementById('sidePanel'),
+        closePanel: document.getElementById('closePanel'),
+        pages: document.querySelectorAll('.page'),
+        editProfile: document.getElementById('editProfile'),
+        profileForm: document.getElementById('profileForm'),
+        saveProfile: document.getElementById('saveProfile'),
+        profileLoader: document.getElementById('profileLoader'),
+        zodiac: document.getElementById('zodiac'),
+        prevStep: document.getElementById('prevStep'),
+        nextStep: document.getElementById('nextStep'),
+        formProgress: document.getElementById('formProgress'),
+        compatForm: document.getElementById('compatForm'),
+        analyzeCompat: document.getElementById('analyzeCompat'),
+        compatLoader: document.getElementById('compatLoader'),
+        partnerZodiac: document.getElementById('partnerZodiac'),
+        compatResult: document.getElementById('compatResult'),
+        compatProgress: document.getElementById('compatProgress'),
+        compatText: document.getElementById('compatText'),
+        compatChart: document.getElementById('compatChart'),
+        userData: document.getElementById('userData'),
+        notification: document.getElementById('notification'),
+        consultDaily: document.getElementById('consultDaily'),
+        consultWeekly: document.getElementById('consultWeekly'),
+        consultMonthly: document.getElementById('consultMonthly'),
+        consultDailyMsg: document.getElementById('consultDailyMsg'),
+        consultWeeklyMsg: document.getElementById('consultWeeklyMsg'),
+        consultMonthlyMsg: document.getElementById('consultMonthlyMsg'),
+        shareDailyWeb: document.getElementById('shareDailyWeb'),
+        shareWeeklyWeb: document.getElementById('shareWeeklyWeb'),
+        shareMonthlyWeb: document.getElementById('shareMonthlyWeb'),
+        shareDailyWhatsApp: document.getElementById('shareDailyWhatsApp'),
+        shareWeeklyWhatsApp: document.getElementById('shareWeeklyWhatsApp'),
+        shareMonthlyWhatsApp: document.getElementById('shareMonthlyWhatsApp'),
+        shareDailyTelegram: document.getElementById('shareDailyTelegram'),
+        shareWeeklyTelegram: document.getElementById('shareWeeklyTelegram'),
+        shareMonthlyTelegram: document.getElementById('shareMonthlyTelegram'),
+        shareApp: document.getElementById('shareApp'),
+        historyContent: document.getElementById('historyContent')
+      };
+
+      const tg = window.Telegram?.WebApp;
+      if (tg) {
+        tg.expand();
+        tg.enableClosingConfirmation();
+        if (tg.initDataUnsafe.user) {
+          document.getElementById('name').value = tg.initDataUnsafe.user.first_name || '';
         }
-        createStars();
-        window.addEventListener('resize', createStars);
+      }
 
-        new Awesomplete(document.getElementById('birthCity'), {
-          list: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Кострома'],
-          minChars: 1,
-          maxItems: 5
+      function createStars() {
+        const container = document.getElementById('stars-container');
+        container.innerHTML = '';
+        const count = window.innerWidth < 600 ? 50 : 100;
+        for (let i = 0; i < count; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.width = star.style.height = Math.random() * 2 + 'px';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.animationDelay = Math.random() * 2 + 's';
+          container.appendChild(star);
+        }
+      }
+      createStars();
+      window.addEventListener('resize', createStars);
+
+      new Awesomplete(document.getElementById('birthCity'), {
+        list: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Кострома'],
+        minChars: 1,
+        maxItems: 5
+      });
+
+      function toggleTheme() {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        document.documentElement.setAttribute('data-theme', isLight ? 'dark' : 'light');
+        elements.themeSwitch.querySelector('i').className = `fas fa-${isLight ? 'moon' : 'sun'}`;
+        localStorage.setItem('theme', isLight ? 'dark' : 'light');
+      }
+
+      elements.themeSwitch.addEventListener('click', toggleTheme);
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      elements.themeSwitch.querySelector('i').className = `fas fa-${savedTheme === 'light' ? 'sun' : 'moon'}`;
+
+      function updateLanguage() {
+        const lang = elements.language.value;
+        document.querySelectorAll('[data-lang]').forEach(el => {
+          const key = el.getAttribute('data-lang');
+          el.textContent = translations[lang][key] || el.textContent;
         });
+        updateUserData();
+        updateHistory();
+        localStorage.setItem('language', lang);
+      }
 
-        function toggleTheme() {
-          const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-          document.documentElement.setAttribute('data-theme', isLight ? 'dark' : 'light');
-          elements.themeSwitch.querySelector('i').className = `fas fa-${isLight ? 'moon' : 'sun'}`;
-          localStorage.setItem('theme', isLight ? 'dark' : 'light');
-        }
+      elements.language.addEventListener('change', updateLanguage);
+      const savedLang = localStorage.getItem('language') || 'ru';
+      elements.language.value = savedLang;
+      updateLanguage();
 
-        elements.themeSwitch.addEventListener('click', () => {
-          console.log('Theme switch clicked');
-          toggleTheme();
+      function switchPage(page) {
+        elements.navButtons.forEach(btn => btn.classList.remove('active'));
+        elements.pages.forEach(p => p.classList.remove('active'));
+        document.querySelector(`[data-page="${page}"]`).classList.add('active');
+        document.getElementById(`${page}Page`).classList.add('active');
+        elements.sidePanel.classList.add('active');
+      }
+
+      function closePanel() {
+        elements.sidePanel.classList.remove('active');
+        elements.navButtons.forEach(btn => btn.classList.remove('active'));
+        elements.pages.forEach(p => p.classList.remove('active'));
+      }
+
+      elements.navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const page = btn.getAttribute('data-page');
+          switchPage(page);
+          if (['daily', 'weekly', 'monthly'].includes(page)) loadForecast(page);
+          if (page === 'history') updateHistory();
         });
+      });
 
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        elements.themeSwitch.querySelector('i').className = `fas fa-${savedTheme === 'light' ? 'sun' : 'moon'}`;
+      elements.closePanel.addEventListener('click', closePanel);
 
-        function updateLanguage() {
-          const lang = elements.language.value;
-          document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            el.textContent = translations[lang][key] || el.textContent;
-          });
-          updateUserData();
-          updateHistory();
-          localStorage.setItem('language', lang);
+      let currentStep = 1;
+      function updateFormStep() {
+        document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+        document.getElementById(`step${currentStep}`).classList.add('active');
+        elements.formProgress.style.width = `${currentStep * 33}%`;
+        elements.prevStep.disabled = currentStep === 1;
+        elements.nextStep.style.display = currentStep < 3 ? 'flex' : 'none';
+        elements.saveProfile.style.display = currentStep === 3 ? 'flex' : 'none';
+      }
+
+      elements.prevStep.addEventListener('click', () => {
+        if (currentStep > 1) {
+          currentStep--;
+          updateFormStep();
         }
+      });
 
-        elements.language.addEventListener('change', () => {
-          console.log('Language changed to:', elements.language.value);
-          updateLanguage();
-        });
-
-        const savedLang = localStorage.getItem('language') || 'ru';
-        elements.language.value = savedLang;
-        updateLanguage();
-
-        function switchPage(page) {
-          console.log('Switching to page:', page);
-          elements.navButtons.forEach(btn => btn.classList.remove('active'));
-          elements.pages.forEach(p => p.classList.remove('active'));
-          document.querySelector(`[data-page="${page}"]`).classList.add('active');
-          document.getElementById(`${page}Page`).classList.add('active');
-          elements.sidePanel.classList.add('active');
-        }
-
-        function closePanel() {
-          console.log('Closing panel');
-          elements.sidePanel.classList.remove('active');
-          elements.navButtons.forEach(btn => btn.classList.remove('active'));
-          elements.pages.forEach(p => p.classList.remove('active'));
-        }
-
-        elements.navButtons.forEach(btn => {
-          btn.addEventListener('click', () => {
-            const page = btn.getAttribute('data-page');
-            switchPage(page);
-            if (['daily', 'weekly', 'monthly'].includes(page)) loadForecast(page);
-            if (page === 'history') updateHistory();
-          });
-        });
-
-        elements.closePanel.addEventListener('click', closePanel);
-
-        let currentStep = 1;
-        function updateFormStep() {
-          document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-          document.getElementById(`step${currentStep}`).classList.add('active');
-          elements.formProgress.style.width = `${currentStep * 33}%`;
-          elements.prevStep.disabled = currentStep === 1;
-          elements.nextStep.style.display = currentStep < 3 ? 'flex' : 'none';
-          elements.saveProfile.style.display = currentStep === 3 ? 'flex' : 'none';
-        }
-
-        elements.prevStep.addEventListener('click', () => {
-          console.log('Previous step clicked');
-          if (currentStep > 1) {
-            currentStep--;
-            updateFormStep();
-          }
-        });
-
-        elements.nextStep.addEventListener('click', () => {
-          console.log('Next step clicked');
-          if (currentStep < 3) {
-            const stepInputs = document.getElementById(`step${currentStep}`).querySelectorAll('[required]');
-            let valid = true;
-            stepInputs.forEach(input => {
-              const error = input.nextElementSibling.classList.contains('error-message') ?
-                input.nextElementSibling : input.nextElementSibling.nextElementSibling;
-              if (!input.value) {
-                error.style.display = 'block';
-                valid = false;
-              } else {
-                error.style.display = 'none';
-              }
-            });
-            if (valid) {
-              currentStep++;
-              updateFormStep();
-            }
-          }
-        });
-
-        function getZodiac(day, month) {
-          if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 'Овен';
-          if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 'Телец';
-          if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return 'Близнецы';
-          if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return 'Рак';
-          if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return 'Лев';
-          if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return 'Дева';
-          if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return 'Весы';
-          if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return 'Скорпион';
-          if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return 'Стрелец';
-          if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return 'Козерог';
-          if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 'Водолей';
-          if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'Рыбы';
-          return '';
-        }
-
-        function updateZodiac(inputId, displayId) {
-          const date = new Date(document.getElementById(inputId).value);
-          const zodiac = getZodiac(date.getDate(), date.getMonth() + 1);
-          const display = document.getElementById(displayId);
-          display.innerHTML = `${zodiacIcons[zodiac] || ''} ${zodiac}`;
-          display.style.display = zodiac ? 'block' : 'none';
-          if (inputId === 'partnerBirthDate') {
-            document.getElementById('partnerZodiacSelect').value = zodiac;
-          }
-        }
-
-        document.getElementById('birthDate').addEventListener('change', () => updateZodiac('birthDate', 'zodiac'));
-        document.getElementById('partnerBirthDate').addEventListener('change', () => updateZodiac('partnerBirthDate', 'partnerZodiac'));
-
-        function loadProfile() {
-          const data = JSON.parse(localStorage.getItem('profile') || '{}');
-          document.getElementById('name').value = data.name || '';
-          document.getElementById('birthDate').value = data.birthDate || '';
-          document.getElementById('birthTime').value = data.birthTime || '';
-          document.getElementById('birthCity').value = data.birthCity || '';
-          document.getElementById('gender').value = data.gender || '';
-          document.getElementById('interest').value = data.interest || '';
-          document.getElementById('relationship').value = data.relationship || '';
-          document.getElementById('children').value = data.children || '';
-          document.getElementById('color').value = data.color || '#6a5acd';
-          document.getElementById('fears').value = data.fears || '';
-          document.getElementById('newsletter').checked = data.newsletter || false;
-          elements.zodiac.innerHTML = `${zodiacIcons[data.zodiac] || ''} ${data.zodiac}`;
-          elements.zodiac.style.display = data.zodiac ? 'block' : 'none';
-          if (data.name) toggleEditMode(false);
-          updateUserData();
-        }
-
-        function updateUserData() {
-          const data = JSON.parse(localStorage.getItem('profile') || '{}');
-          const lang = elements.language.value;
-          elements.userData.textContent = data.name && data.zodiac ?
-            `${data.name}, ${zodiacIcons[data.zodiac] || ''} ${data.zodiac} (${translations[lang][data.gender]})` :
-            translations[lang].no_data;
-        }
-
-        function toggleEditMode(enable) {
-          const inputs = elements.profileForm.querySelectorAll('input, select, textarea');
-          inputs.forEach(input => input.disabled = !enable);
-          elements.editProfile.style.display = enable ? 'none' : 'block';
-          elements.prevStep.disabled = !enable || currentStep === 1;
-          elements.nextStep.disabled = !enable;
-          elements.saveProfile.disabled = !enable;
-          if (enable) {
-            currentStep = 1;
-            updateFormStep();
-          }
-        }
-
-        elements.editProfile.addEventListener('click', () => {
-          console.log('Edit profile clicked');
-          toggleEditMode(true);
-        });
-
-        loadProfile();
-
-        elements.profileForm.addEventListener('submit', e => {
-          console.log('Profile form submitted');
-          e.preventDefault();
+      elements.nextStep.addEventListener('click', () => {
+        if (currentStep < 3) {
+          const stepInputs = document.getElementById(`step${currentStep}`).querySelectorAll('[required]');
           let valid = true;
-          ['name', 'birthDate', 'birthCity', 'gender', 'interest', 'relationship', 'children', 'color'].forEach(id => {
-            const input = document.getElementById(id);
+          stepInputs.forEach(input => {
             const error = input.nextElementSibling.classList.contains('error-message') ?
               input.nextElementSibling : input.nextElementSibling.nextElementSibling;
             if (!input.value) {
@@ -1169,230 +1057,330 @@
               error.style.display = 'none';
             }
           });
-
           if (valid) {
-            elements.saveProfile.disabled = true;
-            elements.profileLoader.style.display = 'block';
-            const data = {
-              name: document.getElementById('name').value,
-              birthDate: document.getElementById('birthDate').value,
-              birthTime: document.getElementById('birthTime').value,
-              birthCity: document.getElementById('birthCity').value,
-              gender: document.getElementById('gender').value,
-              interest: document.getElementById('interest').value,
-              relationship: document.getElementById('relationship').value,
-              children: document.getElementById('children').value,
-              color: document.getElementById('color').value,
-              fears: document.getElementById('fears').value,
-              newsletter: document.getElementById('newsletter').checked,
-              zodiac: elements.zodiac.textContent.replace(/[♈-♓]\s/, '')
-            };
-            localStorage.setItem('profile', JSON.stringify(data));
-            setTimeout(() => {
-              elements.saveProfile.disabled = true;
-              elements.profileLoader.style.display = 'none';
-              showNotification(translations[elements.language.value].profile_saved, 'success');
-              toggleEditMode(false);
-              updateUserData();
-            }, 1000);
+            currentStep++;
+            updateFormStep();
+          }
+        }
+      });
+
+      function getZodiac(day, month) {
+        if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 'Овен';
+        if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 'Телец';
+        if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return 'Близнецы';
+        if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return 'Рак';
+        if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return 'Лев';
+        if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return 'Дева';
+        if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return 'Весы';
+        if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return 'Скорпион';
+        if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return 'Стрелец';
+        if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return 'Козерог';
+        if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 'Водолей';
+        if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'Рыбы';
+        return '';
+      }
+
+      function updateZodiac(inputId, displayId) {
+        const date = new Date(document.getElementById(inputId).value);
+        const zodiac = getZodiac(date.getDate(), date.getMonth() + 1);
+        const display = document.getElementById(displayId);
+        display.innerHTML = `${zodiacIcons[zodiac] || ''} ${zodiac}`;
+        display.style.display = zodiac ? 'block' : 'none';
+        if (inputId === 'partnerBirthDate') {
+          document.getElementById('partnerZodiacSelect').value = zodiac;
+        }
+      }
+
+      document.getElementById('birthDate').addEventListener('change', () => updateZodiac('birthDate', 'zodiac'));
+      document.getElementById('partnerBirthDate').addEventListener('change', () => updateZodiac('partnerBirthDate', 'partnerZodiac'));
+
+      function loadProfile() {
+        const data = JSON.parse(localStorage.getItem('profile') || '{}');
+        document.getElementById('name').value = data.name || '';
+        document.getElementById('birthDate').value = data.birthDate || '';
+        document.getElementById('birthTime').value = data.birthTime || '';
+        document.getElementById('birthCity').value = data.birthCity || '';
+        document.getElementById('gender').value = data.gender || '';
+        document.getElementById('interest').value = data.interest || '';
+        document.getElementById('relationship').value = data.relationship || '';
+        document.getElementById('children').value = data.children || '';
+        document.getElementById('color').value = data.color || '#6a5acd';
+        document.getElementById('fears').value = data.fears || '';
+        document.getElementById('newsletter').checked = data.newsletter || false;
+        elements.zodiac.innerHTML = `${zodiacIcons[data.zodiac] || ''} ${data.zodiac}`;
+        elements.zodiac.style.display = data.zodiac ? 'block' : 'none';
+        if (data.name) toggleEditMode(false);
+        updateUserData();
+      }
+
+      function updateUserData() {
+        const data = JSON.parse(localStorage.getItem('profile') || '{}');
+        const lang = elements.language.value;
+        elements.userData.textContent = data.name && data.zodiac ?
+          `${data.name}, ${zodiacIcons[data.zodiac] || ''} ${data.zodiac} (${translations[lang][data.gender]})` :
+          translations[lang].no_data;
+      }
+
+      function toggleEditMode(enable) {
+        const inputs = elements.profileForm.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => input.disabled = !enable);
+        elements.editProfile.style.display = enable ? 'none' : 'block';
+        elements.prevStep.disabled = !enable || currentStep === 1;
+        elements.nextStep.disabled = !enable;
+        elements.saveProfile.disabled = !enable;
+        if (enable) {
+          currentStep = 1;
+          updateFormStep();
+        }
+      }
+
+      elements.editProfile.addEventListener('click', () => toggleEditMode(true));
+
+      loadProfile();
+
+      elements.profileForm.addEventListener('submit', e => {
+        e.preventDefault();
+        let valid = true;
+        ['name', 'birthDate', 'birthCity', 'gender', 'interest', 'relationship', 'children', 'color'].forEach(id => {
+          const input = document.getElementById(id);
+          const error = input.nextElementSibling.classList.contains('error-message') ?
+            input.nextElementSibling : input.nextElementSibling.nextElementSibling;
+          if (!input.value) {
+            error.style.display = 'block';
+            valid = false;
           } else {
-            showNotification('Заполните все обязательные поля', 'error');
+            error.style.display = 'none';
           }
         });
 
-        function showNotification(message, type = 'success') {
-          elements.notification.textContent = message;
-          elements.notification.className = `notification ${type}`;
-          elements.notification.style.display = 'block';
-          setTimeout(() => elements.notification.style.display = 'none', 2000);
+        if (valid) {
+          elements.saveProfile.disabled = true;
+          elements.profileLoader.style.display = 'block';
+          const data = {
+            name: document.getElementById('name').value,
+            birthDate: document.getElementById('birthDate').value,
+            birthTime: document.getElementById('birthTime').value,
+            birthCity: document.getElementById('birthCity').value,
+            gender: document.getElementById('gender').value,
+            interest: document.getElementById('interest').value,
+            relationship: document.getElementById('relationship').value,
+            children: document.getElementById('children').value,
+            color: document.getElementById('color').value,
+            fears: document.getElementById('fears').value,
+            newsletter: document.getElementById('newsletter').checked,
+            zodiac: elements.zodiac.textContent.replace(/�[♈-♓]\s/, '')
+          };
+          localStorage.setItem('profile', JSON.stringify(data));
+          setTimeout(() => {
+            elements.saveProfile.disabled = true;
+            elements.profileLoader.style.display = 'none';
+            showNotification(translations[elements.language.value].profile_saved, 'success');
+            toggleEditMode(false);
+            updateUserData();
+          }, 1000);
+        } else {
+          showNotification('Заполните все обязательные поля', 'error');
         }
+      });
 
-        function saveForecast(type, text) {
-          const history = JSON.parse(localStorage.getItem('forecastHistory') || '{}');
-          history[type] = history[type] || [];
-          history[type].unshift({ date: new Date().toISOString(), text });
-          if (history[type].length > 10) history[type].pop();
-          localStorage.setItem('forecastHistory', JSON.stringify(history));
-        }
+      function showNotification(message, type = 'success') {
+        elements.notification.textContent = message;
+        elements.notification.className = `notification ${type}`;
+        elements.notification.style.display = 'block';
+        setTimeout(() => elements.notification.style.display = 'none', 2000);
+      }
 
-        function updateHistory() {
-          const history = JSON.parse(localStorage.getItem('forecastHistory') || '{}');
-          const lang = elements.language.value;
-          let content = '';
-          ['daily', 'weekly', 'monthly'].forEach(type => {
-            if (history[type]?.length) {
-              content += `<h3>${translations[lang][`${type}_forecast`]}</h3>`;
-              history[type].forEach(item => {
-                const date = new Date(item.date).toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US');
-                content += `<p><strong>${date}</strong>: ${item.text}</p>`;
-              });
-            }
-          });
-          elements.historyContent.innerHTML = content || `<p>${translations[lang].history_empty}</p>`;
-        }
+      function saveForecast(type, text) {
+        const history = JSON.parse(localStorage.getItem('forecastHistory') || '{}');
+        history[type] = history[type] || [];
+        history[type].unshift({ date: new Date().toISOString(), text });
+        if (history[type].length > 10) history[type].pop();
+        localStorage.setItem('forecastHistory', JSON.stringify(history));
+      }
 
-        function loadForecast(type) {
-          const data = JSON.parse(localStorage.getItem('profile') || '{}');
-          if (!data.name || !data.birthDate) {
-            showNotification(translations[elements.language.value].no_data, 'error');
-            setTimeout(() => {
-              switchPage('profile');
-            }, 2000);
-            return;
-          }
-
-          const content = document.getElementById(`${type}Content`);
-          const dateEl = document.getElementById(`${type}Date`);
-          const lang = elements.language.value;
-          let text, dateText;
-
-          switch (type) {
-            case 'daily':
-              text = `Сегодня удачный день для ${translations[lang][data.interest.toLowerCase()]}.`;
-              dateText = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-              break;
-            case 'weekly':
-              text = `На этой неделе успех в ${translations[lang][data.interest.toLowerCase()]}.`;
-              dateText = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US', { month: 'long', year: 'numeric' });
-              break;
-            case 'monthly':
-              text = `В этом месяце ждут перемены в ${translations[lang][data.interest.toLowerCase()]}.`;
-              dateText = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US', { month: 'long', year: 'numeric' });
-              break;
-          }
-
-          content.innerHTML = `<p>${text}</p>`;
-          dateEl.textContent = dateText;
-          saveForecast(type, text);
-          showNotification(translations[lang].forecast_ready, 'success');
-        }
-
-        function shareForecast(type, platform) {
-          console.log(`Sharing ${type} forecast via ${platform}`);
-          const content = document.getElementById(`${type}Content`).textContent;
-          const lang = elements.language.value;
-          const title = translations[lang][`${type}_forecast`];
-          const text = `${title}: ${content}\n\nAstromir — персональные астрологические прогнозы!`;
-          const url = 'https://t.me/AstromirBot';
-
-          if (platform === 'web') {
-            if (navigator.share) {
-              navigator.share({ title, text, url }).catch(() => {
-                showNotification('Ошибка при попытке поделиться', 'error');
-              });
-            } else {
-              navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
-                showNotification('Прогноз скопирован в буфер обмена', 'info');
-              });
-            }
-          } else if (platform === 'whatsapp') {
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${text}\n${url}`)}`);
-          } else if (platform === 'telegram') {
-            window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
-          }
-        }
-
+      function updateHistory() {
+        const history = JSON.parse(localStorage.getItem('forecastHistory') || '{}');
+        const lang = elements.language.value;
+        let content = '';
         ['daily', 'weekly', 'monthly'].forEach(type => {
-          elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}Web`].addEventListener('click', () => shareForecast(type, 'web'));
-          elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}WhatsApp`].addEventListener('click', () => shareForecast(type, 'whatsapp'));
-          elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}Telegram`].addEventListener('click', () => shareForecast(type, 'telegram'));
+          if (history[type]?.length) {
+            content += `<h3>${translations[lang][`${type}_forecast`]}</h3>`;
+            history[type].forEach(item => {
+              const date = new Date(item.date).toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US');
+              content += `<p><strong>${date}</strong>: ${item.text}</p>`;
+            });
+          }
         });
+        elements.historyContent.innerHTML = content || `<p>${translations[lang].history_empty}</p>`;
+      }
 
-        elements.shareApp.addEventListener('click', () => {
-          console.log('Share app clicked');
-          const lang = elements.language.value;
-          const title = 'Astromir';
-          const text = lang === 'ru' ? 'Попробуйте Astromir — персональные астрологические прогнозы и анализ совместимости!' :
-                                     'Try Astromir — personalized astrological forecasts and compatibility analysis!';
-          const url = 'https://t.me/AstromirBot';
+      function loadForecast(type) {
+        const data = JSON.parse(localStorage.getItem('profile') || '{}');
+        if (!data.name || !data.birthDate) {
+          showNotification(translations[elements.language.value].no_data, 'error');
+          setTimeout(() => {
+            switchPage('profile');
+          }, 2000);
+          return;
+        }
+
+        const content = document.getElementById(`${type}Content`);
+        const dateEl = document.getElementById(`${type}Date`);
+        const lang = elements.language.value;
+        let text, dateText;
+
+        switch (type) {
+          case 'daily':
+            text = `Сегодня удачный день для ${translations[lang][data.interest.toLowerCase()]}.`;
+            dateText = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            break;
+          case 'weekly':
+            text = `На этой неделе успех в ${translations[lang][data.interest.toLowerCase()]}.`;
+            dateText = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US', { month: 'long', year: 'numeric' });
+            break;
+          case 'monthly':
+            text = `В этом месяце ждут перемены в ${translations[lang][data.interest.toLowerCase()]}.`;
+            dateText = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : 'en-US', { month: 'long', year: 'numeric' });
+            break;
+        }
+
+        content.innerHTML = `<p>${text}</p>`;
+        dateEl.textContent = dateText;
+        saveForecast(type, text);
+        showNotification(translations[lang].forecast_ready, 'success');
+      }
+
+      function shareForecast(type, platform) {
+        const content = document.getElementById(`${type}Content`).textContent;
+        const lang = elements.language.value;
+        const title = translations[lang][`${type}_forecast`];
+        const text = `${title}: ${content}\n\nAstromir — персональные астрологические прогнозы!`;
+        const url = 'https://t.me/AstromirBot';
+
+        if (platform === 'web') {
           if (navigator.share) {
             navigator.share({ title, text, url }).catch(() => {
               showNotification('Ошибка при попытке поделиться', 'error');
             });
           } else {
             navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
-              showNotification('Ссылка скопирована в буфер обмена', 'info');
+              showNotification('Прогноз скопирован в буфер обмена', 'info');
             });
           }
-        });
-
-        let compatChart = null;
-        function calculateCompatibility(z1, z2) {
-          if (!z1 || !z2) return { score: 0, text: translations[elements.language.value].no_data, chartData: [0, 0, 0] };
-          const map = {
-            'Овен': { 'Овен': 70, 'Телец': 40, 'Близнецы': 80, 'Рак': 30, 'Лев': 90, 'Дева': 50, 'Весы': 60, 'Скорпион': 45, 'Стрелец': 85, 'Козерог': 55, 'Водолей': 75, 'Рыбы': 35 },
-            'Телец': { 'Овен': 40, 'Телец': 75, 'Близнецы': 50, 'Рак': 85, 'Лев': 45, 'Дева': 90, 'Весы': 65, 'Скорпион': 80, 'Стрелец': 55, 'Козерог': 95, 'Водолей': 60, 'Рыбы': 70 },
-            'Близнецы': { 'Овен': 80, 'Телец': 50, 'Близнецы': 65, 'Рак': 40, 'Лев': 70, 'Дева': 55, 'Весы': 85, 'Скорпион': 60, 'Стрелец': 75, 'Козерог': 45, 'Водолей': 90, 'Рыбы': 50 },
-            'Рак': { 'Овен': 30, 'Телец': 85, 'Близнецы': 40, 'Рак': 80, 'Лев': 35, 'Дева': 75, 'Весы': 50, 'Скорпион': 90, 'Стрелец': 45, 'Козерог': 70, 'Водолей': 55, 'Рыбы': 95 },
-            'Лев': { 'Овен': 90, 'Телец': 45, 'Близнецы': 70, 'Рак': 35, 'Лев': 85, 'Дева': 40, 'Весы': 75, 'Скорпион': 50, 'Стрелец': 80, 'Козерог': 55, 'Водолей': 65, 'Рыбы': 60 },
-            'Дева': { 'Овен': 50, 'Телец': 90, 'Близнецы': 55, 'Рак': 75, 'Лев': 40, 'Дева': 70, 'Весы': 60, 'Скорпион': 85, 'Стрелец': 45, 'Козерог': 80, 'Водолей': 50, 'Рыбы': 65 },
-            'Весы': { 'Овен': 60, 'Телец': 65, 'Близнецы': 85, 'Рак': 50, 'Лев': 75, 'Дева': 60, 'Весы': 75, 'Скорпион': 55, 'Стрелец': 70, 'Козерог': 45, 'Водолей': 80, 'Рыбы': 65 },
-            'Скорпион': { 'Овен': 45, 'Телец': 80, 'Близнецы': 60, 'Рак': 90, 'Лев': 50, 'Дева': 85, 'Весы': 55, 'Скорпион': 95, 'Стрелец': 40, 'Козерог': 75, 'Водолей': 65, 'Рыбы': 85 },
-            'Стрелец': { 'Овен': 85, 'Телец': 55, 'Близнецы': 75, 'Рак': 45, 'Лев': 80, 'Дева': 45, 'Весы': 70, 'Скорпион': 40, 'Стрелец': 90, 'Козерог': 50, 'Водолей': 85, 'Рыбы': 60 },
-            'Козерог': { 'Овен': 55, 'Телец': 95, 'Близнецы': 45, 'Рак': 70, 'Лев': 55, 'Дева': 80, 'Весы': 45, 'Скорпион': 75, 'Стрелец': 50, 'Козерог': 85, 'Водолей': 60, 'Рыбы': 90 },
-            'Водолей': { 'Овен': 75, 'Телец': 60, 'Близнецы': 90, 'Рак': 55, 'Лев': 65, 'Дева': 50, 'Весы': 80, 'Скорпион': 65, 'Стрелец': 85, 'Козерог': 60, 'Водолей': 75, 'Рыбы': 70 },
-            'Рыбы': { 'Овен': 35, 'Телец': 70, 'Близнецы': 50, 'Рак': 95, 'Лев': 60, 'Дева': 65, 'Весы': 65, 'Скорпион': 85, 'Стрелец': 60, 'Козерог': 90, 'Водолей': 70, 'Рыбы': 80 }
-          };
-          const score = map[z1][z2] || 50;
-          const chartData = [score, score * 0.9, score * 0.8];
-          const text = score >= 80 ? translations[elements.language.value].high_compat.replace('{z1}', z1).replace('{z2}', z2) :
-                       score >= 60 ? translations[elements.language.value].mid_compat.replace('{z1}', z1).replace('{z2}', z2) :
-                       translations[elements.language.value].low_compat.replace('{z1}', z1).replace('{z2}', z2);
-          return { score, text, chartData };
+        } else if (platform === 'whatsapp') {
+          window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${text}\n${url}`)}`);
+        } else if (platform === 'telegram') {
+          window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
         }
+      }
 
-        elements.compatForm.addEventListener('submit', e => {
-          console.log('Compatibility form submitted');
-          e.preventDefault();
-          let valid = true;
-          ['partnerName', 'partnerBirthDate', 'partnerGender'].forEach(id => {
-            const input = document.getElementById(id);
-            const error = input.nextElementSibling.classList.contains('error-message') ?
-              input.nextElementSibling : input.nextElementSibling.nextElementSibling;
-            if (!input.value) {
-              error.style.display = 'block';
-              valid = false;
-            } else {
-              error.style.display = 'none';
-            }
+      ['daily', 'weekly', 'monthly'].forEach(type => {
+        elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}Web`].addEventListener('click', () => shareForecast(type, 'web'));
+        elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}WhatsApp`].addEventListener('click', () => shareForecast(type, 'whatsapp'));
+        elements[`share${type.charAt(0).toUpperCase() + type.slice(1)}Telegram`].addEventListener('click', () => shareForecast(type, 'telegram'));
+      });
+
+      elements.shareApp.addEventListener('click', () => {
+        const lang = elements.language.value;
+        const title = 'Astromir';
+        const text = lang === 'ru' ? 'Попробуйте Astromir — персональные астрологические прогнозы и анализ совместимости!' :
+                                   'Try Astromir — personalized astrological forecasts and compatibility analysis!';
+        const url = 'https://t.me/AstromirBot';
+        if (navigator.share) {
+          navigator.share({ title, text, url }).catch(() => {
+            showNotification('Ошибка при попытке поделиться', 'error');
           });
+        } else {
+          navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+            showNotification('Ссылка скопирована в буфер обмена', 'info');
+          });
+        }
+      });
 
-          if (valid) {
-            elements.analyzeCompat.disabled = true;
-            elements.compatLoader.style.display = 'block';
-            const userZodiac = elements.zodiac.textContent.replace(/[♈-♓]\s/, '');
-            const partnerZodiac = document.getElementById('partnerZodiacSelect').value || elements.partnerZodiac.textContent.replace(/[♈-♓]\s/, '');
-            setTimeout(() => {
-              const { score, text, chartData } = calculateCompatibility(userZodiac, partnerZodiac);
-              elements.compatProgress.style.width = `${score}%`;
-              elements.compatText.textContent = text;
-              elements.compatResult.style.display = 'block';
+      let compatChart = null;
+      function calculateCompatibility(z1, z2) {
+        if (!z1 || !z2) return { score: 0, text: translations[elements.language.value].no_data, chartData: [0, 0, 0] };
+        const map = {
+          'Овен': { 'Овен': 70, 'Телец': 40, 'Близнецы': 80, 'Рак': 30, 'Лев': 90, 'Дева': 50, 'Весы': 60, 'Скорпион': 45, 'Стрелец': 85, 'Козерог': 55, 'Водолей': 75, 'Рыбы': 35 },
+          'Телец': { 'Овен': 40, 'Телец': 75, 'Близнецы': 50, 'Рак': 85, 'Лев': 45, 'Дева': 90, 'Весы': 65, 'Скорпион': 80, 'Стрелец': 55, 'Козерог': 95, 'Водолей': 60, 'Рыбы': 70 },
+          'Близнецы': { 'Овен': 80, 'Телец': 50, 'Близнецы': 65, 'Рак': 40, 'Лев': 70, 'Дева': 55, 'Весы': 85, 'Скорпион': 60, 'Стрелец': 75, 'Козерог': 45, 'Водолей': 90, 'Рыбы': 50 },
+          'Рак': { 'Овен': 30, 'Телец': 85, 'Близнецы': 40, 'Рак': 80, 'Лев': 35, 'Дева': 75, 'Весы': 50, 'Скорпион': 90, 'Стрелец': 45, 'Козерог': 70, 'Водолей': 55, 'Рыбы': 95 },
+          'Лев': { 'Овен': 90, 'Телец': 45, 'Близнецы': 70, 'Рак': 35, 'Лев': 85, 'Дева': 40, 'Весы': 75, 'Скорпион': 50, 'Стрелец': 80, 'Козерог': 55, 'Водолей': 65, 'Рыбы': 60 },
+          'Дева': { 'Овен': 50, 'Телец': 90, 'Близнецы': 55, 'Рак': 75, 'Лев': 40, 'Дева': 70, 'Весы': 60, 'Скорпион': 85, 'Стрелец': 45, 'Козерог': 80, 'Водолей': 50, 'Рыбы': 65 },
+          'Весы': { 'Овен': 60, 'Телец': 65, 'Близнецы': 85, 'Рак': 50, 'Лев': 75, 'Дева': 60, 'Весы': 75, 'Скорпион': 55, 'Стрелец': 70, 'Козерог': 45, 'Водолей': 80, 'Рыбы': 65 },
+          'Скорпион': { 'Овен': 45, 'Телец': 80, 'Близнецы': 60, 'Рак': 90, 'Лев': 50, 'Дева': 85, 'Весы': 55, 'Скорпион': 95, 'Стрелец': 40, 'Козерог': 75, 'Водолей': 65, 'Рыбы': 85 },
+          'Стрелец': { 'Овен': 85, 'Телец': 55, 'Близнецы': 75, 'Рак': 45, 'Лев': 80, 'Дева': 45, 'Весы': 70, 'Скорпион': 40, 'Стрелец': 90, 'Козерог': 50, 'Водолей': 85, 'Рыбы': 60 },
+          'Козерог': { 'Овен': 55, 'Телец': 95, 'Близнецы': 45, 'Рак': 70, 'Лев': 55, 'Дева': 80, 'Весы': 45, 'Скорпион': 75, 'Стрелец': 50, 'Козерог': 85, 'Водолей': 60, 'Рыбы': 90 },
+          'Водолей': { 'Овен': 75, 'Телец': 60, 'Близнецы': 90, 'Рак': 55, 'Лев': 65, 'Дева': 50, 'Весы': 80, 'Скорпион': 65, 'Стрелец': 85, 'Козерог': 60, 'Водолей': 75, 'Рыбы': 70 },
+          'Рыбы': { 'Овен': 35, 'Телец': 70, 'Близнецы': 50, 'Рак': 95, 'Лев': 60, 'Дева': 65, 'Весы': 65, 'Скорпион': 85, 'Стрелец': 60, 'Козерог': 90, 'Водолей': 70, 'Рыбы': 80 }
+        };
+        const score = map[z1][z2] || 50;
+        const chartData = [score, score * 0.9, score * 0.8];
+        const text = score >= 80 ? translations[elements.language.value].high_compat.replace('{z1}', z1).replace('{z2}', z2) :
+                     score >= 60 ? translations[elements.language.value].mid_compat.replace('{z1}', z1).replace('{z2}', z2) :
+                     translations[elements.language.value].low_compat.replace('{z1}', z1).replace('{z2}', z2);
+        return { score, text, chartData };
+      }
 
-              if (compatChart) compatChart.destroy();
-              compatChart = new Chart(elements.compatChart, {
-                type: 'bar',
-                data: {
-                  labels: translations[elements.language.value].love ? ['Любовь', 'Дружба', 'Работа'] : ['Love', 'Friendship', 'Work'],
-                  datasets: [{
-                    label: translations[elements.language.value].compatibility_with,
-                    data: chartData,
-                    backgroundColor: ['#9370db', '#6a5acd', '#4caf50']
-                  }]
-                },
-                options: {
-                  scales: { y: { beginAtZero: true, max: 100 } },
-                  responsive: true,
-                  maintainAspectRatio: false
-                }
-              });
-
-              elements.analyzeCompat.disabled = false;
-              elements.compatLoader.style.display = 'none';
-              showNotification(translations[elements.language.value].compatibility_ready, 'success');
-            }, 1000);
+      elements.compatForm.addEventListener('submit', e => {
+        e.preventDefault();
+        let valid = true;
+        ['partnerName', 'partnerBirthDate', 'partnerGender'].forEach(id => {
+          const input = document.getElementById(id);
+          const error = input.nextElementSibling.classList.contains('error-message') ?
+            input.nextElementSibling : input.nextElementSibling.nextElementSibling;
+          if (!input.value) {
+            error.style.display = 'block';
+            valid = false;
           } else {
-            showNotification('Заполните все обязательные поля', 'error');
+            error.style.display = 'none';
           }
         });
 
-        ['consultDaily', 'consultWeekly',
+        if (valid) {
+          elements.analyzeCompat.disabled = true;
+          elements.compatLoader.style.display = 'block';
+          const userZodiac = elements.zodiac.textContent.replace(/�[♈-♓]\s/, '');
+          const partnerZodiac = document.getElementById('partnerZodiacSelect').value || elements.partnerZodiac.textContent.replace(/�[♈-♓]\s/, '');
+          setTimeout(() => {
+            const { score, text, chartData } = calculateCompatibility(userZodiac, partnerZodiac);
+            elements.compatProgress.style.width = `${score}%`;
+            elements.compatText.textContent = text;
+            elements.compatResult.style.display = 'block';
+
+            if (compatChart) compatChart.destroy();
+            compatChart = new Chart(elements.compatChart, {
+              type: 'bar',
+              data: {
+                labels: translations[elements.language.value].love ? ['Любовь', 'Дружба', 'Работа'] : ['Love', 'Friendship', 'Work'],
+                datasets: [{
+                  label: translations[elements.language.value].compatibility_with,
+                  data: chartData,
+                  backgroundColor: ['#9370db', '#6a5acd', '#4caf50']
+                }]
+              },
+              options: {
+                scales: { y: { beginAtZero: true, max: 100 } },
+                responsive: true,
+                maintainAspectRatio: false
+              }
+            });
+
+            elements.analyzeCompat.disabled = false;
+            elements.compatLoader.style.display = 'none';
+            showNotification(translations[elements.language.value].compatibility_ready, 'success');
+          }, 1000);
+        } else {
+          showNotification('Заполните все обязательные поля', 'error');
+        }
+      });
+
+      ['consultDaily', 'consultWeekly', 'consultMonthly'].forEach(id => {
+        elements[id].addEventListener('click', () => {
+          elements[`${id}Msg`].style.display = 'block';
+          setTimeout(() => elements[`${id}Msg`].style.display = 'none', 2000);
+        });
+      });
+    </script>
+</body>
+</html>
