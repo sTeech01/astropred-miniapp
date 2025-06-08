@@ -318,7 +318,47 @@
       font-size: 14px;
       color: var(--primary-color);
     }
-   
+
+    /* Стили для отображения всех знаков зодиака */
+    .zodiac-signs-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .zodiac-sign-card {
+      width: calc(33.333% - 10px);
+      background: rgba(106, 90, 205, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .zodiac-sign-card:hover {
+      background: rgba(106, 90, 205, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .zodiac-sign-icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 5px;
+    }
+
+    .zodiac-sign-name {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .zodiac-dates {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+    
     /* Стили для прогнозов */
     .forecast-container {
       background: var(--card-color);
@@ -516,7 +556,7 @@
         
         <!-- Анимированный круг -->
         <use href="#circle-path" fill="none" stroke="#6a5acd" stroke-width="2" stroke-dasharray="10,5">
-          <animate attributeName="stroke-dashoffset" values="0;900;0" dur="15s" repeatCount="indefinite" />
+          <animate attributeName="stroke-dashoffset" values="0;500;0" dur="15s" repeatCount="indefinite" />
         </use>
       </svg>
       <div class="logo-text">AstroPred</div>
@@ -604,6 +644,34 @@
           </div>
         </div>
         
+        <!-- Блок с отображением всех знаков зодиака -->
+        <div class="form-group">
+          <label><i class="fas fa-star"></i>Знаки зодиака:</label>
+          <div class="zodiac-signs-container" id="zodiacSignsContainer"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="birth_time"><i class="fas fa-clock"></i>Время рождения (необязательно):</label>
+          <input type="time" id="birth_time" name="birth_time" aria-describedby="timeHint" />
+          <div class="field-hint" id="timeHint">Формат: чч:мм (24-часовой)</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="birth_city"><i class="fas fa-city"></i>Город рождения:</label>
+          <input type="text" id="birth_city" name="birth_city" required aria-required="true" />
+          <div class="error-message" id="birth_city-error">Пожалуйста, укажите город рождения</div>
+        </div>
+        
+        <div class="form-navigation">
+          <button type="button" class="btn prev-step" id="prevStep2">
+            <i class="fas fa-arrow-left"></i> Назад
+          </button>
+          <button type="button" class="btn next-step" id="nextStep2">
+            Далее <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+      
       <!-- Шаг 3: Интересы -->
       <div class="form-step" id="step3Form" style="display: none;">
         <div class="form-group">
