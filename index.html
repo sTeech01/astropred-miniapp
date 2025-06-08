@@ -318,6 +318,46 @@
       font-size: 14px;
       color: var(--primary-color);
     }
+
+    /* Стили для отображения всех знаков зодиака */
+    .zodiac-signs-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .zodiac-sign-card {
+      width: calc(33.333% - 10px);
+      background: rgba(106, 90, 205, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .zodiac-sign-card:hover {
+      background: rgba(106, 90, 205, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .zodiac-sign-icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 5px;
+    }
+
+    .zodiac-sign-name {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .zodiac-dates {
+      font-size: 10px;
+      opacity: 0.8;
+    }
     
     /* Стили для прогнозов */
     .forecast-container {
@@ -395,10 +435,11 @@
     .share-app-btn {
       position: fixed;
       bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 20px;
+      right: 20px;
       width: calc(100% - 40px);
-      max-width: 400px;
+      max-width: calc(100% - 40px);
+      margin: 0 auto;
       z-index: 10;
     }
     
@@ -431,6 +472,10 @@
       .forecast-container {
         padding: 15px;
       }
+
+      .zodiac-sign-card {
+        width: calc(50% - 10px);
+      }
     }
     
     @media (max-width: 480px) {
@@ -440,6 +485,10 @@
       
       .share-buttons {
         flex-direction: column;
+      }
+
+      .zodiac-sign-card {
+        width: 100%;
       }
     }
     
@@ -593,6 +642,12 @@
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEyLDIuOUwxNC44LDguOEwyMS40LDkuOUwxNi43LDE0LjRMMTcuOCwyMUwxMiwxOC4xTDYuMiwyMUw3LjMsMTQuNEwyLjYsOS45TDkuMiw4LjhMMTIsMi45WiIgLz48L3N2Zz4=" class="zodiac-icon" alt="">
             <span id="zodiacText"></span>
           </div>
+        </div>
+        
+        <!-- Блок с отображением всех знаков зодиака -->
+        <div class="form-group">
+          <label><i class="fas fa-star"></i>Знаки зодиака:</label>
+          <div class="zodiac-signs-container" id="zodiacSignsContainer"></div>
         </div>
         
         <div class="form-group">
@@ -794,6 +849,38 @@
       if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return 'Рыбы';
       
       return '';
+    }
+
+    // Функция для отображения всех знаков зодиака с датами
+    function displayAllZodiacSigns() {
+      const zodiacSigns = [
+        { name: 'Овен', dates: '21 марта - 19 апреля', icon: '♈' },
+        { name: 'Телец', dates: '20 апреля - 20 мая', icon: '♉' },
+        { name: 'Близнецы', dates: '21 мая - 20 июня', icon: '♊' },
+        { name: 'Рак', dates: '21 июня - 22 июля', icon: '♋' },
+        { name: 'Лев', dates: '23 июля - 22 августа', icon: '♌' },
+        { name: 'Дева', dates: '23 августа - 22 сентября', icon: '♍' },
+        { name: 'Весы', dates: '23 сентября - 22 октября', icon: '♎' },
+        { name: 'Скорпион', dates: '23 октября - 21 ноября', icon: '♏' },
+        { name: 'Стрелец', dates: '22 ноября - 21 декабря', icon: '♐' },
+        { name: 'Козерог', dates: '22 декабря - 19 января', icon: '♑' },
+        { name: 'Водолей', dates: '20 января - 18 февраля', icon: '♒' },
+        { name: 'Рыбы', dates: '19 февраля - 20 марта', icon: '♓' }
+      ];
+
+      const container = document.getElementById('zodiacSignsContainer');
+      container.innerHTML = '';
+
+      zodiacSigns.forEach(sign => {
+        const card = document.createElement('div');
+        card.className = 'zodiac-sign-card';
+        card.innerHTML = `
+          <div class="zodiac-sign-icon">${sign.icon}</div>
+          <div class="zodiac-sign-name">${sign.name}</div>
+          <div class="zodiac-dates">${sign.dates}</div>
+        `;
+        container.appendChild(card);
+      });
     }
     
     // Получение гороскопа через API Aztro
@@ -1087,6 +1174,9 @@
       } else {
         profileData.innerHTML = '<p>Анкета еще не заполнена.</p>';
       }
+      
+      // Отображаем все знаки зодиака
+      displayAllZodiacSigns();
       
       // Устанавливаем режим просмотра по умолчанию
       toggleProfileViewMode(false);
