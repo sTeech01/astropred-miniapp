@@ -851,6 +851,23 @@
       return '';
     }
 
+    // Функция для отображения всех знаков зодиака с датами
+    function displayAllZodiacSigns() {
+      const zodiacSigns = [
+        { name: 'Овен', dates: '21 марта - 19 апреля', icon: '♈' },
+        { name: 'Телец', dates: '20 апреля - 20 мая', icon: '♉' },
+        { name: 'Близнецы', dates: '21 мая - 20 июня', icon: '♊' },
+        { name: 'Рак', dates: '21 июня - 22 июля', icon: '♋' },
+        { name: 'Лев', dates: '23 июля - 22 августа', icon: '♌' },
+        { name: 'Дева', dates: '23 августа - 22 сентября', icon: '♍' },
+        { name: 'Весы', dates: '23 сентября - 22 октября', icon: '♎' },
+        { name: 'Скорпион', dates: '23 октября - 21 ноября', icon: '♏' },
+        { name: 'Стрелец', dates: '22 ноября - 21 декабря', icon: '♐' },
+        { name: 'Козерог', dates: '22 декабря - 19 января', icon: '♑' },
+        { name: 'Водолей', dates: '20 января - 18 февраля', icon: '♒' },
+        { name: 'Рыбы', dates: '19 февраля - 20 марта', icon: '♓' }
+      ];
+
       const container = document.getElementById('zodiacSignsContainer');
       container.innerHTML = '';
 
