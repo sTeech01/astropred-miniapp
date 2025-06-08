@@ -1,0 +1,102 @@
+<div id="profileModal" class="modal" role="dialog" aria-labelledby="profileTitle">
+  <div class="modal-content">
+    <h2 id="profileTitle">Анкета</h2>
+    <button class="button" onclick="enableEdit()" aria-label="Редактировать анкету">Редактировать</button>
+    <div class="tabs">
+      <span class="tab active" data-step="1">Личные данные</span>
+      <span class="tab" data-step="2">Астрология</span>
+      <span class="tab" data-step="3">Интересы</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div id="step1" class="form-step active">
+      <div class="form-group">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" aria-required="true" placeholder="Пожалуйста, введите ваше имя" disabled>
+        <p id="nameError" class="error" style="display: none;">Пожалуйста, введите ваше имя</p>
+      </div>
+      <div class="form-group">
+        <label for="gender">Пол:</label>
+        <select id="gender" aria-required="true" disabled>
+          <option value="">Выберите</option>
+          <option value="male">Мужской</option>
+          <option value="female">Женский</option>
+        </select>
+        <p id="genderError" class="error" style="display: none;">Пожалуйста, выберите пол</p>
+      </div>
+      <button class="button" onclick="nextStep(1)" aria-label="Перейти к следующему шагу">Далее</button>
+    </div>
+    <div id="step2" class="form-step">
+      <div class="form-group">
+        <label for="birthDate">Дата рождения:</label>
+        <input type="date" id="birthDate" aria-required="true" placeholder="Пожалуйста, введите корректную дату" disabled>
+        <p id="birthDateError" class="error" style="display: none;">Пожалуйста, введите корректную дату</p>
+      </div>
+      <div class="form-group">
+        <label for="birthTime">Время рождения (необязательно):</label>
+        <input type="time" id="birthTime" placeholder="Формат: чч:мм (24-часовой)" disabled>
+      </div>
+      <div class="form-group">
+        <label for="birthCity">Город рождения:</label>
+        <input type="text" id="birthCity" aria-required="true" placeholder="Пожалуйста, укажите город рождения" disabled>
+        <p id="birthCityError" class="error" style="display: none;">Пожалуйста, укажите город рождения</p>
+      </div>
+      <button class="button" onclick="prevStep(2)" aria-label="Вернуться к предыдущему шагу">Назад</button>
+      <button class="button" onclick="nextStep(2)" aria-label="Перейти к следующему шагу">Далее</button>
+    </div>
+    <div id="step3" class="form-step">
+      <div class="form-group">
+        <label for="interest">Основной интерес:</label>
+        <select id="interest" aria-required="true" disabled>
+          <option value="">Выберите</option>
+          <option value="love">Любовь и отношения</option>
+          <option value="career">Карьера и бизнес</option>
+          <option value="finance">Финансы и инвестиции</option>
+          <option value="health">Здоровье и благополучие</option>
+          <option value="family">Семья и дети</option>
+          <option value="growth">Личностный рост</option>
+          <option value="creativity">Творчество и вдохновение</option>
+          <option value="travel">Путешествия и переезды</option>
+          <option value="spirituality">Духовное развитие</option>
+          <option value="education">Образование и обучение</option>
+          <option value="decisions">Важные решения</option>
+        </select>
+        <p id="interestError" class="error" style="display: none;">Пожалуйста, выберите интерес</p>
+      </div>
+      <div class="form-group">
+        <label for="maritalStatus">Семейное положение:</label>
+        <select id="maritalStatus" aria-required="true" disabled>
+          <option value="">Выберите</option>
+          <option value="in_relationship">В отношениях</option>
+          <option value="single">Не в отношениях</option>
+          <option value="searching">В поиске</option>
+          <option value="complicated">В сложных отношениях</option>
+        </select>
+        <p id="maritalStatusError" class="error" style="display: none;">Пожалуйста, укажите семейное положение</p>
+      </div>
+      <div class="form-group">
+        <label for="children">Есть ли дети:</label>
+        <select id="children" aria-required="true" disabled>
+          <option value="">Выберите</option>
+          <option value="yes">Да</option>
+          <option value="no">Нет</option>
+          <option value="planning">Планируем</option>
+        </select>
+        <p id="childrenError" class="error" style="display: none;">Пожалуйста, укажите, есть ли у вас дети</p>
+      </div>
+      <div class="form-group">
+        <label for="favoriteColor">Любимый цвет:</label>
+        <input type="color" id="favoriteColor" aria-required="true" disabled>
+        <p id="favoriteColorError" class="error" style="display: none;">Пожалуйста, выберите цвет</p>
+      </div>
+      <div class="form-group">
+        <label for="fears">Страхи или тревоги (необязательно):</label>
+        <input type="text" id="fears" placeholder="Эти данные помогут сделать прогноз более точным" disabled>
+      </div>
+      <button class="button" onclick="prevStep(3)" aria-label="Вернуться к предыдущему шагу">Назад</button>
+      <button class="button" onclick="saveProfile()" aria-label="Сохранить анкету">Сохранить анкету</button>
+    </div>
+    <button class="button" onclick="closeModal('profile')" aria-label="Вернуться в меню">Вернуться в меню</button>
+  </div>
+</div>

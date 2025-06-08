@@ -1,0 +1,47 @@
+<div id="compatibilityModal" class="modal" role="dialog" aria-labelledby="compatTitle">
+  <div class="modal-content">
+    <h2 id="compatTitle">Анализ совместимости</h2>
+    <div class="form-group">
+      <h3>Ваши данные:</h3>
+      <p id="userData">Загрузка ваших данных...</p>
+    </div>
+    <div class="form-group">
+      <label for="partnerName">Имя партнера:</label>
+      <input type="text" id="partnerName" aria-required="true">
+    </div>
+    <div class="form-group">
+      <label for="partnerBirthDate">Дата рождения партнера:</label>
+      <input type="date" id="partnerBirthDate" aria-required="true" oninput="displayZodiac()">
+      <span id="partnerZodiacIcon" class="zodiac-icon"></span>
+    </div>
+    <div class="form-group">
+      <label for="partnerGender">Пол партнера:</label>
+      <select id="partnerGender" aria-required="true">
+        <option value="">Выберите</option>
+        <option value="male">Мужской</option>
+        <option value="female">Женский</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="relationshipDuration">Как долго вы вместе (если применимо):</label>
+      <select id="relationshipDuration">
+        <option value="not_dating">Мы не встречаемся</option>
+        <option value="not_applicable">Не применимо</option>
+        <option value="less_6m">Менее 6 месяцев</option>
+        <option value="6m_1y">6-12 месяцев</option>
+        <option value="1y_3y">1-3 года</option>
+        <option value="3y_5y">3-5 лет</option>
+        <option value="over_5y">Более 5 лет</option>
+      </select>
+    </div>
+    <button class="button" onclick="analyzeCompatibility()" aria-label="Анализировать совместимость">Анализировать совместимость</button>
+    <p id="compatMessage" class="error" style="display: none;"></p>
+    <div class="compatibility-chart" id="compatChart" style="display: none;">
+      <h3>Уровень совместимости</h3>
+      <div>Любовь: <div class="chart-bar love" id="loveBar" style="width: 0;"></div></div>
+      <div>Дружба: <div class="chart-bar friendship" id="friendshipBar" style="width: 0;"></div></div>
+      <div>Работа: <div class="chart-bar work" id="workBar" style="width: 0;"></div></div>
+    </div>
+    <button class="button" onclick="closeModal('compatibility')" aria-label="Вернуться в меню">Вернуться в меню</button>
+  </div>
+</div>
