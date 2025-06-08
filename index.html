@@ -798,7 +798,7 @@
     
     // Время последнего бонуса
     const BONUS_COOLDOWN = 1 * 60 * 60 * 1000; // 3 часа в миллисекундах
-    let lastBonusTime = localStorage.getItem('lastBonusTime') || 0;
+    let lastBonusTime = parseInt(localStorage.getItem('lastBonusTime')) || 0;
     
     // Создание звездного фона
     function createStars() {
