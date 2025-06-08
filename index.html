@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AstroPred Mini App</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script> 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.css">
   <style>
     :root {
-      --primary-color: #9370db;
+      --primary-color: #9370db; 
       --secondary-color: #6a5acd;
       --text-color: #f0f0f0;
       --bg-color: #0a0a1a;
@@ -22,7 +22,6 @@
       --panel-width: 75%;
       --transition-speed: 0.3s;
     }
-    
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -33,8 +32,6 @@
       overflow-x: hidden;
       min-height: 100vh;
     }
-    
-    /* Звездный фон */
     #stars-container {
       position: fixed;
       top: 0;
@@ -44,53 +41,37 @@
       z-index: -1;
       overflow: hidden;
     }
-    
     .star {
       position: absolute;
       background-color: #fff;
       border-radius: 50%;
       animation: twinkle var(--duration) infinite ease-in-out;
     }
-    
     @keyframes twinkle {
       0%, 100% { opacity: 0.2; }
       50% { opacity: 1; }
     }
-    
-    /* Главное меню */
-    #mainMenu {
-      padding: 20px;
-      transition: all var(--transition-speed) ease;
-      position: relative;
-      z-index: 1;
-    }
-    
     .logo-container {
       text-align: center;
       margin-bottom: 30px;
     }
-    
     .logo-svg {
       width: 120px;
       height: 120px;
       margin-bottom: 15px;
     }
-    
     .logo-text {
       font-size: 28px;
       font-weight: bold;
       color: var(--primary-color);
       margin-top: 10px;
     }
-    
     .main-menu {
       display: flex;
       flex-direction: column;
       gap: 15px;
       margin-top: 20px;
     }
-    
-    /* Боковая панель */
     .side-panel {
       position: fixed;
       top: 0;
@@ -105,11 +86,9 @@
       padding: 20px;
       border-left: 1px solid rgba(255,255,255,0.1);
     }
-    
     .side-panel.active {
       right: 0;
     }
-    
     .close-panel {
       position: absolute;
       top: 15px;
@@ -120,8 +99,6 @@
       font-size: 24px;
       cursor: pointer;
     }
-    
-    /* Кнопки */
     .btn {
       position: relative;
       overflow: hidden;
@@ -139,71 +116,39 @@
       background-color: var(--primary-color);
       color: white;
     }
-    
     .btn:hover {
       background-color: var(--secondary-color);
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-    
     .btn:active {
       transform: translateY(0);
     }
-    
     .btn:disabled {
       background-color: #555;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
-    
     .btn-success {
       background-color: var(--success-color);
     }
-    
     .btn-error {
       background-color: var(--error-color);
     }
-    
     .btn-info {
       background-color: var(--info-color);
     }
-    
     .btn-warning {
       background-color: var(--warning-color);
     }
-    
-    /* Эффект волны при клике */
-    .btn::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 5px;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.5);
-      opacity: 0;
-      border-radius: 100%;
-      transform: scale(1, 1) translate(-50%, -50%);
-      transform-origin: 50% 50%;
+    .profile-info {
+      line-height: 1.8;
+      margin-bottom: 20px;
     }
-    
-    .btn:focus:not(:active)::after {
-      animation: ripple 0.6s ease-out;
+    .profile-info p {
+      margin: 0;
     }
-    
-    @keyframes ripple {
-      0% {
-        transform: scale(0, 0);
-        opacity: 0.5;
-      }
-      100% {
-        transform: scale(20, 20);
-        opacity: 0;
-      }
-    }
-    
-    /* Формы */
     form {
       display: flex;
       flex-direction: column;
@@ -216,27 +161,12 @@
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
     }
-    
-    .form-group {
-      position: relative;
-      animation: fadeIn 0.5s ease forwards;
-      opacity: 0;
-    }
-    
     label {
       font-weight: 600;
       display: block;
       margin-bottom: 8px;
       color: var(--text-color);
     }
-    
-    label i {
-      margin-right: 8px;
-      color: var(--primary-color);
-      width: 20px;
-      text-align: center;
-    }
-    
     input, select, textarea {
       padding: 12px 15px;
       border-radius: 10px;
@@ -248,153 +178,6 @@
       color: var(--text-color);
       transition: all var(--transition-speed) ease;
     }
-    
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
-      outline: none;
-    }
-    
-    input:invalid, select:invalid {
-      border-color: var(--error-color);
-    }
-    
-    /* Прогресс-бар анкеты */
-    .progress-container {
-      width: 100%;
-      background: rgba(0,0,0,0.2);
-      border-radius: 10px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    
-    .progress-bar {
-      height: 8px;
-      background: var(--primary-color);
-      border-radius: 10px;
-      transition: width 0.4s ease;
-    }
-    
-    .progress-steps {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      font-size: 14px;
-      color: var(--text-color);
-    }
-    
-    .step {
-      text-align: center;
-      flex: 1;
-      position: relative;
-    }
-    
-    .step.active {
-      color: var(--primary-color);
-      font-weight: bold;
-    }
-    
-    .step.completed::before {
-      content: "✓";
-      color: var(--success-color);
-      margin-right: 5px;
-    }
-    
-    /* Стили для знаков зодиака */
-    .zodiac-icon {
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
-    
-    .zodiac-display {
-      display: inline-block;
-      margin-left: 10px;
-      padding: 5px 10px;
-      background: rgba(106, 90, 205, 0.3);
-      border-radius: 15px;
-      font-size: 14px;
-      color: var(--primary-color);
-    }
-    
-    /* Стили для прогнозов */
-    .forecast-container {
-      background: var(--card-color);
-      padding: 25px;
-      border-radius: 15px;
-      margin-top: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255,255,255,0.1);
-      animation: slideUp 0.5s ease forwards;
-    }
-    
-    .forecast-header {
-      text-align: center;
-      margin-bottom: 20px;
-      color: var(--primary-color);
-    }
-    
-    .forecast-content {
-      line-height: 1.6;
-    }
-    
-    .forecast-section {
-      margin-bottom: 15px;
-      padding-bottom: 15px;
-      border-bottom: 1px dashed rgba(255,255,255,0.1);
-    }
-    
-    .forecast-section h3 {
-      color: var(--primary-color);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    /* График совместимости */
-    .compatibility-chart {
-      margin-top: 20px;
-    }
-    
-    .chart-item {
-      margin-bottom: 15px;
-    }
-    
-    .chart-label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 5px;
-    }
-    
-    .chart-bar {
-      height: 10px;
-      background: rgba(0,0,0,0.2);
-      border-radius: 5px;
-      overflow: hidden;
-    }
-    
-    .chart-progress {
-      height: 100%;
-      border-radius: 5px;
-      transition: width 1s ease;
-    }
-    
-    .love-progress {
-      background: #e91e63;
-    }
-    
-    .friendship-progress {
-      background: #2196f3;
-    }
-    
-    .work-progress {
-      background: #4caf50;
-    }
-    
-    /* История прогнозов */
     .history-item {
       background: var(--card-color);
       padding: 15px;
@@ -403,605 +186,65 @@
       cursor: pointer;
       transition: all var(--transition-speed) ease;
     }
-    
     .history-item:hover {
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
-    
     .history-date {
       font-weight: bold;
       color: var(--primary-color);
       margin-bottom: 5px;
     }
-    
     .history-preview {
       font-size: 14px;
       opacity: 0.8;
-    }
-    
-    /* Кнопки шаринга */
-    .share-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-    
-    .share-btn {
-      flex: 1;
-      min-width: 120px;
-      padding: 10px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--transition-speed) ease;
-    }
-    
-    .telegram-btn {
-      background: #0088cc;
-      color: white;
-    }
-    
-    .whatsapp-btn {
-      background: #25D366;
-      color: white;
-    }
-    
-    .copy-btn {
-      background: #757575;
-      color: white;
-    }
-    
-    .share-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    
-    /* Анимации */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-    
-    /* Адаптация для мобильных */
-    @media (max-width: 768px) {
-      :root {
-        --panel-width: 85%;
-      }
-      
-      .btn {
-        padding: 12px 15px;
-        font-size: 14px;
-      }
-      
-      form {
-        padding: 15px;
-      }
-      
-      .forecast-container {
-        padding: 15px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      :root {
-        --panel-width: 90%;
-      }
-      
-      .share-btn {
-        min-width: 100%;
-      }
     }
   </style>
 </head>
 <body>
   <div id="stars-container"></div>
-  
-  <!-- SVG логотип -->
+
+  <!-- Логотип -->
   <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <defs>
-      <path id="star-path" d="M100,20 L123.5,70 L177.6,76.8 L137.8,113.9 L149.1,167.6 L100,142 L50.9,167.6 L62.2,113.9 L22.4,76.8 L76.5,70 Z" />
-      <circle id="circle-path" cx="100" cy="100" r="80" />
-    </defs>
-    
     <!-- Текст логотипа -->
     <text x="100" y="110" text-anchor="middle" font-size="24" fill="#9370db" font-weight="bold">Astromir</text>
-    
-    <!-- Анимированные звезды -->
-    <use href="#star-path" x="0" y="0" fill="none" stroke="#9370db" stroke-width="2">
-      <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
-    </use>
-    
-    <!-- Анимированный круг -->
-    <use href="#circle-path" fill="none" stroke="#6a5acd" stroke-width="2" stroke-dasharray="10,5">
-      <animate attributeName="stroke-dashoffset" values="0;500;0" dur="15s" repeatCount="indefinite" />
-    </use>
   </svg>
-  
+
   <!-- Главное меню -->
   <div id="mainMenu">
     <div class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <path id="star-path" d="M100,20 L123.5,70 L177.6,76.8 L137.8,113.9 L149.1,167.6 L100,142 L50.9,167.6 L62.2,113.9 L22.4,76.8 L76.5,70 Z" />
-          <circle id="circle-path" cx="100" cy="100" r="80" />
-        </defs>
-        
-        <!-- Текст логотипа -->
         <text x="100" y="110" text-anchor="middle" font-size="24" fill="#9370db" font-weight="bold">Astromir</text>
-        
-        <!-- Анимированные звезды -->
-        <use href="#star-path" x="0" y="0" fill="none" stroke="#9370db" stroke-width="2">
-          <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
-        </use>
-        
-        <!-- Анимированный круг -->
-        <use href="#circle-path" fill="none" stroke="#6a5acd" stroke-width="2" stroke-dasharray="10,5">
-          <animate attributeName="stroke-dashoffset" values="0;500;0" dur="15s" repeatCount="indefinite" />
-        </use>
       </svg>
       <div class="logo-text">Astromir</div>
     </div>
-    
     <div class="main-menu">
-      <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
-        <i class="fas fa-user-edit"></i> Анкета
-      </button>
-      <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
-        <i class="fas fa-sun"></i> Прогноз на день
-      </button>
-      <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
-        <i class="fas fa-calendar-week"></i> Прогноз на неделю
-      </button>
-      <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
-        <i class="fas fa-calendar-alt"></i> Прогноз на месяц
-      </button>
-      <button id="compatibilityBtn" class="btn" aria-label="Проверить совместимость">
-        <i class="fas fa-heart"></i> Совместимость
-      </button>
-      <button id="historyBtn" class="btn" aria-label="История прогнозов">
-        <i class="fas fa-history"></i> История
-      </button>
-    </div>
-  </div>
-  
-  <!-- Боковая панель для анкеты -->
-  <div class="side-panel" id="profilePanel">
-    <button class="close-panel" id="closeProfilePanel" aria-label="Закрыть панель">
-      <i class="fas fa-times"></i>
-    </button>
-    <h2><i class="fas fa-user-edit"></i> Анкета</h2>
-    
-    <div class="progress-container">
-      <div class="progress-bar" id="formProgressBar" style="width: 33%"></div>
-      <div class="progress-steps">
-        <div class="step active" id="step1">Личные данные</div>
-        <div class="step" id="step2">Астрология</div>
-        <div class="step" id="step3">Интересы</div>
-      </div>
-    </div>
-    
-    <form id="astroForm">
-      <!-- Шаг 1: Личные данные -->
-      <div class="form-step" id="step1Form" style="display: block;">
-        <div class="form-group">
-          <label for="name"><i class="fas fa-user"></i>Имя:</label>
-          <input type="text" id="name" name="name" required aria-required="true" />
-          <div class="error-message" id="name-error">Пожалуйста, введите ваше имя</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="gender"><i class="fas fa-venus-mars"></i>Пол:</label>
-          <select id="gender" name="gender" required aria-required="true">
-            <option value="">Выберите</option>
-            <option value="м">Мужской</option>
-            <option value="ж">Женский</option>        
-          </select>
-          <div class="error-message" id="gender-error">Пожалуйста, выберите пол</div>
-        </div>
-        
-        <button type="button" class="btn next-step" id="nextStep1">
-          Далее <i class="fas fa-arrow-right"></i>
-        </button>
-      </div>
-      
-      <!-- Шаг 2: Астрология -->
-      <div class="form-step" id="step2Form" style="display: none;">
-        <div class="form-group">
-          <label for="birth_date"><i class="fas fa-calendar-day"></i>Дата рождения:</label>
-          <input type="date" id="birth_date" name="birth_date" required aria-required="true" />
-          <div class="error-message" id="birth_date-error">Пожалуйста, введите корректную дату</div>
-          <div id="zodiacDisplay" class="zodiac-display" style="display: none;">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEyLDIuOUwxNC44LDguOEwyMS40LDkuOUwxNi43LDE0LjRMMTcuOCwyMUwxMiwxOC4xTDYuMiwyMUw3LjMsMTQuNEwyLjYsOS45TDkuMiw4LjhMMTIsMi45WiIgLz48L3N2Zz4=" class="zodiac-icon" alt="">
-            <span id="zodiacText"></span>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label for="birth_time"><i class="fas fa-clock"></i>Время рождения (необязательно):</label>
-          <input type="time" id="birth_time" name="birth_time" aria-describedby="timeHint" />
-          <div class="field-hint" id="timeHint">Формат: чч:мм (24-часовой)</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="birth_city"><i class="fas fa-city"></i>Город рождения:</label>
-          <input type="text" id="birth_city" name="birth_city" required aria-required="true" />
-          <div class="error-message" id="birth_city-error">Пожалуйста, укажите город рождения</div>
-        </div>
-        
-        <div class="form-navigation">
-          <button type="button" class="btn prev-step" id="prevStep2">
-            <i class="fas fa-arrow-left"></i> Назад
-          </button>
-          <button type="button" class="btn next-step" id="nextStep2">
-            Далее <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Шаг 3: Интересы -->
-      <div class="form-step" id="step3Form" style="display: none;">
-        <div class="form-group">
-          <label for="interest"><i class="fas fa-star"></i>Основной интерес:</label>
-          <select id="interest" name="interest" required aria-required="true">
-            <option value="">Выберите</option>
-            <option value="Любовь и отношения">Любовь и отношения</option>
-            <option value="Карьера и бизнес">Карьера и бизнес</option>
-            <option value="Финансы и инвестиции">Финансы и инвестиции</option>
-            <option value="Здоровье и благополучие">Здоровье и благополучие</option>
-            <option value="Семья и дети">Семья и дети</option>
-            <option value="Личностный рост">Личностный рост</option>
-            <option value="Творчество и вдохновение">Творчество и вдохновение</option>
-            <option value="Путешествия и переезды">Путешествия и переезды</option>
-            <option value="Духовное развитие">Духовное развитие</option>
-            <option value="Образование и обучение">Образование и обучение</option>
-            <option value="Важные решения">Важные решения</option>
-          </select>
-          <div class="error-message" id="interest-error">Пожалуйста, выберите интерес</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="relationship"><i class="fas fa-heart"></i>Семейное положение:</label>
-          <select id="relationship" name="relationship" required aria-required="true">
-            <option value="">Выберите</option>
-            <option value="В паре">В отношениях</option>
-            <option value="Не в паре">Не в отношениях</option>
-            <option value="В поиске">В поиске</option>
-            <option value="В сложных отношениях">В сложных отношениях</option>
-          </select>
-          <div class="error-message" id="relationship-error">Пожалуйста, укажите семейное положение</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="children"><i class="fas fa-baby"></i>Есть ли дети:</label>
-          <select id="children" name="children" required aria-required="true">
-            <option value="">Выберите</option>
-            <option value="Да">Да</option>
-            <option value="Нет">Нет</option>
-            <option value="Планируем">Планируем</option>
-          </select>
-          <div class="error-message" id="children-error">Пожалуйста, укажите, есть ли у вас дети</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="favorite_color"><i class="fas fa-palette"></i>Любимый цвет:</label>
-          <input type="color" id="favorite_color" name="favorite_color" value="#6a5acd" required aria-required="true" />
-          <div class="error-message" id="favorite_color-error">Пожалуйста, выберите цвет</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="fears"><i class="fas fa-flushed"></i>Страхи или тревоги (необязательно):</label>
-          <textarea id="fears" name="fears" rows="2" aria-describedby="fearsHint"></textarea>
-          <div class="field-hint" id="fearsHint">Эти данные помогут сделать прогноз более точным</div>
-        </div>
-        
-        <div class="form-navigation">
-          <button type="button" class="btn prev-step" id="prevStep3">
-            <i class="fas fa-arrow-left"></i> Назад
-          </button>
-          <button type="submit" class="btn btn-success" id="saveProfileBtn">
-            <i class="fas fa-save"></i> Сохранить анкету
-            <span class="loader" id="loader"></span>
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-  
-  <!-- Боковая панель для прогноза -->
-  <div class="side-panel" id="forecastPanel">
-    <button class="close-panel" id="closeForecastPanel" aria-label="Закрыть панель">
-      <i class="fas fa-times"></i>
-    </button>
-    <div class="forecast-container" id="forecastContainer">
-      <div class="forecast-header">
-        <h2 id="forecastTitle"><i class="fas fa-crystal-ball"></i> Ваш персональный астропрогноз</h2>
-        <p id="forecastDate"></p>
-      </div>
-      
-      <div class="forecast-content" id="forecastContent">
-        <!-- Сюда будет вставлен прогноз -->
-      </div>
-      
-      <div class="share-buttons">
-        <button class="share-btn telegram-btn" id="shareTelegram" aria-label="Поделиться в Telegram">
-          <i class="fab fa-telegram"></i> Telegram
-        </button>
-        <button class="share-btn whatsapp-btn" id="shareWhatsApp" aria-label="Поделиться в WhatsApp">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </button>
-        <button class="share-btn copy-btn" id="copyForecast" aria-label="Копировать прогноз">
-          <i class="fas fa-copy"></i> Копировать
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Боковая панель для совместимости -->
-  <div class="side-panel" id="compatibilityPanel">
-    <button class="close-panel" id="closeCompatibilityPanel" aria-label="Закрыть панель">
-      <i class="fas fa-times"></i>
-    </button>
-    <h2><i class="fas fa-heart"></i> Анализ совместимости</h2>
-    
-    <div id="compatibilityInfo" style="display: none;">
-      <div class="profile-view">
-        <h3>Ваши данные:</h3>
-        <div id="userCompatibilityData"></div>
-      </div>
-    </div>
-    
-    <form id="partnerForm" style="display: none;">
-      <div class="form-group">
-        <label for="partnerName"><i class="fas fa-user"></i>Имя партнера:</label>
-        <input type="text" id="partnerName" name="partnerName" required aria-required="true" />
-      </div>
-      
-      <div class="form-group">
-        <label for="partnerBirthDate"><i class="fas fa-calendar-day"></i>Дата рождения партнера:</label>
-        <input type="date" id="partnerBirthDate" name="partnerBirthDate" required aria-required="true" />
-        <div id="partnerZodiacDisplay" class="zodiac-display" style="display: none;">
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEyLDIuOUwxNC44LDguOEwyMS40LDkuOUwxNi43LDE0LjRMMTcuOCwyMUwxMiwxOC4xTDYuMiwyMUw3LjMsMTQuNEwyLjYsOS45TDkuMiw4LjhMMTIsMi45WiIgLz48L3N2Zz4=" class="zodiac-icon" alt="">
-          <span id="partnerZodiacText"></span>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="partnerGender"><i class="fas fa-venus-mars"></i>Пол партнера:</label>
-        <select id="partnerGender" name="partnerGender" required aria-required="true">
-          <option value="">Выберите</option>
-          <option value="м">Мужской</option>
-          <option value="ж">Женский</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="partnerZodiac"><i class="fas fa-sun"></i>Знак зодиака партнера:</label>
-        <select id="partnerZodiac" name="partnerZodiac">
-          <option value="">Не знаю</option>
-          <option value="Овен">Овен ♈</option>
-          <option value="Телец">Телец ♉</option>
-          <option value="Близнецы">Близнецы ♊</option>
-          <option value="Рак">Рак ♋</option>
-          <option value="Лев">Лев ♌</option>
-          <option value="Дева">Дева ♍</option>
-          <option value="Весы">Весы ♎</option>
-          <option value="Скорпион">Скорпион ♏</option>
-          <option value="Стрелец">Стрелец ♐</option>
-          <option value="Козерог">Козерог ♑</option>
-          <option value="Водолей">Водолей ♒</option>
-          <option value="Рыбы">Рыбы ♓</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="relationshipDuration"><i class="fas fa-clock"></i>Как долго вы вместе (если применимо):</label>
-        <select id="relationshipDuration" name="relationshipDuration">
-          <option value="">Не применимо</option>
-          <option value="Менее 6 месяцев">Менее 6 месяцев</option>
-          <option value="6-12 месяцев">6-12 месяцев</option>
-          <option value="1-3 года">1-3 года</option>
-          <option value="3-5 лет">3-5 лет</option>
-          <option value="Более 5 лет">Более 5 лет</option>
-        </select>
-      </div>
-      
-      <button type="submit" class="btn" id="analyzeCompatibilityBtn">
-        <i class="fas fa-heartbeat"></i> Анализировать совместимость
-        <span class="loader" id="compatibilityLoader"></span>
-      </button>
-    </form>
-    
-    <div id="compatibilityResult" class="forecast-content" style="display: none;">
-      <!-- Здесь будет результат анализа совместимости -->
-      <div class="compatibility-chart">
-        <h3><i class="fas fa-chart-bar"></i> Уровень совместимости</h3>
-        
-        <div class="chart-item">
-          <div class="chart-label">
-            <span>Любовь:</span>
-            <span id="loveScore">0%</span>
-          </div>
-          <div class="chart-bar">
-            <div class="chart-progress love-progress" id="loveProgress" style="width: 0%"></div>
-          </div>
-        </div>
-        
-        <div class="chart-item">
-          <div class="chart-label">
-            <span>Дружба:</span>
-            <span id="friendshipScore">0%</span>
-          </div>
-          <div class="chart-bar">
-            <div class="chart-progress friendship-progress" id="friendshipProgress" style="width: 0%"></div>
-          </div>
-        </div>
-        
-        <div class="chart-item">
-          <div class="chart-label">
-            <span>Работа:</span>
-            <span id="workScore">0%</span>
-          </div>
-          <div class="chart-bar">
-            <div class="chart-progress work-progress" id="workProgress" style="width: 0%"></div>
-          </div>
-        </div>
-      </div>
-      
-      <div id="compatibilityText"></div>
-      
-      <div class="share-buttons">
-        <button class="share-btn telegram-btn" id="shareCompatibilityTelegram" aria-label="Поделиться в Telegram">
-          <i class="fab fa-telegram"></i> Telegram
-        </button>
-        <button class="share-btn whatsapp-btn" id="shareCompatibilityWhatsApp" aria-label="Поделиться в WhatsApp">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </button>
-        <button class="share-btn copy-btn" id="copyCompatibility" aria-label="Копировать результат">
-          <i class="fas fa-copy"></i> Копировать
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Боковая панель для истории -->
-  <div class="side-panel" id="historyPanel">
-    <button class="close-panel" id="closeHistoryPanel" aria-label="Закрыть панель">
-      <i class="fas fa-times"></i>
-    </button>
-    <h2><i class="fas fa-history"></i> История прогнозов</h2>
-    
-    <div id="historyContainer">
-      <!-- Здесь будет список сохраненных прогнозов -->
-      <p id="emptyHistoryMessage" style="text-align: center; opacity: 0.7;">
-        У вас пока нет сохраненных прогнозов
-      </p>
+      <button id="profileBtn" class="btn"><i class="fas fa-user-edit"></i> Анкета</button>
+      <button id="dailyForecastBtn" class="btn"><i class="fas fa-sun"></i> Прогноз на день</button>
+      <button id="weeklyForecastBtn" class="btn"><i class="fas fa-calendar-week"></i> Прогноз на неделю</button>
+      <button id="monthlyForecastBtn" class="btn"><i class="fas fa-calendar-alt"></i> Прогноз на месяц</button>
+      <button id="compatibilityBtn" class="btn"><i class="fas fa-heart"></i> Совместимость</button>
+      <button id="historyBtn" class="btn"><i class="fas fa-history"></i> История</button>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+  <!-- Панель профиля -->
+  <div class="side-panel" id="profilePanel">
+    <button class="close-panel" id="closeProfilePanel"><i class="fas fa-times"></i></button>
+    <div id="profileContent"></div>
+  </div>
+
+  <!-- Основной скрипт -->
   <script>
-    // Инициализация WebApp Telegram
-    const tg = window.Telegram.WebApp;
-    if (tg) {
-      tg.expand();
-      tg.enableClosingConfirmation();
-    }
-    
-    // Основные элементы
-    const mainMenu = document.getElementById('mainMenu');
     const profileBtn = document.getElementById('profileBtn');
-    const dailyForecastBtn = document.getElementById('dailyForecastBtn');
-    const weeklyForecastBtn = document.getElementById('weeklyForecastBtn');
-    const monthlyForecastBtn = document.getElementById('monthlyForecastBtn');
-    const compatibilityBtn = document.getElementById('compatibilityBtn');
-    const historyBtn = document.getElementById('historyBtn');
-    
-    // Панели
     const profilePanel = document.getElementById('profilePanel');
-    const forecastPanel = document.getElementById('forecastPanel');
-    const compatibilityPanel = document.getElementById('compatibilityPanel');
-    const historyPanel = document.getElementById('historyPanel');
-    
-    // Кнопки закрытия панелей
     const closeProfilePanel = document.getElementById('closeProfilePanel');
-    const closeForecastPanel = document.getElementById('closeForecastPanel');
-    const closeCompatibilityPanel = document.getElementById('closeCompatibilityPanel');
-    const closeHistoryPanel = document.getElementById('closeHistoryPanel');
-    
-    // Форма анкеты
-    const profileForm = document.getElementById('astroForm');
-    const saveProfileBtn = document.getElementById('saveProfileBtn');
-    
-    // Прогноз
-    const forecastContent = document.getElementById('forecastContent');
-    const forecastDate = document.getElementById('forecastDate');
-    const forecastTitle = document.getElementById('forecastTitle');
-    
-    // Совместимость
-    const compatibilityInfo = document.getElementById('compatibilityInfo');
-    const userCompatibilityData = document.getElementById('userCompatibilityData');
-    const partnerForm = document.getElementById('partnerForm');
-    const analyzeCompatibilityBtn = document.getElementById('analyzeCompatibilityBtn');
-    const compatibilityResult = document.getElementById('compatibilityResult');
-    const compatibilityText = document.getElementById('compatibilityText');
-    
-    // История
-    const historyContainer = document.getElementById('historyContainer');
-    const emptyHistoryMessage = document.getElementById('emptyHistoryMessage');
-    
-    // Прогресс-бар анкеты
-    const formProgressBar = document.getElementById('formProgressBar');
-    const step1 = document.getElementById('step1');
-    const step2 = document.getElementById('step2');
-    const step3 = document.getElementById('step3');
-    
-    // Шаги анкеты
-    const step1Form = document.getElementById('step1Form');
-    const step2Form = document.getElementById('step2Form');
-    const step3Form = document.getElementById('step3Form');
-    
-    // Навигация по шагам
-    const nextStep1 = document.getElementById('nextStep1');
-    const nextStep2 = document.getElementById('nextStep2');
-    const prevStep2 = document.getElementById('prevStep2');
-    const prevStep3 = document.getElementById('prevStep3');
-    
-    // Создание звездного фона
-    function createStars() {
-      const starsCount = 200;
-      const containerWidth = window.innerWidth;
-      const containerHeight = window.innerHeight;
-      
-      for (let i = 0; i < starsCount; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        
-        const size = Math.random() * 3;
-        const x = Math.random() * containerWidth;
-        const y = Math.random() * containerHeight;
-        const duration = 2 + Math.random() * 3 + 's';
-        const delay = Math.random() * 5 + 's';
-        
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.left = `${x}px`;
-        star.style.top = `${y}px`;
-        star.style.setProperty('--duration', duration);
-        star.style.animationDelay = delay;
-        
-        document.getElementById('stars-container').appendChild(star);
-      }
-    }
-    
-    // Определение знака зодиака по дате рождения
+
     function getZodiacSign(dateString) {
       if (!dateString) return '';
-      
       const date = new Date(dateString);
       const day = date.getDate();
       const month = date.getMonth() + 1;
-      
       if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return 'Овен ♈';
       if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return 'Телец ♉';
       if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return 'Близнецы ♊';
@@ -1014,708 +257,138 @@
       if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return 'Козерог ♑';
       if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return 'Водолей ♒';
       if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return 'Рыбы ♓';
-      
       return '';
     }
-    
-    // Показать боковую панель
-    function showPanel(panel) {
-      // Сначала скрываем все панели
-      document.querySelectorAll('.side-panel').forEach(p => {
-        p.classList.remove('active');
-      });
-      
-      // Затем показываем нужную панель
-      panel.classList.add('active');
-      
-      // Добавляем затемнение для основного контента
-      document.body.classList.add('panel-open');
-    }
-    
-    // Скрыть все боковые панели
-    function hideAllPanels() {
-      document.querySelectorAll('.side-panel').forEach(panel => {
-        panel.classList.remove('active');
-      });
-      document.body.classList.remove('panel-open');
-    }
-    
-    // Обновление прогресс-бара анкеты
-    function updateProgress(currentStep) {
-      const progress = (currentStep / 3) * 100;
-      formProgressBar.style.width = `${progress}%`;
-      
-      // Обновляем классы шагов
-      step1.classList.remove('active', 'completed');
-      step2.classList.remove('active', 'completed');
-      step3.classList.remove('active', 'completed');
-      
-      if (currentStep >= 1) step1.classList.add('completed');
-      if (currentStep >= 2) step2.classList.add('completed');
-      if (currentStep >= 3) step3.classList.add('completed');
-      
-      document.getElementById(`step${currentStep}`).classList.add('active');
-    }
-    
-    // Переход к следующему шагу анкеты
-    function goToNextStep(currentStep, nextStep) {
-      // Проверяем валидность текущего шага
-      let isValid = true;
-      const currentForm = document.getElementById(`step${currentStep}Form`);
-      
-      // Проверяем обязательные поля
-      currentForm.querySelectorAll('[required]').forEach(field => {
-        if (!field.value) {
-          isValid = false;
-          const errorElement = document.getElementById(`${field.id}-error`);
-          if (errorElement) {
-            errorElement.style.display = 'block';
-          }
-        }
-      });
-      
-      if (!isValid) {
-        // Добавляем анимацию для невалидных полей
-        currentForm.querySelectorAll('[required]').forEach(field => {
-          if (!field.value) {
-            field.style.animation = 'shake 0.5s';
-            setTimeout(() => {
-              field.style.animation = '';
-            }, 500);
-          }
-        });
-        return;
-      }
-      
-      // Скрываем текущий шаг
-      currentForm.style.display = 'none';
-      
-      // Показываем следующий шаг
-      document.getElementById(`step${nextStep}Form`).style.display = 'block';
-      
-      // Обновляем прогресс
-      updateProgress(nextStep);
-      
-      // Прокручиваем к началу формы
-      profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    
-    // Переход к предыдущему шагу анкеты
-    function goToPrevStep(currentStep, prevStep) {
-      // Скрываем текущий шаг
-      document.getElementById(`step${currentStep}Form`).style.display = 'none';
-      
-      // Показываем предыдущий шаг
-      document.getElementById(`step${prevStep}Form`).style.display = 'block';
-      
-      // Обновляем прогресс
-      updateProgress(prevStep);
-      
-      // Прокручиваем к началу формы
-      profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    
-    // Генерация прогноза на основе данных
-    function generateForecast(data, period = 'день') {
-      const zodiac = getZodiacSign(data.birth_date) || 'неизвестным знаком';
-      const today = new Date();
-      
-      // Определяем заголовок в зависимости от периода
-      let periodTitle = '';
-      let periodSpecificText = '';
-      
-      switch (period) {
-        case 'день':
-          periodTitle = 'Прогноз на день';
-          periodSpecificText = 'Сегодня особенно благоприятное время для новых начинаний.';
-          break;
-        case 'неделю':
-          periodTitle = 'Прогноз на неделю';
-          periodSpecificText = 'На этой неделе ожидаются значительные изменения в вашей жизни.';
-          break;
-        case 'месяц':
-          periodTitle = 'Прогноз на месяц';
-          periodSpecificText = 'Этот месяц принесет вам важные события и возможности.';
-          break;
-      }
-      
-      const forecastTexts = {
-        'Любовь и отношения': [
-          `Для ${data.name}, родившегося под знаком ${zodiac}, этот ${period} обещает интересные встречи.`,
-          periodSpecificText,
-          data.relationship === 'В паре' ? 
-            `Ваши отношения в этот ${period} могут перейти на новый уровень.` : 
-            `В этот ${period} вас может ждать важная встреча.`
-        ],
-        'Карьера и бизнес': [
-          `Как представитель знака ${zodiac}, вы сейчас находитесь в фазе профессионального роста.`,
-          `Этот ${period} особенно благоприятен для карьерных решений.`,
-          'Не бойтесь проявлять инициативу - звезды благоволят смелым решениям.'
-        ],
-        'Финансы и инвестиции': [
-          `Ваш знак зодиака (${zodiac}) указывает на необходимость осторожности в финансовых вопросах в этот ${period}.`,
-          periodSpecificText,
-          'Избегайте импульсивных трат и тщательно анализируйте инвестиции.'
-        ]
-      };
-      
-      // Выбираем соответствующий текст прогноза
-      const baseTexts = forecastTexts[data.interest] || [
-        `Дорогой ${data.name}, как представитель знака ${zodiac}, вы сейчас находитесь под влиянием Марса.`,
-        `Этот ${period} принесет вам новые возможности и вызовы.`,
-        'Прислушивайтесь к своей интуиции и не бойтесь изменений.'
-      ];
-      
-      // Формируем HTML прогноза
-      let forecastHTML = `
-        <div class="forecast-section">
-          <h3><i class="fas fa-user-astronaut"></i> Персональные данные</h3>
-          <p>Имя: ${data.name}</p>
-          <p>Знак зодиака: ${zodiac}</p>
+
+    function showProfileView(data) {
+      const profileHTML = `
+        <h2><i class="fas fa-user-circle"></i> Ваш профиль</h2>
+        <div class="profile-info">
+          <p><strong>Имя:</strong> ${data.name}</p>
+          <p><strong>Пол:</strong> ${data.gender === 'м' ? 'Мужской' : 'Женский'}</p>
+          <p><strong>Дата рождения:</strong> ${data.birth_date}</p>
+          <p><strong>Город рождения:</strong> ${data.birth_city}</p>
+          <p><strong>Знак зодиака:</strong> ${getZodiacSign(data.birth_date)}</p>
+          <p><strong>Основной интерес:</strong> ${data.interest}</p>
+          <p><strong>Семейное положение:</strong> ${data.relationship}</p>
+          <p><strong>Дети:</strong> ${data.children}</p>
         </div>
-        
-        <div class="forecast-section">
-          <h3><i class="fas fa-star"></i> Основной прогноз</h3>
+        <button class="btn btn-warning" id="editProfileBtn"><i class="fas fa-edit"></i> Редактировать</button>
       `;
-      
-      baseTexts.forEach(text => {
-        forecastHTML += `<p>${text}</p>`;
+      profilePanel.innerHTML = profileHTML + `<button class="close-panel" id="closeProfilePanel"><i class="fas fa-times"></i></button>`;
+      document.getElementById('closeProfilePanel').addEventListener('click', hideAllPanels);
+      document.getElementById('editProfileBtn').addEventListener('click', () => {
+        loadFormDataIntoForm();
+        showPanel(profilePanel);
       });
-      
-      forecastHTML += `</div>`;
-      
-      // Добавляем рекомендации
-      forecastHTML += `
-        <div class="forecast-section">
-          <h3><i class="fas fa-lightbulb"></i> Рекомендации</h3>
-          <p>Благоприятные дни: ${getLuckyDays(zodiac, period)}</p>
-          <p>Совет: ${getAdvice(zodiac, data.interest, period)}</p>
-          <p>Цвет удачи: ${getLuckyColor(zodiac)}</p>
-        </div>
-      `;
-      
-      // Устанавливаем заголовок прогноза
-      forecastTitle.innerHTML = `<i class="fas fa-crystal-ball"></i> Ваш персональный астропрогноз на ${period}`;
-      
-      return forecastHTML;
+      showPanel(profilePanel);
     }
-    
-    // Вспомогательные функции для генерации прогноза
-    function getLuckyDays(zodiac, period = 'день') {
-      const daysMap = {
-        'Овен ♈': '5, 12, 19 числа месяца',
-        'Телец ♉': '3, 10, 17 числа месяца',
-        'Близнецы ♊': '7, 14, 21 числа месяца',
-        'Рак ♋': '2, 9, 16 числа месяца',
-        'Лев ♌': '6, 13, 20 числа месяца',
-        'Дева ♍': '4, 11, 18 числа месяца',
-        'Весы ♎': '8, 15, 22 числа месяца',
-        'Скорпион ♏': '5, 12, 19 числа месяца',
-        'Стрелец ♐': '3, 10, 17 числа месяца',
-        'Козерог ♑': '7, 14, 21 числа месяца',
-        'Водолей ♒': '2, 9, 16 числа месяца',
-        'Рыбы ♓': '6, 13, 20 числа месяца'
-      };
-      
-      if (period === 'день') {
-        return 'сегодня';
-      } else if (period === 'неделю') {
-        return zodiac && daysMap[zodiac] ? 
-          `в середине недели (${daysMap[zodiac].split(',')[1].trim()})` : 
-          'в середине недели';
-      } else {
-        return zodiac && daysMap[zodiac] ? daysMap[zodiac] : '8, 15, 22 числа месяца';
-      }
-    }
-    
-    function getAdvice(zodiac, interest, period = 'день') {
-      if (interest === 'Любовь и отношения') {
-        return zodiac ? 
-          `Для ${zodiac} этот ${period} хорош для романтических знакомств` : 
-          `Проявите инициативу в личных отношениях в этот ${period}`;
-      } else if (interest === 'Карьера и бизнес') {
-        return `Этот ${period} - хорошее время для важных переговоров`;
-      } else {
-        return `Прислушивайтесь к своей интуиции в этот ${period}`;
-      }
-    }
-    
-    function getLuckyColor(zodiac) {
-      const colorsMap = {
-        'Овен ♈': 'красный',
-        'Телец ♉': 'зеленый',
-        'Близнецы ♊': 'желтый',
-        'Рак ♋': 'серебристый',
-        'Лев ♌': 'золотой',
-        'Дева ♍': 'бежевый',
-        'Весы ♎': 'розовый',
-        'Скорпион ♏': 'бордовый',
-        'Стрелец ♐': 'фиолетовый',
-        'Козерог ♑': 'черный',
-        'Водолей ♒': 'голубой',
-        'Рыбы ♓': 'синий'
-      };
-      return zodiac && colorsMap[zodiac] ? colorsMap[zodiac] : 'ваш любимый цвет';
-    }
-    
-    // Анализ совместимости
-    function analyzeCompatibility(userData, partnerData) {
-      const userZodiac = getZodiacSign(userData.birth_date) || 'неизвестен';
-      const partnerZodiac = getZodiacSign(partnerData.partnerBirthDate) || partnerData.partnerZodiac || 'неизвестен';
-      
-      // Генерируем случайные оценки для визуализации
-      const loveScore = 40 + Math.floor(Math.random() * 50);
-      const friendshipScore = 30 + Math.floor(Math.random() * 60);
-      const workScore = 50 + Math.floor(Math.random() * 40);
-      
-      // Общая совместимость
-      const compatibilityScore = Math.round((loveScore + friendshipScore + workScore) / 3);
-      
-      // Формируем текст результата
-      let compatibilityHTML = `
-        <div class="forecast-section">
-          <h3><i class="fas fa-info-circle"></i> Общая информация</h3>
-          <p>Вы: ${userData.name} (${userZodiac})</p>
-          <p>Партнер: ${partnerData.partnerName} (${partnerZodiac})</p>
-          ${partnerData.relationshipDuration ? `<p>Длительность отношений: ${partnerData.relationshipDuration}</p>` : ''}
-        </div>
-      `;
-      
-      // Добавляем анализ по категориям
-      compatibilityHTML += `
-        <div class="forecast-section">
-          <h3><i class="fas fa-heart"></i> Любовная совместимость</h3>
-          <p>${getCompatibilityText('love', loveScore, userZodiac, partnerZodiac)}</p>
-        </div>
-        
-        <div class="forecast-section">
-          <h3><i class="fas fa-users"></i> Дружеская совместимость</h3>
-          <p>${getCompatibilityText('friendship', friendshipScore, userZodiac, partnerZodiac)}</p>
-        </div>
-        
-        <div class="forecast-section">
-          <h3><i class="fas fa-briefcase"></i> Деловая совместимость</h3>
-          <p>${getCompatibilityText('work', workScore, userZodiac, partnerZodiac)}</p>
-        </div>
-        
-        <div class="forecast-section">
-          <h3><i class="fas fa-chart-pie"></i> Итоговая оценка</h3>
-          <p>Общий уровень совместимости: ${compatibilityScore}%</p>
-          <p>${getFinalConclusion(compatibilityScore)}</p>
-        </div>
-      `;
-      
-      // Возвращаем результат и оценки для графиков
-      return {
-        html: compatibilityHTML,
-        scores: {
-          love: loveScore,
-          friendship: friendshipScore,
-          work: workScore,
-          total: compatibilityScore
-        }
-      };
-    }
-    
-    // Генерация текста для категорий совместимости
-    function getCompatibilityText(type, score, zodiac1, zodiac2) {
-      const texts = {
-        love: {
-          high: `Отличная любовная совместимость! ${zodiac1} и ${zodiac2} созданы друг для друга.`,
-          medium: `Хорошая любовная совместимость. ${zodiac1} и ${zodiac2} могут создать гармоничные отношения.`,
-          low: `Низкая любовная совместимость. ${zodiac1} и ${zodiac2} могут испытывать трудности в отношениях.`
-        },
-        friendship: {
-          high: `Отличная дружеская совместимость! ${zodiac1} и ${zodiac2} отлично понимают друг друга.`,
-          medium: `Хорошая дружеская совместимость. ${zodiac1} и ${zodiac2} могут быть хорошими друзьями.`,
-          low: `Низкая дружеская совместимость. ${zodiac1} и ${zodiac2} могут не найти общих интересов.`
-        },
-        work: {
-          high: `Отличная деловая совместимость! ${zodiac1} и ${zodiac2} могут создать успешный тандем.`,
-          medium: `Хорошая деловая совместимость. ${zodiac1} и ${zodiac2} могут эффективно работать вместе.`,
-          low: `Низкая деловая совместимость. ${zodiac1} и ${zodiac2} могут испытывать трудности в совместной работе.`
-        }
-      };
-      
-      if (score >= 70) return texts[type].high;
-      if (score >= 40) return texts[type].medium;
-      return texts[type].low;
-    }
-    
-    // Итоговый вывод о совместимости
-    function getFinalConclusion(score) {
-      if (score >= 80) return 'Отличная совместимость! У вас большой потенциал для гармоничных отношений.';
-      if (score >= 60) return 'Хорошая совместимость. Ваши отношения имеют прочную основу для развития.';
-      if (score >= 40) return 'Средняя совместимость. Вам нужно будет приложить усилия для гармонии.';
-      return 'Низкая совместимость. Возможны частые конфликты, но при желании можно найти общий язык.';
-    }
-    
-    // Сохранение прогноза в историю
-    function saveForecastToHistory(forecast, period) {
-      const history = JSON.parse(localStorage.getItem('forecastHistory') || '[]');
-      const today = new Date();
-      
-      const historyItem = {
-        id: Date.now(),
-        date: today.toISOString(),
-        period: period,
-        preview: forecast.substring(0, 100) + '...',
-        content: forecast
-      };
-      
-      history.unshift(historyItem);
-      localStorage.setItem('forecastHistory', JSON.stringify(history));
-    }
-    
-    // Загрузка истории прогнозов
-    function loadHistory() {
-      const history = JSON.parse(localStorage.getItem('forecastHistory') || '[]');
-      
-      if (history.length === 0) {
-        emptyHistoryMessage.style.display = 'block';
-        historyContainer.innerHTML = '';
-        return;
-      }
-      
-      emptyHistoryMessage.style.display = 'none';
-      
-      let historyHTML = '';
-      history.forEach(item => {
-        const date = new Date(item.date);
-        const formattedDate = date.toLocaleDateString('ru-RU', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-        
-        historyHTML += `
-          <div class="history-item" data-id="${item.id}">
-            <div class="history-date">${formattedDate} - ${item.period}</div>
-            <div class="history-preview">${item.preview}</div>
+
+    function loadFormDataIntoForm() {
+      const savedData = JSON.parse(localStorage.getItem('astroProfileData'));
+      const formHTML = `
+        <form id="astroForm">
+          <h2><i class="fas fa-user-edit"></i> Анкета</h2>
+          <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i>Имя:</label>
+            <input type="text" id="name" name="name" value="${savedData.name}" required />
           </div>
-        `;
-      });
-      
-      historyContainer.innerHTML = historyHTML;
-      
-      // Добавляем обработчики клика на элементы истории
-      document.querySelectorAll('.history-item').forEach(item => {
-        item.addEventListener('click', () => {
-          const id = parseInt(item.getAttribute('data-id'));
-          showForecastFromHistory(id);
-        });
-      });
+          <div class="form-group">
+            <label for="gender"><i class="fas fa-venus-mars"></i>Пол:</label>
+            <select id="gender" name="gender" required>
+              <option value="м" ${savedData.gender === 'м' ? 'selected' : ''}>Мужской</option>
+              <option value="ж" ${savedData.gender === 'ж' ? 'selected' : ''}>Женский</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="birth_date"><i class="fas fa-calendar-day"></i>Дата рождения:</label>
+            <input type="date" id="birth_date" name="birth_date" value="${savedData.birth_date}" required />
+          </div>
+          <div class="form-group">
+            <label for="birth_city"><i class="fas fa-city"></i>Город рождения:</label>
+            <input type="text" id="birth_city" name="birth_city" value="${savedData.birth_city}" required />
+          </div>
+          <div class="form-group">
+            <label for="interest"><i class="fas fa-star"></i>Основной интерес:</label>
+            <select id="interest" name="interest" required>
+              <option value="Любовь и отношения" ${savedData.interest === 'Любовь и отношения' ? 'selected' : ''}>Любовь и отношения</option>
+              <option value="Карьера и бизнес" ${savedData.interest === 'Карьера и бизнес' ? 'selected' : ''}>Карьера и бизнес</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="relationship"><i class="fas fa-heart"></i>Семейное положение:</label>
+            <select id="relationship" name="relationship" required>
+              <option value="В паре" ${savedData.relationship === 'В паре' ? 'selected' : ''}>В отношениях</option>
+              <option value="Не в паре" ${savedData.relationship === 'Не в паре' ? 'selected' : ''}>Не в отношениях</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="children"><i class="fas fa-baby"></i>Есть ли дети:</label>
+            <select id="children" name="children" required>
+              <option value="Да" ${savedData.children === 'Да' ? 'selected' : ''}>Да</option>
+              <option value="Нет" ${savedData.children === 'Нет' ? 'selected' : ''}>Нет</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Сохранить</button>
+        </form>
+      `;
+      profilePanel.innerHTML = formHTML + `<button class="close-panel" id="closeProfilePanel"><i class="fas fa-times"></i></button>`;
+      document.getElementById('closeProfilePanel').addEventListener('click', hideAllPanels);
+      document.getElementById('astroForm').addEventListener('submit', handleSaveForm);
     }
-    
-    // Показать прогноз из истории
-    function showForecastFromHistory(id) {
-      const history = JSON.parse(localStorage.getItem('forecastHistory') || '[]');
-      const forecast = history.find(item => item.id === id);
-      
-      if (!forecast) return;
-      
-      forecastContent.innerHTML = forecast.content;
-      forecastDate.textContent = `Прогноз от ${new Date(forecast.date).toLocaleDateString('ru-RU')}`;
-      forecastTitle.innerHTML = `<i class="fas fa-history"></i> ${forecast.period}`;
-      
-      showPanel(forecastPanel);
+
+    function handleSaveForm(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      localStorage.setItem('astroProfileData', JSON.stringify(data));
+      showProfileView(data);
+      alert('Анкета сохранена!');
     }
-    
-    // Поделиться через Telegram
-    function shareViaTelegram(text) {
-      if (tg && tg.isTelegram) {
-        tg.sendData(text);
-      } else {
-        const url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
-      }
+
+    function showPanel(panel) {
+      document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
+      panel.classList.add('active');
     }
-    
-    // Поделиться через WhatsApp
-    function shareViaWhatsApp(text) {
-      const url = `https://wa.me/?text=${encodeURIComponent(text + '\n\n' + window.location.href)}`;
-      window.open(url, '_blank');
+
+    function hideAllPanels() {
+      document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('active'));
     }
-    
-    // Копировать текст в буфер обмена
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        showNotification('Текст скопирован в буфер обмена');
-      }).catch(err => {
-        showNotification('Не удалось скопировать текст', 'error');
-      });
-    }
-    
-    // Показать уведомление
-    function showNotification(message, type = 'success') {
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.classList.add('fade-out');
-        setTimeout(() => {
-          notification.remove();
-        }, 300);
-      }, 3000);
-    }
-    
-    // Инициализация приложения
-    function initApp() {
-      createStars();
-      
-      // Проверяем, есть ли сохраненные данные
+
+    profileBtn.addEventListener('click', () => {
       const savedData = localStorage.getItem('astroProfileData');
       if (savedData) {
-        const data = JSON.parse(savedData);
-        for (const key in data) {
-          if (profileForm.elements[key]) {
-            profileForm.elements[key].value = data[key];
-          }
-        }
-      }
-      
-      // Инициализация автодополнения для города
-      new Awesomplete(document.getElementById('birth_city'), {
-        list: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 
-               'Челябинск', 'Самара', 'Омск', 'Ростов-на-Дону', 'Уфа', 'Красноярск', 'Пермь', 'Воронеж', 
-               'Волгоград', 'Краснодар', 'Саратов', 'Тюмень', 'Тольятти', 'Ижевск', 'Барнаул', 'Ульяновск', 
-               'Иркутск', 'Хабаровск', 'Ярославль', 'Владивосток', 'Махачкала', 'Томск', 'Оренбург', 'Кемерово'],
-        minChars: 1,
-        maxItems: 10
-      });
-      
-      // Загружаем историю прогнозов
-      loadHistory();
-    }
-    
-    // Обработчики событий
-    profileBtn.addEventListener('click', () => {
-      showPanel(profilePanel);
-      updateProgress(1);
-      step1Form.style.display = 'block';
-      step2Form.style.display = 'none';
-      step3Form.style.display = 'none';
-    });
-    
-    dailyForecastBtn.addEventListener('click', () => {
-      const formData = new FormData(profileForm);
-      const data = Object.fromEntries(formData.entries());
-      
-      if (!data.name || !data.birth_date) {
-        showNotification('Пожалуйста, сначала заполните анкету', 'error');
+        showProfileView(JSON.parse(savedData));
+      } else {
+        loadFormDataIntoForm();
         showPanel(profilePanel);
-        return;
       }
-      
-      forecastContent.innerHTML = generateForecast(data, 'день');
-      forecastDate.textContent = `Прогноз на ${new Date().toLocaleDateString('ru-RU')}`;
-      saveForecastToHistory(forecastContent.innerHTML, 'Прогноз на день');
-      showPanel(forecastPanel);
     });
-    
-    weeklyForecastBtn.addEventListener('click', () => {
-      const formData = new FormData(profileForm);
-      const data = Object.fromEntries(formData.entries());
-      
-      if (!data.name || !data.birth_date) {
-        showNotification('Пожалуйста, сначала заполните анкету', 'error');
-        showPanel(profilePanel);
-        return;
-      }
-      
-      forecastContent.innerHTML = generateForecast(data, 'неделю');
-      forecastDate.textContent = `Прогноз на неделю ${new Date().toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}`;
-      saveForecastToHistory(forecastContent.innerHTML, 'Прогноз на неделю');
-      showPanel(forecastPanel);
-    });
-    
-    monthlyForecastBtn.addEventListener('click', () => {
-      const formData = new FormData(profileForm);
-      const data = Object.fromEntries(formData.entries());
-      
-      if (!data.name || !data.birth_date) {
-        showNotification('Пожалуйста, сначала заполните анкету', 'error');
-        showPanel(profilePanel);
-        return;
-      }
-      
-      forecastContent.innerHTML = generateForecast(data, 'месяц');
-      forecastDate.textContent = `Прогноз на месяц ${new Date().toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}`;
-      saveForecastToHistory(forecastContent.innerHTML, 'Прогноз на месяц');
-      showPanel(forecastPanel);
-    });
-    
-    compatibilityBtn.addEventListener('click', () => {
-      const formData = new FormData(profileForm);
-      const data = Object.fromEntries(formData.entries());
-      
-      if (!data.name || !data.birth_date) {
-        showNotification('Пожалуйста, сначала заполните анкету', 'error');
-        showPanel(profilePanel);
-        return;
-      }
-      
-      const zodiac = getZodiacSign(data.birth_date);
-      
-      userCompatibilityData.innerHTML = `
-        <div class="profile-item"><strong>Имя:</strong> ${data.name}</div>
-        <div class="profile-item"><strong>Знак зодиака:</strong> ${zodiac || 'Не указан'}</div>
-        <div class="profile-item"><strong>Пол:</strong> ${data.gender === 'м' ? 'Мужской' : 'Женский'}</div>
-      `;
-      
-      compatibilityInfo.style.display = 'block';
-      partnerForm.style.display = 'block';
-      compatibilityResult.style.display = 'none';
-      showPanel(compatibilityPanel);
-    });
-    
-    historyBtn.addEventListener('click', () => {
-      loadHistory();
-      showPanel(historyPanel);
-    });
-    
-    // Обработчики закрытия панелей
+
     closeProfilePanel.addEventListener('click', hideAllPanels);
-    closeForecastPanel.addEventListener('click', hideAllPanels);
-    closeCompatibilityPanel.addEventListener('click', hideAllPanels);
-    closeHistoryPanel.addEventListener('click', hideAllPanels);
-    
-    // Обработчики шагов анкеты
-    nextStep1.addEventListener('click', () => goToNextStep(1, 2));
-    nextStep2.addEventListener('click', () => goToNextStep(2, 3));
-    prevStep2.addEventListener('click', () => goToPrevStep(2, 1));
-    prevStep3.addEventListener('click', () => goToPrevStep(3, 2));
-    
-    // Обработка сохранения анкеты
-    profileForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      if (!profileForm.checkValidity()) {
-        showNotification('Пожалуйста, заполните все обязательные поля', 'error');
-        return;
+
+    // Звёздный фон
+    function createStars() {
+      const starsCount = 200;
+      const containerWidth = window.innerWidth;
+      const containerHeight = window.innerHeight;
+      for (let i = 0; i < starsCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3;
+        const x = Math.random() * containerWidth;
+        const y = Math.random() * containerHeight;
+        const duration = 2 + Math.random() * 3 + 's';
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${x}px`;
+        star.style.top = `${y}px`;
+        star.style.setProperty('--duration', duration);
+        document.getElementById('stars-container').appendChild(star);
       }
-      
-      const formData = new FormData(profileForm);
-      const data = Object.fromEntries(formData.entries());
-      
-      // Сохраняем данные в localStorage
-      localStorage.setItem('astroProfileData', JSON.stringify(data));
-      
-      // Показываем уведомление об успешном сохранении
-      showNotification('Анкета успешно сохранена', 'success');
-      
-      // Закрываем панель через 1 секунду
-      setTimeout(hideAllPanels, 1000);
-    });
-    
-    // Обработка изменения даты рождения (определение знака зодиака)
-    document.getElementById('birth_date').addEventListener('change', function() {
-      const zodiac = getZodiacSign(this.value);
-      if (zodiac) {
-        document.getElementById('zodiacDisplay').style.display = 'inline-block';
-        document.getElementById('zodiacText').textContent = zodiac;
-      } else {
-        document.getElementById('zodiacDisplay').style.display = 'none';
-      }
-    });
-    
-    // Обработка анализа совместимости
-    partnerForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      if (!partnerForm.checkValidity()) {
-        showNotification('Пожалуйста, заполните все обязательные поля', 'error');
-        return;
-      }
-      
-      // Показываем индикатор загрузки
-      analyzeCompatibilityBtn.disabled = true;
-      document.getElementById('compatibilityLoader').style.display = 'block';
-      
-      // Получаем данные пользователя и партнера
-      const userFormData = new FormData(profileForm);
-      const userData = Object.fromEntries(userFormData.entries());
-      
-      const partnerFormData = new FormData(partnerForm);
-      const partnerData = Object.fromEntries(partnerFormData.entries());
-      
-      // Имитация загрузки (в реальном приложении здесь будет запрос к серверу)
-      setTimeout(() => {
-        // Анализируем совместимость
-        const { html, scores } = analyzeCompatibility(userData, partnerData);
-        
-        // Показываем результат
-        compatibilityText.innerHTML = html;
-        compatibilityResult.style.display = 'block';
-        partnerForm.style.display = 'none';
-        
-        // Анимируем графики
-        setTimeout(() => {
-          document.getElementById('loveProgress').style.width = `${scores.love}%`;
-          document.getElementById('friendshipProgress').style.width = `${scores.friendship}%`;
-          document.getElementById('workProgress').style.width = `${scores.work}%`;
-          
-          document.getElementById('loveScore').textContent = `${scores.love}%`;
-          document.getElementById('friendshipScore').textContent = `${scores.friendship}%`;
-          document.getElementById('workScore').textContent = `${scores.work}%`;
-        }, 100);
-        
-        // Скрываем индикатор загрузки
-        analyzeCompatibilityBtn.disabled = false;
-        document.getElementById('compatibilityLoader').style.display = 'none';
-      }, 1500);
-    });
-    
-    // Обработка изменения даты рождения партнера
-    document.getElementById('partnerBirthDate').addEventListener('change', function() {
-      const zodiac = getZodiacSign(this.value);
-      if (zodiac) {
-        document.getElementById('partnerZodiacDisplay').style.display = 'inline-block';
-        document.getElementById('partnerZodiacText').textContent = zodiac;
-        document.getElementById('partnerZodiac').value = zodiac.split(' ')[0]; // Удаляем эмодзи для значения
-      } else {
-        document.getElementById('partnerZodiacDisplay').style.display = 'none';
-      }
-    });
-    
-    // Обработчики кнопок шаринга прогноза
-    document.getElementById('shareTelegram').addEventListener('click', () => {
-      const text = `Мой астропрогноз на сегодня:\n${forecastContent.textContent.substring(0, 200)}...\n\nПолный прогноз в приложении Astromir!`;
-      shareViaTelegram(text);
-    });
-    
-    document.getElementById('shareWhatsApp').addEventListener('click', () => {
-      const text = `Мой астропрогноз на сегодня:\n${forecastContent.textContent.substring(0, 200)}...\n\nПолный прогноз в приложении Astromir!`;
-      shareViaWhatsApp(text);
-    });
-    
-    document.getElementById('copyForecast').addEventListener('click', () => {
-      const text = `Мой астропрогноз на сегодня:\n${forecastContent.textContent}\n\nСгенерировано в приложении Astromir`;
-      copyToClipboard(text);
-    });
-    
-    // Обработчики кнопок шаринга совместимости
-    document.getElementById('shareCompatibilityTelegram').addEventListener('click', () => {
-      const text = `Результат анализа совместимости:\n${compatibilityText.textContent.substring(0, 200)}...\n\nПолный анализ в приложении Astromir!`;
-      shareViaTelegram(text);
-    });
-    
-    document.getElementById('shareCompatibilityWhatsApp').addEventListener('click', () => {
-      const text = `Результат анализа совместимости:\n${compatibilityText.textContent.substring(0, 200)}...\n\nПолный анализ в приложении Astromir!`;
-      shareViaWhatsApp(text);
-    });
-    
-    document.getElementById('copyCompatibility').addEventListener('click', () => {
-      const text = `Результат анализа совместимости:\n${compatibilityText.textContent}\n\nСгенерировано в приложении Astromir`;
-      copyToClipboard(text);
-    });
-    
-    // Запуск приложения
-    window.addEventListener('load', initApp);
+    }
+
+    window.addEventListener('load', createStars);
   </script>
 </body>
 </html>
