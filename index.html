@@ -391,7 +391,7 @@
     .form-navigation {
       display: flex;
       justify-content: space-between;
-      gap: 20px; /* Увеличили расстояние между кнопками */
+      gap: 20px;
       margin-top: 20px;
     }
     
@@ -402,9 +402,9 @@
     /* Бонусное сообщение */
     .bonus-message {
       position: fixed;
-      bottom: 100px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       width: calc(100% - 40px);
       max-width: 400px;
       background: var(--card-color);
@@ -437,6 +437,18 @@
       color: var(--text-color);
       font-size: 18px;
       cursor: pointer;
+    }
+    
+    /* Оверлей для бонусного сообщения */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      display: none;
     }
     
     /* Анимации */
@@ -564,6 +576,9 @@
         <i class="fas fa-calendar-alt"></i> Прогноз на месяц
       </button>
     </div>
+    
+    <!-- Оверлей для бонусного сообщения -->
+    <div class="overlay" id="overlay"></div>
     
     <!-- Бонусное сообщение -->
     <div class="bonus-message" id="bonusMessage">
@@ -759,6 +774,7 @@
     const bonusMessage = document.getElementById('bonusMessage');
     const bonusText = document.getElementById('bonusText');
     const closeBonusMessage = document.getElementById('closeBonusMessage');
+    const overlay = document.getElementById('overlay');
     
     // Панели
     const profilePanel = document.getElementById('profilePanel');
@@ -811,6 +827,10 @@
       "Сегодня отличный день для того, чтобы отпустить прошлое и открыться новому.",
       "Все, что происходит сегодня, ведет вас к лучшей версии себя."
     ];
+    
+    // Время последнего бонуса
+    let lastBonusTime = localStorage.getItem('lastBonusTime') || 0;
+    const BONUS_COOLDOWN = 3 * 60 * 60 * 1000; // 3 часа в миллисекундах
     
     // Создание звездного фона
     function createStars() {
@@ -1122,9 +1142,43 @@
     
     // Показать случайный бонус
     function showRandomBonus() {
+      const currentTime = new Date().getTime();
+      const timeSinceLastBonus = currentTime - lastBonusTime;
+      
+      if (timeSinceLastBonus < BONUS_COOLDOWN) {
+        const hoursLeft = Math.ceil((BONUS_COOLDOWN - timeSinceLastBonus) / (60 * 60 * 1000));
+        showNotification(`Вы сможете получить новый бонус через ${hoursLeft} часа(ов)`, 'error');
+        return;
+      }
+      
       const randomIndex = Math.floor(Math.random() * bonusPhrases.length);
       bonusText.textContent = bonusPhrases[randomIndex];
+      
+      // Показываем оверлей и сообщение
+      overlay.style.display = 'block';
       bonusMessage.style.display = 'block';
+      
+      // Сохраняем время получения бонуса
+      lastBonusTime = currentTime;
+      localStorage.setItem('lastBonusTime', lastBonusTime);
+      
+      // Обновляем состояние кнопки
+      updateBonusButtonState();
+    }
+    
+    // Обновить состояние кнопки бонуса
+    function updateBonusButtonState() {
+      const currentTime = new Date().getTime();
+      const timeSinceLastBonus = currentTime - lastBonusTime;
+      
+      if (timeSinceLastBonus < BONUS_COOLDOWN) {
+        const hoursLeft = Math.ceil((BONUS_COOLDOWN - timeSinceLastBonus) / (60 * 60 * 1000));
+        bonusBtn.innerHTML = `<i class="fas fa-clock"></i> До бонуса: ${hoursLeft}ч`;
+        bonusBtn.disabled = true;
+      } else {
+        bonusBtn.innerHTML = '<i class="fas fa-envelope"></i> Получить бонус';
+        bonusBtn.disabled = false;
+      }
     }
     
     // Инициализация приложения
@@ -1160,6 +1214,9 @@
         minChars: 1,
         maxItems: 10
       });
+      
+      // Обновляем состояние кнопки бонуса
+      updateBonusButtonState();
     }
     
     // Обработчики событий
@@ -1311,19 +1368,23 @@
       // Генерируем случайный реферальный код
       const refCode = 'ref' + Math.floor(1000 + Math.random() * 9000);
       const shareUrl = `https://t.me/astropred_bot?start=${refCode}`;
-      const shareText = `Хочу поделиться с тобой этим астроботом — реально интересно! Прогноз на день, месяц, совместимость и ещё куча всего.\n\nВот ссылка: ${shareUrl}`;
       
-      if (tg && tg.isTelegram) {
-        tg.sendData(shareText);
-      } else if (navigator.share) {
+      if (navigator.share) {
         navigator.share({
           title: 'AstroPred - Астрологический помощник',
-          text: shareText,
+          text: 'Попробуйте это приложение - AstroPred!',
           url: shareUrl
         }).catch(console.error);
+      } else if (tg && tg.isTelegram) {
+        tg.sendData(shareUrl);
       } else {
-        const url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-        window.open(url, '_blank');
+        // Если Web Share API не поддерживается, просто копируем ссылку в буфер обмена
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showNotification('Ссылка скопирована в буфер обмена!', 'success');
+        }).catch(() => {
+          // Если не удалось скопировать, показываем ссылку
+          prompt('Скопируйте эту ссылку:', shareUrl);
+        });
       }
     });
     
@@ -1332,6 +1393,13 @@
     
     // Закрыть бонусное сообщение
     closeBonusMessage.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      bonusMessage.style.display = 'none';
+    });
+    
+    // Закрыть бонусное сообщение при клике на оверлей
+    overlay.addEventListener('click', () => {
+      overlay.style.display = 'none';
       bonusMessage.style.display = 'none';
     });
     
