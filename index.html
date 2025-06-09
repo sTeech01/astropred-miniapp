@@ -952,32 +952,30 @@
       return '';
     }
     
-    // 64. Получение гороскопа через альтернативный API
-    async function getHoroscope(zodiacSign, period = 'today') {
+    // 64. Получение гороскопа через надежный API
+    async function getHoroscope(zodiacSign, period = 'daily') {
       try {
-        const response = await fetch(`https://aztro-api.zodiacal.workers.dev/?sign=${zodiacSign}&day=${period}`, {
-          method: 'POST'
-        });
+        const response = await fetch(
+          `https://horoscope-app-api.vercel.app/api/v1/get-horoscope/${period}?sign=${zodiacSign}`,
+          { method: 'GET' }
+        );
 
         if (!response.ok) {
-          throw new Error('Ошибка запроса к альтернативному API');
-       }
+          throw new Error('Ошибка запроса к новому API');
+        }
 
-        const data = await response.json();
-
+        const res = await response.json();
+        // Обратите внимание: поле `horoscope_data` вместо `description`
         return {
-          description: data.description,
-          mood: data.mood || 'Не указано',
-          color: data.color || 'Не указано',
-          lucky_number: data.lucky_number || '—',
-          compatibility: data.compatibility || 'Не указано'
+          description: res.data.horoscope_data,
+          date: res.data.date,
         };
       } catch (error) {
         console.error('Ошибка:', error);
         return null;
       }
     }
-    
+
     // 65. Показать боковую панель
     function showPanel(panel) {
       document.querySelectorAll('.side-panel').forEach(p => {
