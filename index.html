@@ -409,13 +409,14 @@
     /* 37. Кнопки "Поделиться" */
     .share-buttons {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       margin-top: 20px;
-      justify-content: space-between;
+      justify-content: space-between; /* Растягивает кнопки по краям */
     }
-    
+
     .share-buttons .btn {
-      flex: 1;
+      flex: 1; /* Равномерно распределяет ширину */
+      min-width: 0; /* Позволяет кнопкам сжиматься */
     }
     
     /* 38. Кнопки внизу экрана */
@@ -540,7 +541,12 @@
         flex-direction: column;
       }
     }
-    
+    @media (max-width: 480px) {
+      .share-buttons {
+        flex-direction: row; /* Убедись, что кнопки в ряд */
+        gap: 8px; /* Уменьши отступ между кнопками */
+      }
+    }
     /* 44. Лоадер */
     .loader {
       display: inline-block;
