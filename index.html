@@ -965,10 +965,9 @@
         }
 
         const res = await response.json();
-        // Обратите внимание: поле `horoscope_data` вместо `description`
         return {
-          description: res.data.horoscope_data,
-          date: res.data.date,
+          description: res.data.horoscope_data || 'Описание недоступно',
+          date: res.data.date || new Date().toLocaleDateString('ru-RU')
         };
       } catch (error) {
         console.error('Ошибка:', error);
@@ -1069,12 +1068,10 @@
       
       if (period === 'день') {
         forecastHTML += `
-          <p><strong>Настроение:</strong> ${horoscope.mood}</p>
-          <p><strong>Цвет дня:</strong> ${horoscope.color}</p>
-          <p><strong>Счастливое число:</strong> ${horoscope.lucky_number}</p>
-          <p><strong>Совместимость:</strong> ${horoscope.compatibility}</p>
+          <p><strong>Дата прогноза:</strong> ${horoscope.date}</p>
         `;
       }
+
       
       forecastHTML += `</div>`;
       
@@ -1107,7 +1104,7 @@
         advice = `Профессиональная сфера: ${horoscope.description.split('.')[0]}. Используйте этот ${period} для важных переговоров и решений.`;
       }
       else if (data.interest === 'Финансы и инвестиции') {
-        advice = `Финансовая удача: ${horoscope.lucky_number} может быть вашим счастливым числом. ${horoscope.description.split('.')[0]}.`;
+        advice = `Финансовая удача сегодня зависит от ваших решений. ${horoscope.description.split('.')[0] || 'Звезды советуют быть внимательнее.'}`;
       }
       else {
         advice = `Для вас в этот ${period}: ${horoscope.description.split('.')[0]}. Следуйте своей интуиции.`;
