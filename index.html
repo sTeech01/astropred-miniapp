@@ -82,11 +82,6 @@
       z-index: 1;
       padding-bottom: 120px;
     }
-    /* 7.1 Новый стиль для заголовка анкеты */
-      .side-panel > h2 {
-        margin-top: 0;
-        padding-top: 10px;
-      }
     
     /* 8. Контейнер логотипа */
     .logo-container {
@@ -345,7 +340,8 @@
       background: var(--card-color);
       padding: 25px;
       border-radius: 15px;
-      margin-top: 20px;
+      margin: 20px auto;
+      max-width: 600px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
@@ -362,6 +358,7 @@
     /* 31. Контент прогноза */
     .forecast-content {
       line-height: 1.6;
+      padding-bottom: 80px; /* Добавляем место для кнопок шаринга */
     }
     
     /* 32. Секции прогноза */
@@ -394,7 +391,7 @@
     /* 35. Заголовки профиля */
     .profile-view h3 {
       color: var(--primary-color);
-      margin-bottom: 20px 0 15px;
+      margin: 20px 0 15px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -404,6 +401,9 @@
     .profile-view p {
       margin-bottom: 10px;
       padding-left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     /* 37. Кнопки "Поделиться" */
@@ -411,12 +411,17 @@
       display: flex;
       gap: 10px;
       margin-top: 20px;
-      justify-content: space-between; /* Растягивает кнопки по краям */
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 600px;
+      z-index: 10;
     }
 
     .share-buttons .btn {
-      flex: 1; /* Равномерно распределяет ширину */
-      min-width: 0; /* Позволяет кнопкам сжиматься */
+      flex: 1;
     }
     
     /* 38. Кнопки внизу экрана */
@@ -509,14 +514,14 @@
     }
     
     /* 43. Адаптивные стили */
-      @media (max-width: 400px) {
+    @media (max-width: 768px) {
       :root {
-        --panel-width: 95%;
+        --panel-width: 85%;
       }
+      
       .forecast-container {
-        padding: 10px;
+        padding: 15px;
       }
-    }
       
       .btn {
         padding: 12px 15px;
@@ -524,10 +529,6 @@
       }
       
       form {
-        padding: 15px;
-      }
-      
-      .forecast-container {
         padding: 15px;
       }
     }
@@ -539,14 +540,14 @@
       
       .share-buttons {
         flex-direction: column;
+        gap: 8px;
+      }
+      
+      .forecast-container {
+        padding: 10px;
       }
     }
-    @media (max-width: 480px) {
-      .share-buttons {
-        flex-direction: row; /* Убедись, что кнопки в ряд */
-        gap: 8px; /* Уменьши отступ между кнопками */
-      }
-    }
+    
     /* 44. Лоадер */
     .loader {
       display: inline-block;
@@ -587,12 +588,41 @@
     .notification.fade-out {
       animation: fadeOut 0.3s ease forwards;
     }
+    
+    /* 46. Знаки зодиака */
+    .zodiac-icon {
+      font-size: 18px;
+      margin-left: 5px;
+    }
+    
+    /* 47. Отображение знака зодиака */
+    .zodiac-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: 5px;
+    }
+    
+    /* 48. Сообщение об ошибке */
+    .error-message {
+      color: var(--error-color);
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    /* 49. Подсказка */
+    .field-hint {
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
   <div id="stars-container"></div>
   
-  <!-- 46. Главное меню -->
+  <!-- 50. Главное меню -->
   <div id="mainMenu">
     <div class="logo-container" id="themeToggle">
       <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -629,10 +659,10 @@
       </button>
     </div>
     
-    <!-- 47. Оверлей для бонусного сообщения -->
+    <!-- 51. Оверлей для бонусного сообщения -->
     <div class="overlay" id="overlay"></div>
     
-    <!-- 48. Бонусное сообщение -->
+    <!-- 52. Бонусное сообщение -->
     <div class="bonus-message" id="bonusMessage">
       <button class="close-bonus" id="closeBonusMessage" aria-label="Закрыть">
         <i class="fas fa-times"></i>
@@ -641,10 +671,10 @@
       <p id="bonusText"></p>
     </div>
     
-    <!-- 49. Кнопки внизу экрана -->
+    <!-- 53. Кнопки внизу экрана -->
     <div class="bottom-buttons">
       <button id="bonusBtn" class="btn btn-warning" aria-label="Получить бонус">
-        <i class="fas fa-envelope"></i> Получить бонус
+        <i class="fas fa-gift"></i> Получить бонус
       </button>
       <button id="shareAppBtn" class="btn btn-info" aria-label="Поделиться приложением">
         <i class="fas fa-share-alt"></i> Поделиться приложением
@@ -652,7 +682,7 @@
     </div>
   </div>
   
-  <!-- 50. Боковая панель для анкеты -->
+  <!-- 54. Боковая панель для анкеты -->
   <div class="side-panel" id="profilePanel">
     <button class="close-panel" id="closeProfilePanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
@@ -702,6 +732,10 @@
           <label for="birth_date"><i class="fas fa-calendar-day"></i>Дата рождения:</label>
           <input type="date" id="birth_date" name="birth_date" required aria-required="true" />
           <div class="error-message" id="birth_date-error">Пожалуйста, введите корректную дату</div>
+          <div class="zodiac-display" id="zodiacDisplay" style="display: none;">
+            <span id="zodiacText"></span>
+            <i class="fas fa-star zodiac-icon" id="zodiacIcon"></i>
+          </div>
         </div>
         
         <div class="form-group">
@@ -771,10 +805,12 @@
     </div>
   </div>
   
+  <!-- 55. Боковая панель для прогноза -->
   <div class="side-panel" id="forecastPanel">
     <button class="close-panel" id="closeForecastPanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
     </button>
+    
     <div class="forecast-container" id="forecastContainer">
       <div class="forecast-header">
         <h2 id="forecastTitle"><i class="fas fa-crystal-ball"></i> Ваш персональный астропрогноз</h2>
@@ -783,28 +819,28 @@
       
       <div class="forecast-content" id="forecastContent">
       </div>
-      
-      <div class="share-buttons">
-        <button class="btn telegram-btn" id="shareTelegram" aria-label="Поделиться в Telegram">
-          <i class="fab fa-telegram"></i> Telegram
-        </button>
-        <button class="btn whatsapp-btn" id="shareWhatsApp" aria-label="Поделиться в WhatsApp">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </button>
-      </div>
+    </div>
+    
+    <div class="share-buttons">
+      <button class="btn telegram-btn" id="shareTelegram" aria-label="Поделиться в Telegram">
+        <i class="fab fa-telegram"></i> Telegram
+      </button>
+      <button class="btn whatsapp-btn" id="shareWhatsApp" aria-label="Поделиться в WhatsApp">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </button>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
   <script>
-    // 51. Инициализация WebApp Telegram
+    // 56. Инициализация WebApp Telegram
     const tg = window.Telegram.WebApp;
     if (tg) {
       tg.expand();
       tg.enableClosingConfirmation();
     }
     
-    // 52. Основные элементы
+    // 57. Основные элементы
     const mainMenu = document.getElementById('mainMenu');
     const profileBtn = document.getElementById('profileBtn');
     const dailyForecastBtn = document.getElementById('dailyForecastBtn');
@@ -818,15 +854,15 @@
     const overlay = document.getElementById('overlay');
     const themeToggle = document.getElementById('themeToggle');
     
-    // 53. Панели
+    // 58. Панели
     const profilePanel = document.getElementById('profilePanel');
     const forecastPanel = document.getElementById('forecastPanel');
     
-    // 54. Кнопки закрытия панелей
+    // 59. Кнопки закрытия панелей
     const closeProfilePanel = document.getElementById('closeProfilePanel');
     const closeForecastPanel = document.getElementById('closeForecastPanel');
     
-    // 55. Форма анкеты
+    // 60. Форма анкеты
     const profileForm = document.getElementById('astroForm');
     const saveProfileBtn = document.getElementById('saveProfileBtn');
     const profileView = document.getElementById('profileView');
@@ -834,58 +870,78 @@
     const editProfileBtn = document.getElementById('editProfileBtn');
     const formProgressContainer = document.getElementById('formProgressContainer');
     
-    // 56. Прогноз
+    // 61. Прогноз
     const forecastContent = document.getElementById('forecastContent');
     const forecastDate = document.getElementById('forecastDate');
     const forecastTitle = document.getElementById('forecastTitle');
     
-    // 57. Прогресс-бар анкеты
+    // 62. Прогресс-бар анкеты
     const formProgressBar = document.getElementById('formProgressBar');
     const step1 = document.getElementById('step1');
     const step2 = document.getElementById('step2');
     const step3 = document.getElementById('step3');
     
-    // 58. Шаги анкеты
+    // 63. Шаги анкеты
     const step1Form = document.getElementById('step1Form');
     const step2Form = document.getElementById('step2Form');
     const step3Form = document.getElementById('step3Form');
     
-    // 59. Навигация по шагам
+    // 64. Навигация по шагам
     const nextStep1 = document.getElementById('nextStep1');
     const nextStep2 = document.getElementById('nextStep2');
     const prevStep2 = document.getElementById('prevStep2');
     const prevStep3 = document.getElementById('prevStep3');
     
-    // 60. Мотивирующие фразы для бонуса (мягко-ласкательные)
+    // 65. Знак зодиака
+    const zodiacDisplay = document.getElementById('zodiacDisplay');
+    const zodiacText = document.getElementById('zodiacText');
+    const zodiacIcon = document.getElementById('zodiacIcon');
+    
+    // 66. Мотивирующие фразы для бонуса (мягко-ласкательные)
     const bonusPhrases = [
       "Солнышко, сегодня твой день! Звезды сложились в твою пользу — действуй смело!",
-     "Родной человек, сегодня Вселенная шепчет: ты сильнее, чем думаешь! Верь в себя!",
-     "Любимое сердце, сегодняшний день — твой шанс! Не упусти возможность сделать шаг к мечте!",
-     "Близкий мой, звезды говорят — сегодня день маленьких чудес. Будь открыт к сюрпризам!",
-     "Теплый свет, твоя энергия сегодня на высоте! Используй этот день для важных дел!",
-     "Сокровище, сегодня идеальный момент для новых начинаний. Дерзай!",
-     "Радость моя, сегодня твоя интуиция особенно сильна. Доверься внутреннему голосу!",
-     "Ангелочек, помни — даже маленькие шаги приводят к большим целям. Ты молодец!",
-     "Звездочка, сегодня день магии и возможностей. Верь в чудеса — они рядом!",
-     "Солнышко, твои мечты ближе, чем кажется. Продолжай идти — ты на верном пути!",
-     "Душа моя, сегодня отличный день, чтобы отпустить прошлое и открыться новому!",
-     "Светлый человек, всё, что происходит сегодня, ведёт тебя к лучшей версии себя!",
-     "Родной человек, сегодня Вселенная на твоей стороне. Доверься потоку!",
-     "Сердечко, помни — ты уникален и особенный. Сегодня день проявить свою индивидуальность!",
-     "Сокровище, сегодня звезды советуют быть добрее к себе. Ты заслуживаешь любви!",
-     "Радость моя, сегодня день благодарности. Поблагодари себя за всё, что уже сделал!",
-     "Ангелочек, сегодня идеальный момент для творчества. Дай волю своей фантазии!",
-     "Звездочка, помни — ты сияешь ярче всех звёзд на небе. Будь собой!",
-     "Солнышко, сегодня день маленьких радостей. Насладись каждым моментом!",
-     "Родной человек, сегодня Вселенная посылает тебе знак — ты на правильном пути!",
-
+      "Родной человек, сегодня Вселенная шепчет: ты сильнее, чем думаешь! Верь в себя!",
+      "Любимое сердце, сегодняшний день — твой шанс! Не упусти возможность сделать шаг к мечте!",
+      "Близкий мой, звезды говорят — сегодня день маленьких чудес. Будь открыт к сюрпризам!",
+      "Теплый свет, твоя энергия сегодня на высоте! Используй этот день для важных дел!",
+      "Сокровище, сегодня идеальный момент для новых начинаний. Дерзай!",
+      "Радость моя, сегодня твоя интуиция особенно сильна. Доверься внутреннему голосу!",
+      "Ангелочек, помни — даже маленькие шаги приводят к большим целям. Ты молодец!",
+      "Звездочка, сегодня день магии и возможностей. Верь в чудеса — они рядом!",
+      "Солнышко, твои мечты ближе, чем кажется. Продолжай идти — ты на верном пути!",
+      "Душа моя, сегодня отличный день, чтобы отпустить прошлое и открыться новому!",
+      "Светлый человек, всё, что происходит сегодня, ведёт тебя к лучшей версии себя!",
+      "Родной человек, сегодня Вселенная на твоей стороне. Доверься потоку!",
+      "Сердечко, помни — ты уникален и особенный. Сегодня день проявить свою индивидуальность!",
+      "Сокровище, сегодня звезды советуют быть добрее к себе. Ты заслуживаешь любви!",
+      "Радость моя, сегодня день благодарности. Поблагодари себя за всё, что уже сделал!",
+      "Ангелочек, сегодня идеальный момент для творчества. Дай волю своей фантазии!",
+      "Звездочка, помни — ты сияешь ярче всех звёзд на небе. Будь собой!",
+      "Солнышко, сегодня день маленьких радостей. Насладись каждым моментом!",
+      "Родной человек, сегодня Вселенная посылает тебе знак — ты на правильном пути!"
     ];
     
-    // 61. Время последнего бонуса
-    const BONUS_COOLDOWN = 1 * 60 * 60 * 1000; // 3 часа в миллисекундах
+    // 67. Время последнего бонуса
+    const BONUS_COOLDOWN = 3 * 60 * 60 * 1000; // 3 часа в миллисекундах
     let lastBonusTime = parseInt(localStorage.getItem('lastBonusTime')) || 0;
     
-    // 62. Создание звездного фона
+    // 68. Иконки знаков зодиака
+    const zodiacIcons = {
+      'Овен': 'fa-fire',
+      'Телец': 'fa-bull',
+      'Близнецы': 'fa-gem',
+      'Рак': 'fa-moon',
+      'Лев': 'fa-sun',
+      'Дева': 'fa-leaf',
+      'Весы': 'fa-balance-scale',
+      'Скорпион': 'fa-scorpion',
+      'Стрелец': 'fa-arrow-right',
+      'Козерог': 'fa-mountain',
+      'Водолей': 'fa-water',
+      'Рыбы': 'fa-fish'
+    };
+    
+    // 69. Создание звездного фона
     function createStars() {
       const starsCount = 200;
       const containerWidth = window.innerWidth;
@@ -912,7 +968,7 @@
       }
     }
     
-    // 63. Определение знака зодиака по дате рождения
+    // 70. Определение знака зодиака по дате рождения
     function getZodiacSign(dateString) {
       if (!dateString) return '';
       
@@ -936,7 +992,7 @@
       return '';
     }
     
-    // 64. Получение гороскопа через API Aztro
+    // 71. Получение гороскопа через API Aztro
     async function getHoroscope(zodiacSign, period = 'today') {
       try {
         // Для демонстрации используем моковые данные
@@ -974,7 +1030,7 @@
       }
     }
     
-    // 65. Показать боковую панель
+    // 72. Показать боковую панель
     function showPanel(panel) {
       document.querySelectorAll('.side-panel').forEach(p => {
         p.classList.remove('active');
@@ -983,7 +1039,7 @@
       document.body.classList.add('panel-open');
     }
     
-    // 66. Скрыть все боковые панели
+    // 73. Скрыть все боковые панели
     function hideAllPanels() {
       document.querySelectorAll('.side-panel').forEach(panel => {
         panel.classList.remove('active');
@@ -991,7 +1047,7 @@
       document.body.classList.remove('panel-open');
     }
     
-    // 67. Обновление прогресс-бара анкеты
+    // 74. Обновление прогресс-бара анкеты
     function updateProgress(currentStep) {
       const progress = (currentStep / 3) * 100;
       formProgressBar.style.width = `${progress}%`;
@@ -1007,7 +1063,7 @@
       document.getElementById(`step${currentStep}`).classList.add('active');
     }
     
-    // 68. Переход к следующему шагу анкеты
+    // 75. Переход к следующему шагу анкеты
     function goToNextStep(currentStep, nextStep) {
       let isValid = true;
       const currentForm = document.getElementById(`step${currentStep}Form`);
@@ -1040,7 +1096,7 @@
       profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // 69. Переход к предыдущему шагу анкеты
+    // 76. Переход к предыдущему шагу анкеты
     function goToPrevStep(currentStep, prevStep) {
       document.getElementById(`step${currentStep}Form`).style.display = 'none';
       document.getElementById(`step${prevStep}Form`).style.display = 'block';
@@ -1048,7 +1104,7 @@
       profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // 70. Генерация прогноза на основе данных
+    // 77. Генерация прогноза на основе данных
     async function generateForecast(data, period = 'день') {
       const zodiac = getZodiacSign(data.birth_date);
       
@@ -1073,7 +1129,7 @@
         <div class="forecast-section">
           <h3><i class="fas fa-user-astronaut"></i> Персональные данные</h3>
           <p>Имя: ${data.name}</p>
-          <p>Знак зодиака: ${zodiac}</p>
+          <p>Знак зодиака: ${zodiac} <i class="fas ${zodiacIcons[zodiac]} zodiac-icon"></i></p>
           <p>Интерес: ${data.interest}</p>
         </div>
         
@@ -1107,7 +1163,7 @@
       return forecastHTML;
     }
     
-    // 71. Генерация персонализированных рекомендаций
+    // 78. Генерация персонализированных рекомендаций
     function getPersonalAdvice(data, horoscope, period) {
       let advice = '';
       
@@ -1131,7 +1187,7 @@
       return advice;
     }
     
-    // 72. Показать уведомление
+    // 79. Показать уведомление
     function showNotification(message, type = 'success') {
       const notification = document.createElement('div');
       notification.className = `notification ${type}`;
@@ -1146,7 +1202,7 @@
       }, 3000);
     }
     
-    // 73. Отображение данных профиля
+    // 80. Отображение данных профиля
     function displayProfileData(data) {
       if (!data || !data.name) {
         profileData.innerHTML = '<p>Анкета еще не заполнена.</p>';
@@ -1154,6 +1210,7 @@
       }
       
       const zodiac = getZodiacSign(data.birth_date);
+      const zodiacIconClass = zodiac ? zodiacIcons[zodiac] : '';
       
       profileData.innerHTML = `
         <p><strong>Имя:</strong> ${data.name}</p>
@@ -1161,13 +1218,13 @@
         <p><strong>Дата рождения:</strong> ${new Date(data.birth_date).toLocaleDateString('ru-RU')}</p>
         ${data.birth_time ? `<p><strong>Время рождения:</strong> ${data.birth_time}</p>` : ''}
         <p><strong>Город рождения:</strong> ${data.birth_city}</p>
-        <p><strong>Знак зодиака:</strong> ${zodiac || 'Не определен'}</p>
+        <p><strong>Знак зодиака:</strong> ${zodiac || 'Не определен'} ${zodiacIconClass ? `<i class="fas ${zodiacIconClass} zodiac-icon"></i>` : ''}</p>
         <p><strong>Основной интерес:</strong> ${data.interest}</p>
         <p><strong>Семейное положение:</strong> ${data.relationship}</p>
       `;
     }
     
-    // 74. Переключение между режимами просмотра и редактирования анкеты
+    // 81. Переключение между режимами просмотра и редактирования анкеты
     function toggleProfileViewMode(editMode = false) {
       if (editMode) {
         // Режим редактирования
@@ -1193,7 +1250,7 @@
       }
     }
     
-    // 75. Показать случайный бонус
+    // 82. Показать случайный бонус
     function showRandomBonus() {
       const now = Date.now();
       const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
@@ -1219,30 +1276,37 @@
       updateBonusButton();
     }
     
-    // 76. Обновить состояние кнопки бонуса
+    // 83. Обновить состояние кнопки бонуса
     function updateBonusButton() {
       const now = Date.now();
       const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
       
       if (timeLeft > 0) {
-        const hoursLeft = Math.ceil(timeLeft / (60 * 60 * 1000));
-        bonusBtn.innerHTML = `<i class="fas fa-clock"></i> До бонуса: ${hoursLeft}ч`;
+        // Вычисляем оставшееся время
+        const hours = Math.floor(timeLeft / (60 * 60 * 1000));
+        const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+        
+        // Обновляем текст кнопки
+        bonusBtn.innerHTML = `<i class="fas fa-clock"></i> До бонуса: ${hours}ч ${minutes}м`;
         bonusBtn.disabled = true;
+        
+        // Запускаем таймер для обновления каждую минуту
+        setTimeout(updateBonusButton, 60000);
       } else {
         bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
         bonusBtn.disabled = false;
       }
     }
     
-    // 77. Переключение темы (светлая/темная)
+    // 84. Переключение темы (светлая/темная)
     function toggleTheme() {
       document.documentElement.classList.toggle('light-theme');
       const isLightTheme = document.documentElement.classList.contains('light-theme');
       localStorage.setItem('theme', isLightTheme ? 'light' : 'dark');
     }
     
-    // 78. Инициализация приложения
-        function initApp() {
+    // 85. Инициализация приложения
+    function initApp() {
       createStars();
       
       // Проверяем сохраненную тему
@@ -1285,7 +1349,7 @@
       updateBonusButton();
     }
     
-    // 79. Обработчики событий
+    // 86. Обработчики событий
     profileBtn.addEventListener('click', () => {
       showPanel(profilePanel);
       
@@ -1413,16 +1477,17 @@
     document.getElementById('birth_date').addEventListener('change', function() {
       const zodiac = getZodiacSign(this.value);
       if (zodiac) {
-        document.getElementById('zodiacDisplay').style.display = 'inline-block';
-        document.getElementById('zodiacText').textContent = zodiac;
+        zodiacDisplay.style.display = 'inline-flex';
+        zodiacText.textContent = zodiac;
+        zodiacIcon.className = `fas ${zodiacIcons[zodiac]} zodiac-icon`;
       } else {
-        document.getElementById('zodiacDisplay').style.display = 'none';
+        zodiacDisplay.style.display = 'none';
       }
     });
     
     // Поделиться через Telegram
     document.getElementById('shareTelegram').addEventListener('click', () => {
-      const text = `Мой астропрогноз на сегодня:\n${forecastContent.textContent.substring(0, 200)}...\n\nПолный прогноз в приложении AstroPred!`;
+      const text = `Хочу поделиться с тобой этим астроботом — реально интересно! Прогноз на день, месяц, совместимость и ещё куча всего.\n\nВот ссылка: @astropred_bot`;
       if (tg && tg.isTelegram) {
         tg.sendData(text);
       } else {
@@ -1443,22 +1508,23 @@
       // Генерируем случайный реферальный код
       const refCode = 'ref' + Math.floor(1000 + Math.random() * 9000);
       const shareUrl = `https://t.me/astropred_bot?start=${refCode}`;
+      const shareText = `Хочу поделиться с тобой этим астроботом — реально интересно! Прогноз на день, месяц, совместимость и ещё куча всего.\n\nВот ссылка: @astropred_bot`;
       
       if (navigator.share) {
         navigator.share({
           title: 'AstroPred - Астрологический помощник',
-          text: 'Попробуйте это приложение - AstroPred!',
+          text: shareText,
           url: shareUrl
         }).catch(console.error);
       } else if (tg && tg.isTelegram) {
-        tg.sendData(shareUrl);
+        tg.sendData(shareText);
       } else {
         // Если Web Share API не поддерживается, просто копируем ссылку в буфер обмена
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          showNotification('Ссылка скопирована в буфер обмена!', 'success');
+        navigator.clipboard.writeText(shareText).then(() => {
+          showNotification('Сообщение скопировано в буфер обмена!', 'success');
         }).catch(() => {
           // Если не удалось скопировать, показываем ссылку
-          prompt('Скопируйте эту ссылку:', shareUrl);
+          prompt('Скопируйте это сообщение:', shareText);
         });
       }
     });
