@@ -418,6 +418,20 @@
       flex: 1; /* Равномерно распределяет ширину */
       min-width: 0; /* Позволяет кнопкам сжиматься */
     }
+
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: space-between;
+    }
+
+    .share-buttons .btn {
+      width: 48%; /* Фиксированная ширина с небольшим отступом */
+      min-width: 0; /* Позволяет кнопкам сжиматься */
+      padding: 10px 5px; /* Уменьшенные отступы */
+      font-size: 14px; /* Уменьшенный размер шрифта */
+    }
     
     /* 38. Кнопки внизу экрана */
     .bottom-buttons {
@@ -509,36 +523,13 @@
     }
     
     /* 43. Адаптивные стили */
-      @media (max-width: 400px) {
-      :root {
-        --panel-width: 95%;
-      }
-      .forecast-container {
-        padding: 10px;
-      }
-    }
-      
-      .btn {
-        padding: 12px 15px;
-        font-size: 14px;
-      }
-      
-      form {
-        padding: 15px;
-      }
-      
-      .forecast-container {
-        padding: 15px;
-      }
-    }
-    
     @media (max-width: 480px) {
-      :root {
-        --panel-width: 90%;
-      }
-      
       .share-buttons {
-        flex-direction: column;
+        flex-direction: row; /* Убедись, что кнопки в ряд */
+        gap: 8px;
+      }
+      .share-buttons .btn {
+        font-size: 12px; /* Еще меньше шрифт на очень маленьких экранах */
       }
     }
     @media (max-width: 480px) {
