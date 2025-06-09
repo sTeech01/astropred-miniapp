@@ -952,16 +952,16 @@
       return '';
     }
     
-    // 64. Получение гороскопа через API Aztro
+    // 64. Получение гороскопа через альтернативный API
     async function getHoroscope(zodiacSign, period = 'today') {
       try {
-        const response = await fetch(`https://aztro.sameerkumar.website/?sign=${zodiacSign}&day=${period}`, {
+        const response = await fetch(`https://aztro-api.zodiacal.workers.dev/?sign=${zodiacSign}&day=${period}`, {
           method: 'POST'
         });
 
         if (!response.ok) {
-          throw new Error('Ошибка запроса к API');
-        }
+          throw new Error('Ошибка запроса к альтернативному API');
+       }
 
         const data = await response.json();
 
