@@ -508,10 +508,14 @@
     }
     
     /* 43. Адаптивные стили */
-    @media (max-width: 768px) {
+      @media (max-width: 400px) {
       :root {
-        --panel-width: 85%;
+        --panel-width: 95%;
       }
+      .forecast-container {
+        padding: 10px;
+      }
+    }
       
       .btn {
         padding: 12px 15px;
