@@ -1227,7 +1227,7 @@
     }
     
     // 78. Инициализация приложения
-    function initApp() {
+        function initApp() {
       createStars();
       
       // Проверяем сохраненную тему
@@ -1238,6 +1238,7 @@
       
       // Проверяем, есть ли сохраненные данные
       const savedData = localStorage.getItem('astroProfileData');
+      
       if (savedData) {
         const data = JSON.parse(savedData);
         
@@ -1248,14 +1249,13 @@
           }
         }
         
-        // Показываем данные профиля
+        // Показываем данные профиля в режиме просмотра
         displayProfileData(data);
+        toggleProfileViewMode(false);
       } else {
-        profileData.innerHTML = '<p>Анкета еще не заполнена.</p>';
+        // Если данных нет - сразу показываем форму для заполнения
+        toggleProfileViewMode(true);
       }
-      
-      // Устанавливаем режим просмотра по умолчанию
-      toggleProfileViewMode(false);
       
       // Инициализация автодополнения для города
       new Awesomplete(document.getElementById('birth_city'), {
@@ -1273,7 +1273,16 @@
     // 79. Обработчики событий
     profileBtn.addEventListener('click', () => {
       showPanel(profilePanel);
-      toggleProfileViewMode(false);
+      
+      // Проверяем, есть ли сохраненные данные
+      const savedData = localStorage.getItem('astroProfileData');
+      if (savedData) {
+        // Если есть - показываем режим просмотра
+        toggleProfileViewMode(false);
+      } else {
+        // Если нет - показываем форму для заполнения
+        toggleProfileViewMode(true);
+      }
     });
     
     // Обработчик кнопки редактирования профиля
