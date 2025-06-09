@@ -284,7 +284,18 @@
       color: var(--text-color);
       transition: all var(--transition-speed) ease;
     }
-    
+
+    /* Специфика для select: добавим стрелочку */
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg fill='%23cccccc' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px 18px;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+  
     /* 24. Состояния полей ввода */
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary-color);
@@ -431,6 +442,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      padding-bottom: env(safe-area-inset-bottom); /* защита от вырезов */
     }
     
     /* 39. Навигация по форме */
@@ -612,6 +624,10 @@
         </use>
       </svg>
       <div class="logo-text">AstroPred</div>
+            <span id="themeIcon" style="margin-top: 10px; font-size: 20px; display: block;">
+        <i class="fas fa-moon"></i>
+      </span>
+
     </div>
     
     <div class="main-menu">
@@ -939,35 +955,23 @@
     // 64. Получение гороскопа через API Aztro
     async function getHoroscope(zodiacSign, period = 'today') {
       try {
-        // Для демонстрации используем моковые данные
-        const mockData = {
-          today: {
-            description: "Сегодня удачный день для новых начинаний. Звезды благосклонны к вам, особенно в профессиональной сфере. Возможны неожиданные встречи, которые могут изменить вашу жизнь.",
-            mood: "Оптимистичный",
-            color: "Фиолетовый",
-            lucky_number: "7",
-            compatibility: "Близнецы"
-          },
-          week: {
-            description: "На этой неделе вас ждут важные события. В середине недели возможны финансовые поступления. Будьте внимательны к знакам судьбы - они укажут вам верное направление.",
-            mood: "Энергичный",
-            color: "Золотой",
-            lucky_number: "14",
-            compatibility: "Весы"
-          },
-          month: {
-            description: "Этот месяц принесет вам важные изменения. Первая половина месяца благоприятна для любовных отношений, вторая - для карьерного роста. Старайтесь сохранять баланс между работой и личной жизнью.",
-            mood: "Уравновешенный",
-            color: "Синий",
-            lucky_number: "22",
-            compatibility: "Стрелец"
-          }
+        const response = await fetch(`https://aztro.sameerkumar.website/?sign=${zodiacSign}&day=${period}`, {
+          method: 'POST'
+        });
+
+        if (!response.ok) {
+          throw new Error('Ошибка запроса к API');
+        }
+
+        const data = await response.json();
+
+        return {
+          description: data.description,
+          mood: data.mood || 'Не указано',
+          color: data.color || 'Не указано',
+          lucky_number: data.lucky_number || '—',
+          compatibility: data.compatibility || 'Не указано'
         };
-        
-        // Имитация задержки API
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        return mockData[period];
       } catch (error) {
         console.error('Ошибка:', error);
         return null;
@@ -1009,37 +1013,22 @@
     
     // 68. Переход к следующему шагу анкеты
     function goToNextStep(currentStep, nextStep) {
-      let isValid = true;
       const currentForm = document.getElementById(`step${currentStep}Form`);
-      
-      currentForm.querySelectorAll('[required]').forEach(field => {
-        if (!field.value) {
-          isValid = false;
-          const errorElement = document.getElementById(`${field.id}-error`);
-          if (errorElement) {
-            errorElement.style.display = 'block';
-          }
+      const inputs = currentForm.querySelectorAll('input, select');
+
+      for (let field of inputs) {
+        if (!field.checkValidity()) {
+          field.reportValidity(); // Показывает встроенное сообщение об ошибке
+          return;
         }
-      });
-      
-      if (!isValid) {
-        currentForm.querySelectorAll('[required]').forEach(field => {
-          if (!field.value) {
-            field.style.animation = 'shake 0.5s';
-            setTimeout(() => {
-              field.style.animation = '';
-            }, 500);
-          }
-        });
-        return;
       }
-      
+
       currentForm.style.display = 'none';
       document.getElementById(`step${nextStep}Form`).style.display = 'block';
       updateProgress(nextStep);
       profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     // 69. Переход к предыдущему шагу анкеты
     function goToPrevStep(currentStep, prevStep) {
       document.getElementById(`step${currentStep}Form`).style.display = 'none';
@@ -1058,8 +1047,6 @@
       
       // Определяем период для API
       let apiPeriod = 'today';
-      if (period === 'неделю') apiPeriod = 'week';
-      if (period === 'месяц') apiPeriod = 'month';
       
       // Получаем гороскоп из API
       const horoscope = await getHoroscope(zodiac.toLowerCase(), apiPeriod);
@@ -1234,44 +1221,52 @@
       }
     }
     
-    // 77. Переключение темы (светлая/темная)
+    // 77. Переключение темы (светлая/тёмная) с иконкой
     function toggleTheme() {
-      document.documentElement.classList.toggle('light-theme');
-      const isLightTheme = document.documentElement.classList.contains('light-theme');
-      localStorage.setItem('theme', isLightTheme ? 'light' : 'dark');
+      const root = document.documentElement;
+      const isLight = root.classList.toggle('light-theme');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+      // Обновляем иконку
+      const themeIcon = document.getElementById('themeIcon');
+      if (themeIcon) {
+        themeIcon.innerHTML = isLight
+          ? '<i class="fas fa-sun"></i>'
+          : '<i class="fas fa-moon"></i>';
+      }
     }
     
     // 78. Инициализация приложения
-        function initApp() {
-      createStars();
-      
-      // Проверяем сохраненную тему
+    function initApp() {
+      // Сначала применяем сохранённую тему
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         document.documentElement.classList.add('light-theme');
       }
-      
-      // Проверяем, есть ли сохраненные данные
+
+      // Затем создаём звёзды (с учётом темы)
+      createStars();
+
+      // Проверяем, есть ли сохранённые данные анкеты
       const savedData = localStorage.getItem('astroProfileData');
-      
       if (savedData) {
         const data = JSON.parse(savedData);
-        
-        // Заполняем форму
+
+        // Заполняем форму сохранёнными данными
         for (const key in data) {
           if (profileForm.elements[key]) {
-            profileForm.elements[key].value = data[key];
+           profileForm.elements[key].value = data[key];
           }
         }
-        
-        // Показываем данные профиля в режиме просмотра
+
+        // Показываем данные в режиме просмотра
         displayProfileData(data);
         toggleProfileViewMode(false);
       } else {
-        // Если данных нет - сразу показываем форму для заполнения
+        // Если данных нет — открываем форму
         toggleProfileViewMode(true);
       }
-      
+
       // Инициализация автодополнения для города
       new Awesomplete(document.getElementById('birth_city'), {
         list: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 
@@ -1280,11 +1275,11 @@
         minChars: 1,
         maxItems: 10
       });
-      
+
       // Обновляем состояние кнопки бонуса
       updateBonusButton();
     }
-    
+
     // 79. Обработчики событий
     profileBtn.addEventListener('click', () => {
       showPanel(profilePanel);
