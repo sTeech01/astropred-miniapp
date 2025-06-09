@@ -1438,25 +1438,22 @@
       // Генерируем случайный реферальный код
       const refCode = 'ref' + Math.floor(1000 + Math.random() * 9000);
       const shareUrl = `https://t.me/astropred_bot?start=${refCode}`;
-      
+
       if (navigator.share) {
         navigator.share({
-          title: 'AstroPred - Астрологический помощник',
-          text: 'Попробуйте это приложение - AstroPred!',
+          title: 'AstroPred — Астрологический помощник',
+          text: 'Попробуй AstroPred — это работает магически ✨',
           url: shareUrl
         }).catch(console.error);
       } else if (tg && tg.isTelegram) {
         tg.sendData(shareUrl);
       } else {
-        // Если Web Share API не поддерживается, просто копируем ссылку в буфер обмена
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          showNotification('Ссылка скопирована в буфер обмена!', 'success');
-        }).catch(() => {
-          // Если не удалось скопировать, показываем ссылку
-          prompt('Скопируйте эту ссылку:', shareUrl);
-        });
+        navigator.clipboard.writeText(shareUrl)
+          .then(() => showNotification('Ссылка скопирована в буфер обмена!', 'success'))
+          .catch(() => showNotification(`Ссылка для приглашения: ${shareUrl}`, 'info'));
       }
     });
+
     
     // Показать бонусное сообщение
     bonusBtn.addEventListener('click', showRandomBonus);
