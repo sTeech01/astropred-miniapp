@@ -368,11 +368,6 @@
       border: 1px solid rgba(255,255,255,0.1);
       animation: slideUp 0.5s ease forwards;
     }
-    .forecast-container {
-      position: relative; /* Добавляем */
-      min-height: 300px; /* Минимальная высота */
-      padding-bottom: 80px; /* Место для кнопок */
-    }
     
     /* 3.31 Заголовок прогноза */
     .forecast-header {
@@ -384,11 +379,6 @@
     /* 3.32 Контент прогноза */
     .forecast-content {
       line-height: 1.6;
-    }
-    .forecast-content {
-      line-height: 1.6;
-      max-height: calc(100% - 120px); /* Ограничиваем высоту */
-      overflow-y: auto; /* Добавляем прокрутку при необходимости */
     }
     
     /* 3.33 Секции прогноза */
@@ -444,15 +434,6 @@
     .share-buttons .btn {
       flex: 1;
       min-width: 0;
-    }
-    
-    .share-buttons {
-      position: absolute; /* Фиксируем позицию */
-      bottom: 20px; /* Отступ снизу */
-      left: 20px; /* Отступ слева */
-      right: 20px; /* Отступ справа */
-      display: flex;
-      gap: 10px;
     }
     
     /* 3.39 Кнопки внизу экрана */
@@ -554,16 +535,7 @@
         padding: 10px;
       }
     }
-    @media (max-width: 480px) {
-      .forecast-container {
-        min-height: 60vh; /* Используем viewport height */
-        padding-bottom: 70px; /* Уменьшаем отступ */
-      }
-  
-      .share-buttons {
-        flex-direction: column; /* Кнопки в столбик на маленьких экранах */
-      }
-    }
+      
     @media (max-width: 480px) {
       :root {
         --panel-width: 90%;
