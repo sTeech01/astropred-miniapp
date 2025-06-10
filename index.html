@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <!-- 1. Мета-теги для кодировки и адаптивности -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AstroPred Mini App</title>
+  <!-- Блок 1: Голова документа с мета-тегами и стилями -->
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroPred</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      .hidden { display: none; }
+      .form-section { display: none; }
+      .form-section.active { display: block; }
+      .bonus-content, .share-message { color: #16a34a; font-style: italic; }
+      .bonus-container, .share-container { position: relative; min-height: 60px; }
+      .bonus-feedback, .share-feedback { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; }
+    </style>
+  </head>
   
   <!-- 2. Подключение библиотек -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -654,20 +666,20 @@
       </span>
     </div>
     
-    <!-- 6. Основные кнопки меню -->
-    <div class="main-menu">
-      <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
-        <i class="fas fa-user-edit"></i> Анкета
-      </button>
-      <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
-        <i class="fas fa-sun"></i> Прогноз на день
-      </button>
-      <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
-        <i class="fas fa-calendar-week"></i> Прогноз на неделю
-      </button>
-      <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
-        <i class="fas fa-calendar-alt"></i> Прогноз на месяц
-      </button>
+    <!-- Блок 6: Секция кнопок бонуса и шаринга -->
+    <div class="mt-6 flex justify-center space-x-6">
+      <div class="bonus-container">
+        <button onclick="getBonus()" class="bg-purple-500 text-white p-3 rounded-lg hover:bg-purple-600">
+          <i class="fas fa-gift mr-1"></i> Получить бонус
+        </button>
+        <p id="bonus-feedback" class="bonus-content bonus-feedback hidden mt-2"></p>
+      </div>
+      <div class="share-container">
+        <button onclick="shareApp()" class="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600">
+          <i class="fas fa-share-alt mr-1"></i> Поделиться приложением
+        </button>
+        <p id="share-feedback" class="share-message share-feedback hidden mt-2"></p>
+      </div>
     </div>
     
     <!-- 7. Оверлей для бонусного сообщения -->
@@ -841,8 +853,68 @@
   </div>
 
   <!-- 15. Подключение библиотеки автодополнения -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
-  
+  <!-- Блок 15: JavaScript для управления формой, прогнозами, бонусом и шарингом -->
+  <script>
+    // Показать нужную секцию
+    function showSection(sectionId) {
+      document.querySelectorAll('.form-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+    }
+
+    // Получение бонуса
+    function getBonus() {
+      const name = localStorage.getItem('name') || 'Друг';
+      const bonusText = `Персональный совет для ${name}: Доверяйте интуиции и будьте открыты к возможностям!`;
+      const bonusFeedback = document.getElementById('bonus-feedback');
+      bonusFeedback.textContent = bonusText;
+      bonusFeedback.classList.remove('hidden');
+      setTimeout(() => bonusFeedback.classList.add('hidden'), 3000);
+    }
+
+    // Поделиться приложением
+    function shareApp() {
+      const shareText = "Хочу поделиться с тобой этим астроботом — реально интересно! Прогноз на день, месяц, совместимость и ещё куча всего. Вот ссылка: @astropred_bot";
+      const shareUrl = "https://t.me/astropred_bot";
+      const feedback = document.getElementById('share-feedback');
+      if (navigator.share) {
+        navigator.share({
+          title: 'AstroPred',
+          text: shareText,
+          url: shareUrl
+        }).then(() => {
+          feedback.textContent = 'Успешно поделились приложением!';
+          feedback.classList.remove('hidden');
+          setTimeout(() => feedback.classList.add('hidden'), 3000);
+        }).catch(() => {
+          feedback.textContent = 'Ошибка при попытке поделиться. Попробуйте через Telegram или WhatsApp.';
+          feedback.classList.remove('hidden');
+          setTimeout(() => feedback.classList.add('hidden'), 3000);
+        });
+      } else {
+        navigator.clipboard.writeText(shareText + ' ' + shareUrl).then(() => {
+          feedback.textContent = 'Текст скопирован в буфер обмена! Вставьте его в мессенджер.';
+          feedback.classList.remove('hidden');
+          setTimeout(() => feedback.classList.add('hidden'), 3000);
+        }).catch(() => {
+          feedback.textContent = 'Не удалось скопировать. Используйте: ' + shareText + ' ' + shareUrl;
+          feedback.classList.remove('hidden');
+          setTimeout(() => feedback.classList.add('hidden'), 5000);
+        });
+      }
+    }
+
+    // Заглушки для остальных функций (добавим позже)
+    function nextStep(step) { console.log('Next step:', step); }
+    function prevStep(step) { console.log('Prev step:', step); }
+    function validateStep1() { return true; }
+    function validateStep2() { return true; }
+    function saveForm() { console.log('Form saved'); }
+    function showFormData() { console.log('Showing form data'); }
+    function editForm() { console.log('Editing form'); }
+  </script>
+
   <!-- 16. Основной JavaScript код -->
   <script>
     // 16.1 Инициализация WebApp Telegram
