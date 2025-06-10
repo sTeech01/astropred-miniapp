@@ -1191,11 +1191,26 @@
     
     // 16.23 Показать уведомление
     function showNotification(message, type = 'success') {
+      // Удаляем предыдущие уведомления того же типа
+      document.querySelectorAll(`.notification.${type}`).forEach(el => el.remove());
+  
+      const icons = {
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        info: 'fa-info-circle',
+        warning: 'fa-exclamation-triangle'
+      };
+  
       const notification = document.createElement('div');
       notification.className = `notification ${type}`;
-      notification.textContent = message;
+      notification.innerHTML = `
+        <i class="fas ${icons[type] || 'fa-info-circle'}"></i>
+        <span>${message}</span>
+      `;
+  
       document.body.appendChild(notification);
-      
+  
+      // Автоматическое скрытие через 3 секунды
       setTimeout(() => {
         notification.classList.add('fade-out');
         setTimeout(() => {
@@ -1298,6 +1313,12 @@
       const isLight = root.classList.toggle('light-theme');
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
 
+      // Добавляем класс для анимации
+      document.body.classList.add('theme-changing');
+      setTimeout(() => {
+        document.body.classList.remove('theme-changing');
+      }, 300);
+
       // Обновляем иконку
       const themeIcon = document.getElementById('themeIcon');
       if (themeIcon) {
@@ -1309,46 +1330,67 @@
     
     // 16.29 Инициализация приложения
     function initApp() {
-      // Сначала применяем сохранённую тему
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-      }
-
-      // Затем создаём звёзды (с учётом темы)
-      createStars();
-
-      // Проверяем, есть ли сохранённые данные анкеты
-      const savedData = localStorage.getItem('astroProfileData');
-      if (savedData) {
-        const data = JSON.parse(savedData);
-
-        // Заполняем форму сохранёнными данными
-        for (const key in data) {
-          if (profileForm.elements[key]) {
-           profileForm.elements[key].value = data[key];
-          }
+      try {
+        // Сначала применяем сохранённую тему
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.documentElement.classList.add('light-theme');
         }
 
-        // Показываем данные в режиме просмотра
-        displayProfileData(data);
-        toggleProfileViewMode(false);
-      } else {
-        // Если данных нет — открываем форму
-        toggleProfileViewMode(true);
+        // Затем создаём звёзды (с учётом темы)
+        createStars();
+
+        // Проверяем, есть ли сохранённые данные анкеты
+        const savedData = localStorage.getItem('astroProfileData');
+        if (savedData) {
+          try {
+            const data = JSON.parse(savedData);
+        
+            // Проверяем, что данные валидны
+            if (data && data.name && data.birth_date) {
+              // Заполняем форму сохранёнными данными
+              for (const key in data) {
+                if (profileForm.elements[key]) {
+                  profileForm.elements[key].value = data[key];
+                }
+              }
+
+              // Показываем данные в режиме просмотра
+              displayProfileData(data);
+              toggleProfileViewMode(false);
+            } else {
+              // Если данные невалидны - открываем форму
+              toggleProfileViewMode(true);
+              localStorage.removeItem('astroProfileData');
+            }
+          } catch (e) {
+            console.error('Ошибка парсинга данных:', e);
+            toggleProfileViewMode(true);
+            localStorage.removeItem('astroProfileData');
+          }
+        } else {
+          // Если данных нет — открываем форму
+          toggleProfileViewMode(true);
+        }
+
+        // Инициализация автодополнения для города
+        if (document.getElementById('birth_city')) {
+          new Awesomplete(document.getElementById('birth_city'), {
+            list: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 
+                   'Челябинск', 'Самара', 'Омск', 'Ростов-на-Дону', 'Уфа', 'Красноярск', 'Пермь', 'Воронеж', 
+                   'Волгоград', 'Краснодар', 'Саратов', 'Тюмень', 'Тольятти', 'Ижевск', 'Барнаул', 'Ульяновск'],
+            minChars: 1,
+            maxItems: 10
+          });
+        }
+
+        // Обновляем состояние кнопки бонуса
+        updateBonusButton();
+      } catch (error) {
+        console.error('Ошибка инициализации:', error);
+        // Показываем сообщение об ошибке
+        showNotification('Произошла ошибка при загрузке приложения', 'error');
       }
-
-      // Инициализация автодополнения для города
-      new Awesomplete(document.getElementById('birth_city'), {
-        list: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 
-               'Челябинск', 'Самара', 'Омск', 'Ростов-на-Дону', 'Уфа', 'Красноярск', 'Пермь', 'Воронеж', 
-               'Волгоград', 'Краснодар', 'Саратов', 'Тюмень', 'Тольятти', 'Ижевск', 'Барнаул', 'Ульяновск'],
-        minChars: 1,
-        maxItems: 10
-      });
-
-      // Обновляем состояние кнопки бонуса
-      updateBonusButton();
     }
 
     // 16.30 Обработчики событий
