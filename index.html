@@ -537,10 +537,29 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translate(-50%, 20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes themeChange {
+      from { opacity: 0.8; }
+      to { opacity: 1; }
+    }
+
+    .theme-changing {
+      animation: themeChange 0.3s ease;
     }
     
     /* 3.44 Адаптивные стили */
@@ -1109,62 +1128,78 @@
       profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
+
     // 16.21 Генерация прогноза на основе данных
     async function generateForecast(data, period = 'день') {
-      const zodiac = getZodiacSign(data.birth_date);
-      
-      if (!zodiac) {
-        return '<p>Не удалось определить знак зодиака. Пожалуйста, проверьте дату рождения.</p>';
-      }
-      
-      // Определяем период для API
-      let apiPeriod = 'today';
-      if (period === 'неделю') apiPeriod = 'week';
-      if (period === 'месяц') apiPeriod = 'month';
-      
-      // Получаем гороскоп из API
-      const horoscope = await getHoroscope(zodiac, apiPeriod);
-      
-      if (!horoscope) {
-        return '<p>Не удалось получить прогноз. Пожалуйста, попробуйте позже.</p>';
-      }
-      
-      // Формируем HTML прогноза
-      let forecastHTML = `
-        <div class="forecast-section">
-          <h3><i class="fas fa-user-astronaut"></i> Персональные данные</h3>
-          <p>Имя: ${data.name}</p>
-          <p>Знак зодиака: ${zodiac}</p>
-          <p>Интерес: ${data.interest}</p>
-        </div>
-        
-        <div class="forecast-section">
-          <h3><i class="fas fa-star"></i> Основной прогноз</h3>
-          <p>${horoscope.description}</p>
-      `;
-      
-      if (period === 'день') {
-        forecastHTML += `
-          <p><strong>Дата прогноза:</strong> ${horoscope.date}</p>
-        `;
-      }
-      
-      forecastHTML += `</div>`;
-      
-      // Добавляем персонализированные рекомендации
-      forecastHTML += `
-        <div class="forecast-section">
-          <h3><i class="fas fa-lightbulb"></i> Персональные рекомендации</h3>
-          <p>${getPersonalAdvice(data, horoscope, period)}</p>
-        </div>
-      `;
-      
-      // Устанавливаем заголовок прогноза
-      forecastTitle.innerHTML = `<i class="fas fa-crystal-ball"></i> Ваш персональный астропрогноз на ${period}`;
-      
-      return forecastHTML;
-    }
+      try {
+        const zodiac = getZodiacSign(data.birth_date);
     
+        if (!zodiac) {
+          return '<p>Не удалось определить знак зодиака. Пожалуйста, проверьте дату рождения.</p>';
+        }
+    
+        // Проверяем кэш
+        const cacheKey = `${zodiac}-${period}-${new Date().toLocaleDateString()}`;
+        const cached = sessionStorage.getItem(cacheKey);
+    
+        if (cached) {
+          return cached;
+        }
+    
+        // Определяем период для API
+        let apiPeriod = 'today';
+        if (period === 'неделю') apiPeriod = 'week';
+        if (period === 'месяц') apiPeriod = 'month';
+    
+        // Получаем гороскоп
+        const horoscope = await getHoroscope(zodiac, apiPeriod);
+    
+        if (!horoscope) {
+          return '<p>Не удалось получить прогноз. Пожалуйста, попробуйте позже.</p>';
+        }
+    
+        // Формируем HTML прогноза
+        let forecastHTML = `
+          <div class="forecast-section">
+            <h3><i class="fas fa-user-astronaut"></i> Персональные данные</h3>
+            <p>Имя: ${data.name}</p>
+            <p>Знак зодиака: ${zodiac}</p>
+            <p>Интерес: ${data.interest}</p>
+          </div>
+      
+          <div class="forecast-section">
+            <h3><i class="fas fa-star"></i> Основной прогноз</h3>
+            <p>${horoscope.description}</p>
+        `;
+    
+        if (period === 'день') {
+          forecastHTML += `
+            <p><strong>Дата прогноза:</strong> ${horoscope.date}</p>
+          `;
+        }
+    
+        forecastHTML += `</div>`;
+    
+        // Добавляем персонализированные рекомендации
+        forecastHTML += `
+          <div class="forecast-section">
+            <h3><i class="fas fa-lightbulb"></i> Персональные рекомендации</h3>
+            <p>${getPersonalAdvice(data, horoscope, period)}</p>
+          </div>
+        `;
+    
+        // Сохраняем в кэш
+        sessionStorage.setItem(cacheKey, forecastHTML);
+    
+        // Устанавливаем заголовок прогноза
+        forecastTitle.innerHTML = `<i class="fas fa-crystal-ball"></i> Ваш персональный астропрогноз на ${period}`;
+    
+        return forecastHTML;
+      } catch (error) {
+        console.error('Ошибка генерации прогноза:', error);
+        return '<p>Произошла ошибка при формировании прогноза. Пожалуйста, попробуйте позже.</p>';
+      }
+    }
     // 16.22 Генерация персонализированных рекомендаций
     function getPersonalAdvice(data, horoscope, period) {
       let advice = '';
