@@ -554,7 +554,16 @@
         padding: 10px;
       }
     }
-      
+    @media (max-width: 480px) {
+      .forecast-container {
+        min-height: 60vh; /* Используем viewport height */
+        padding-bottom: 70px; /* Уменьшаем отступ */
+      }
+  
+      .share-buttons {
+        flex-direction: column; /* Кнопки в столбик на маленьких экранах */
+      }
+    }
     @media (max-width: 480px) {
       :root {
         --panel-width: 90%;
