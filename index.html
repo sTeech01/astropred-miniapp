@@ -195,15 +195,22 @@
     
     /* 3.17.1 Добавленные стили для кнопки бонуса */
     #bonusBtn.disabled {
-      background-color: #cccccc !important;
-      color: #666666 !important;
-      cursor: not-allowed;
-    }
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed;
+  position: relative;
+}
 
-    #bonusTimer {
-      font-size: 12px;
-      margin-top: 5px;
-    }
+#bonusTimer {
+  font-size: 10px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+}
 
     /* 3.18 Стили для разных типов кнопок */
     .btn-success {
@@ -1053,6 +1060,19 @@
       margin-right: 10px;
       transform: translateX(-10px);
     }
+    #themeToggleBtn {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+    }
+
+#themeToggleBtn:hover {
+  transform: scale(1.1);
+}
   </style>
 </head>
 <body>
@@ -1068,11 +1088,20 @@
   <!-- 6. Главное меню -->
   <div id="mainMenu">
       <!-- Добавленный заголовок -->
-        <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 10px rgba(147, 112, 219, 0.5); letter-spacing: 2px;">
-            ASTRODAMUS
-          </h1>
-        </div>
+  <div style="text-align: center; margin-bottom: 20px;">
+    <h1 style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 10px rgba(147, 112, 219, 0.5); letter-spacing: 2px;">
+      ASTRODAMUS
+    </h1>
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+      <div class="stars-counter" id="starsCounter" title="Ваши звезды">
+        <i class="fas fa-star"></i>
+        <span id="starsCount">0</span>
+      </div>
+      <button id="themeToggleBtn" aria-label="Сменить тему">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+    </div>
+  </div>
 
     <!-- 7. Основные кнопки меню в стиле iOS -->
     <div class="main-menu main-menu-2x4">
@@ -2574,51 +2603,47 @@
     }
     
     // 21.40 Обновить состояние кнопки бонуса
-  function updateBonusButton() {
-    const now = Date.now();
-    const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
-    
-    if (timeLeft > 0) {
-      bonusBtn.disabled = true;
-      bonusBtn.classList.add('disabled');
-      bonusBtn.classList.remove('btn-pulse');
-    } else {
-      bonusBtn.disabled = false;
-      bonusBtn.classList.remove('disabled');
-      bonusBtn.classList.add('btn-pulse');
-      bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
-    }
-  }
+// 21.40 Обновить состояние кнопки бонуса (новая версия с таймером)
+function updateBonusButton() {
+  const now = Date.now();
+  const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
   
-    // Запуск таймера обратного отсчета
-  function startBonusTimer() {
-    const endTime = lastBonusTime + BONUS_COOLDOWN;
+  if (timeLeft > 0) {
+    bonusBtn.disabled = true;
+    bonusBtn.classList.add('disabled');
+    bonusBtn.classList.remove('btn-pulse');
     
-    function updateTimer() {
-      const now = Date.now();
-      const timeLeft = endTime - now;
-      
-      if (timeLeft <= 0) {
-        clearInterval(timer);
-        updateBonusButton();
-        return;
-      }
-      
-      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-      
-      bonusBtn.innerHTML = `
-        <i class="fas fa-clock"></i> До бонуса: 
-        ${hours.toString().padStart(2, '0')}:
-        ${minutes.toString().padStart(2, '0')}:
-        ${seconds.toString().padStart(2, '0')}
-      `;
+    // Добавляем таймер на кнопку
+    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    
+    bonusBtn.innerHTML = `
+      <i class="fas fa-gift"></i> Бонус
+      <div id="bonusTimer">
+        ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}
+      </div>
+    `;
+    
+    // Обновляем таймер каждую секунду
+    if (window.bonusTimerInterval) {
+      clearInterval(window.bonusTimerInterval);
     }
     
-    updateTimer(); // Первое обновление
-    const timer = setInterval(updateTimer, 1000);
+    window.bonusTimerInterval = setInterval(() => {
+      updateBonusButton();
+    }, 1000);
+  } else {
+    bonusBtn.disabled = false;
+    bonusBtn.classList.remove('disabled');
+    bonusBtn.classList.add('btn-pulse');
+    bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
+    
+    if (window.bonusTimerInterval) {
+      clearInterval(window.bonusTimerInterval);
+    }
   }
+}
     // 21.41 Переключение темы (светлая/тёмная) с иконкой
     function toggleTheme() {
       const root = document.documentElement;
