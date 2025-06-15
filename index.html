@@ -59,6 +59,7 @@
       overflow-x: hidden;
       min-height: 100vh;
       line-height: 1.5;
+      padding-bottom: 80px; /* Уменьшено для поднятия кнопок вверх */
     }
     
     /* 3.4 Контейнер для звездного фона */
@@ -93,7 +94,7 @@
       transition: all var(--transition-speed) ease;
       position: relative;
       z-index: 1;
-      padding-bottom: 120px;
+      padding-bottom: 20px; /* Уменьшено для поднятия кнопок вверх */
       max-width: 600px;
       margin: 0 auto;
     }
@@ -109,8 +110,8 @@
     .main-menu {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
+      gap: 10px; /* Уменьшен отступ между кнопками */
+      margin-top: 10px; /* Уменьшен отступ сверху */
     }
     
     /* 3.10 Боковая панель */
@@ -155,10 +156,10 @@
     .btn {
       position: relative;
       overflow: hidden;
-      padding: 15px 10px;
-      border-radius: 18px;
+      padding: 8px 5px; /* Уменьшен padding */
+      border-radius: 12px; /* Уменьшен радиус */
       border: none;
-      font-size: 14px;
+      font-size: 12px; /* Уменьшен размер шрифта */
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -166,20 +167,20 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 5px; /* Уменьшен отступ между иконкой и текстом */
       background-color: var(--card-color);
       color: var(--text-color);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      height: 90px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Уменьшена тень */
+      height: 60px; /* Уменьшена высота кнопки */
       text-align: center;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.1);
     }
     
     /* 3.14 Состояния кнопок */
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25); /* Уменьшена тень */
     }
     
     .btn:active {
@@ -201,10 +202,14 @@
       position: relative;
     }
 
+    #bonusBtn.collected {
+      background-color: var(--success-color) !important;
+    }
+
     #bonusTimer {
-      font-size: 10px;
+      font-size: 9px; /* Уменьшен размер шрифта */
       position: absolute;
-      bottom: 5px;
+      bottom: 3px; /* Поднят выше */
       left: 0;
       right: 0;
       text-align: center;
@@ -251,8 +256,8 @@
     
     /* 3.17 Иконки в кнопках */
     .btn i {
-      font-size: 28px;
-      margin-bottom: 5px;
+      font-size: 20px; /* Уменьшен размер иконки */
+      margin-bottom: 3px; /* Уменьшен отступ */
       display: block;
     }
     
@@ -291,11 +296,11 @@
     form {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
       transition: all var(--transition-speed) ease;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
@@ -312,24 +317,24 @@
     label {
       font-weight: 600;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px; /* Уменьшен отступ */
       color: var(--text-color);
-      font-size: 15px;
+      font-size: 14px; /* Уменьшен размер шрифта */
     }
     
     label i {
-      margin-right: 8px;
+      margin-right: 6px; /* Уменьшен отступ */
       color: var(--primary-color);
-      width: 20px;
+      width: 18px; /* Уменьшена ширина */
       text-align: center;
     }
     
     /* 3.23 Стили полей ввода */
     input, select, textarea {
-      padding: 12px 15px;
+      padding: 10px 12px; /* Уменьшен padding */
       border-radius: var(--border-radius);
       border: 1px solid rgba(255,255,255,0.2);
-      font-size: 16px;
+      font-size: 14px; /* Уменьшен размер шрифта */
       width: 100%;
       box-sizing: border-box;
       background: rgba(0,0,0,0.2);
@@ -343,9 +348,9 @@
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg fill='%23cccccc' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 18px 18px;
-      padding-right: 40px;
+      background-position: right 10px center;
+      background-size: 16px 16px; /* Уменьшен размер стрелки */
+      padding-right: 35px; /* Уменьшен отступ */
       cursor: pointer;
     }
   
@@ -366,13 +371,13 @@
       width: 100%;
       background: rgba(0,0,0,0.2);
       border-radius: var(--border-radius);
-      margin-bottom: 20px;
+      margin-bottom: 15px; /* Уменьшен отступ */
       overflow: hidden;
     }
     
     /* 3.26 Прогресс-бар */
     .progress-bar {
-      height: 8px;
+      height: 6px; /* Уменьшена высота */
       background: var(--primary-color);
       border-radius: var(--border-radius);
       transition: width 0.4s ease;
@@ -382,8 +387,8 @@
     .progress-steps {
       display: flex;
       justify-content: space-between;
-      margin-top: 10px;
-      font-size: 14px;
+      margin-top: 8px; /* Уменьшен отступ */
+      font-size: 12px; /* Уменьшен размер шрифта */
       color: var(--text-color);
     }
     
@@ -392,7 +397,7 @@
       text-align: center;
       flex: 1;
       position: relative;
-      font-size: 13px;
+      font-size: 12px; /* Уменьшен размер шрифта */
       opacity: 0.7;
     }
     
@@ -405,16 +410,16 @@
     .step.completed::before {
       content: "✓";
       color: var(--success-color);
-      margin-right: 5px;
+      margin-right: 4px; /* Уменьшен отступ */
     }
     
     /* 3.29 Контейнер прогноза */
     .forecast-container {
       background: var(--card-color);
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      margin-top: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-top: 15px; /* Уменьшен отступ */
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
       animation: slideUp 0.5s ease forwards;
@@ -423,39 +428,39 @@
     /* 3.30 Заголовок прогноза */
     .forecast-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px; /* Уменьшен отступ */
       color: var(--primary-color);
     }
     
     /* 3.31 Контент прогноза */
     .forecast-content {
-      line-height: 1.6;
+      line-height: 1.5; /* Уменьшен межстрочный интервал */
     }
     
     /* 3.32 Секции прогноза */
     .forecast-section {
-      margin-bottom: 15px;
-      padding-bottom: 15px;
+      margin-bottom: 12px; /* Уменьшен отступ */
+      padding-bottom: 12px; /* Уменьшен отступ */
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
     
     /* 3.33 Заголовки секций */
     .forecast-section h3 {
       color: var(--primary-color);
-      margin-bottom: 10px;
+      margin-bottom: 8px; /* Уменьшен отступ */
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.1rem;
+      gap: 8px; /* Уменьшен отступ */
+      font-size: 1rem; /* Уменьшен размер шрифта */
     }
     
     /* 3.34 Просмотр профиля */
     .profile-view {
       background: var(--card-color);
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      margin-top: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-top: 15px; /* Уменьшен отступ */
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
     }
@@ -463,24 +468,24 @@
     /* 3.35 Заголовки профиля */
     .profile-view h3 {
       color: var(--primary-color);
-      margin-bottom: 20px 0 15px;
+      margin-bottom: 15px; /* Уменьшен отступ */
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.3rem;
+      gap: 8px; /* Уменьшен отступ */
+      font-size: 1.2rem; /* Уменьшен размер шрифта */
     }
     
     /* 3.36 Параграфы профиля */
     .profile-view p {
-      margin-bottom: 10px;
-      padding-left: 10px;
+      margin-bottom: 8px; /* Уменьшен отступ */
+      padding-left: 8px; /* Уменьшен отступ */
     }
     
     /* 3.37 Кнопки "Поделиться" */
     .share-buttons {
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 8px; /* Уменьшен отступ */
+      margin-top: 15px; /* Уменьшен отступ */
       justify-content: space-between;
     }
 
@@ -492,7 +497,7 @@
     /* 3.38 Кнопки внизу экрана */
     .bottom-buttons {
         position: fixed;
-        bottom: 20px;
+        bottom: 15px; /* Подняты выше */
         left: 0;
         right: 0;
         width: 100%;
@@ -501,8 +506,8 @@
         z-index: 10;
         display: flex;
         justify-content: center;
-        gap: 10px;
-        padding: 0 20px;
+        gap: 8px; /* Уменьшен отступ */
+        padding: 0 15px; /* Уменьшен padding */
         padding-bottom: env(safe-area-inset-bottom);
         box-sizing: border-box;
     }
@@ -526,8 +531,8 @@
     .form-navigation {
       display: flex;
       justify-content: space-between;
-      gap: 15px;
-      margin-top: 20px;
+      gap: 12px; /* Уменьшен отступ */
+      margin-top: 15px; /* Уменьшен отступ */
     }
     
     .form-navigation .btn {
@@ -543,10 +548,10 @@
       width: calc(100% - 40px);
       max-width: 400px;
       box-sizing: border-box;
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       background: var(--card-color);
       border-radius: var(--border-radius);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* Уменьшена тень */
       z-index: 1000;
       text-align: center;
       display: none;
@@ -556,23 +561,23 @@
     
     .bonus-message h3 {
       color: var(--primary-color);
-      margin-bottom: 15px;
-      font-size: 1.3rem;
+      margin-bottom: 12px; /* Уменьшен отступ */
+      font-size: 1.2rem; /* Уменьшен размер шрифта */
     }
     
     .bonus-message p {
-      line-height: 1.6;
-      margin-bottom: 15px;
+      line-height: 1.5; /* Уменьшен межстрочный интервал */
+      margin-bottom: 12px; /* Уменьшен отступ */
     }
     
     .bonus-message .close-bonus {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      top: 12px; /* Уменьшен отступ */
+      right: 12px; /* Уменьшен отступ */
       background: none;
       border: none;
       color: var(--text-color);
-      font-size: 18px;
+      font-size: 16px; /* Уменьшен размер шрифта */
       cursor: pointer;
       opacity: 0.7;
       transition: opacity 0.2s;
@@ -597,12 +602,12 @@
     
     /* 3.42 Анимации */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
@@ -612,7 +617,7 @@
         --panel-width: 95%;
       }
       .forecast-container, .profile-view {
-        padding: 15px;
+        padding: 12px; /* Уменьшен padding */
       }
     }
       
@@ -623,16 +628,16 @@
       
       .share-buttons {
         flex-direction: row;
-        gap: 8px;
+        gap: 6px; /* Уменьшен отступ */
       }
       
       .logo-svg {
-        width: 100px;
-        height: 100px;
+        width: 80px; /* Уменьшен размер */
+        height: 80px; /* Уменьшен размер */
       }
       
       .logo-text {
-        font-size: 24px;
+        font-size: 20px; /* Уменьшен размер шрифта */
       }
       
       /* Адаптация кнопок для маленьких экранов */
@@ -641,20 +646,20 @@
       }
       
       .btn {
-        height: 80px;
+        height: 55px; /* Уменьшена высота */
       }
     }
     
     /* 3.44 Лоадер */
     .loader {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,.3);
+      width: 16px; /* Уменьшен размер */
+      height: 16px; /* Уменьшен размер */
+      border: 2px solid rgba(255,255,255,.3);
       border-radius: 50%;
       border-top-color: #fff;
       animation: spin 1s ease-in-out infinite;
-      margin-left: 10px;
+      margin-left: 8px; /* Уменьшен отступ */
     }
     
     @keyframes spin {
@@ -664,10 +669,10 @@
     /* 3.45 Уведомления */
     .notification {
       position: fixed;
-      bottom: 20px;
+      bottom: 15px; /* Поднято выше */
       left: 50%;
       transform: translateX(-50%);
-      padding: 12px 20px;
+      padding: 10px 15px; /* Уменьшен padding */
       border-radius: var(--border-radius);
       color: white;
       z-index: 1000;
@@ -693,8 +698,8 @@
     }
     
     @keyframes slideIn {
-      from { bottom: -50px; opacity: 0; }
-      to { bottom: 20px; opacity: 1; }
+      from { bottom: -40px; opacity: 0; }
+      to { bottom: 15px; opacity: 1; }
     }
     
     @keyframes fadeOut {
@@ -705,17 +710,17 @@
     /* 3.46 Счетчик звезд */
     .stars-counter {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 15px; /* Поднято выше */
+      left: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 8px 15px;
-      border-radius: 20px;
+      padding: 6px 12px; /* Уменьшен padding */
+      border-radius: 18px; /* Уменьшен радиус */
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px; /* Уменьшен отступ */
       z-index: 50;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      font-size: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* Уменьшена тень */
+      font-size: 12px; /* Уменьшен размер шрифта */
       cursor: pointer;
       transition: transform 0.2s ease;
     }
@@ -741,9 +746,9 @@
     /* 3.48 Стили для реферальной системы */
     .ref-link {
       background: rgba(0,0,0,0.2);
-      padding: 12px;
+      padding: 10px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      margin-top: 15px;
+      margin-top: 12px; /* Уменьшен отступ */
       word-break: break-all;
       text-align: center;
       cursor: pointer;
@@ -755,14 +760,14 @@
     }
     
     .ref-link i {
-      margin-right: 5px;
+      margin-right: 4px; /* Уменьшен отступ */
     }
     
     /* 3.49 Улучшенные сообщения об ошибках */
     .error-message {
       color: var(--error-color);
-      font-size: 13px;
-      margin-top: 5px;
+      font-size: 12px; /* Уменьшен размер шрифта */
+      margin-top: 4px; /* Уменьшен отступ */
       display: none;
     }
     
@@ -790,12 +795,12 @@
     
     .tooltip .tooltiptext {
       visibility: hidden;
-      width: 200px;
+      width: 180px; /* Уменьшена ширина */
       background-color: var(--card-color);
       color: var(--text-color);
       text-align: center;
       border-radius: 6px;
-      padding: 8px;
+      padding: 6px; /* Уменьшен padding */
       position: absolute;
       z-index: 1;
       bottom: 125%;
@@ -803,8 +808,8 @@
       transform: translateX(-50%);
       opacity: 0;
       transition: opacity 0.3s;
-      font-size: 14px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      font-size: 12px; /* Уменьшен размер шрифта */
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2); /* Уменьшена тень */
     }
     
     .tooltip:hover .tooltiptext {
@@ -814,15 +819,15 @@
     
     /* 3.52 Подсказки для полей формы */
     .field-hint {
-      font-size: 12px;
+      font-size: 11px; /* Уменьшен размер шрифта */
       color: rgba(255,255,255,0.6);
-      margin-top: 5px;
+      margin-top: 4px; /* Уменьшен отступ */
     }
     
     /* 3.53 Улучшенный скроллбар */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px; /* Уменьшена ширина */
+      height: 6px; /* Уменьшена высота */
     }
     
     ::-webkit-scrollbar-track {
@@ -831,7 +836,7 @@
     
     ::-webkit-scrollbar-thumb {
       background: var(--primary-color);
-      border-radius: 4px;
+      border-radius: 3px; /* Уменьшен радиус */
     }
     
     ::-webkit-scrollbar-thumb:hover {
@@ -840,61 +845,61 @@
 
     /* 3.54 Стили для натальной карты */
     .natal-chart-container {
-      margin-top: 20px;
+      margin-top: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 20px;
+      padding: 15px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
     }
 
     .natal-chart {
       width: 100%;
-      height: 300px;
-      margin: 20px 0;
+      height: 250px; /* Уменьшена высота */
+      margin: 15px 0; /* Уменьшен отступ */
     }
 
     .planet-info {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
+      gap: 8px; /* Уменьшен отступ */
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .planet-card {
       background: rgba(0,0,0,0.2);
-      padding: 10px;
+      padding: 8px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      flex: 1 1 calc(33% - 10px);
-      min-width: 120px;
+      flex: 1 1 calc(33% - 8px); /* Уменьшен отступ */
+      min-width: 100px; /* Уменьшена минимальная ширина */
     }
 
     .planet-card h4 {
-      margin: 0 0 5px 0;
+      margin: 0 0 4px 0; /* Уменьшен отступ */
       color: var(--primary-color);
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px; /* Уменьшен отступ */
     }
 
     /* 3.55 Стили для транзитов */
     .transits-container {
-      margin-top: 20px;
+      margin-top: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 20px;
+      padding: 15px; /* Уменьшен padding */
       border-radius: var(--border-radius);
     }
 
     .transit-item {
       display: flex;
       align-items: center;
-      padding: 10px;
+      padding: 8px; /* Уменьшен padding */
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
 
     .transit-icon {
-      font-size: 24px;
-      margin-right: 15px;
-      width: 30px;
+      font-size: 20px; /* Уменьшен размер */
+      margin-right: 12px; /* Уменьшен отступ */
+      width: 24px; /* Уменьшена ширина */
       text-align: center;
     }
 
@@ -903,32 +908,32 @@
     }
 
     .transit-date {
-      font-size: 12px;
+      font-size: 11px; /* Уменьшен размер шрифта */
       opacity: 0.7;
     }
 
     /* 3.56 Стили для лунного календаря */
     .moon-phase {
       text-align: center;
-      margin: 20px 0;
+      margin: 15px 0; /* Уменьшен отступ */
     }
 
     .moon-icon {
-      font-size: 50px;
-      margin-bottom: 10px;
+      font-size: 40px; /* Уменьшен размер */
+      margin-bottom: 8px; /* Уменьшен отступ */
     }
 
     .moon-calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-top: 15px;
+      gap: 4px; /* Уменьшен отступ */
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .moon-day {
       text-align: center;
-      padding: 5px;
-      border-radius: 5px;
+      padding: 4px; /* Уменьшен padding */
+      border-radius: 4px; /* Уменьшен радиус */
       background: rgba(0,0,0,0.1);
     }
 
@@ -939,16 +944,16 @@
 
     /* 3.57 Стили для обучения */
     .quiz-toggle {
-        padding: 8px 12px !important;
-        font-size: 12px !important;
+        padding: 6px 10px !important; /* Уменьшен padding */
+        font-size: 11px !important; /* Уменьшен размер шрифта */
         height: auto !important;
     }
 
     .quiz-option {
         background: rgba(255,255,255,0.1) !important;
-        padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 5px;
+        padding: 8px; /* Уменьшен padding */
+        border-radius: 4px; /* Уменьшен радиус */
+        margin-bottom: 4px; /* Уменьшен отступ */
         transition: background 0.2s;
     }
 
@@ -966,25 +971,25 @@
 
     /* 3.58 Стили для совместимости */
     .compatibility-container {
-      margin-top: 20px;
+      margin-top: 15px; /* Уменьшен отступ */
     }
 
     .compatibility-score {
-      font-size: 24px;
+      font-size: 20px; /* Уменьшен размер шрифта */
       font-weight: bold;
       color: var(--primary-color);
       text-align: center;
-      margin: 15px 0;
+      margin: 12px 0; /* Уменьшен отступ */
     }
 
     .compatibility-aspects {
-      margin-top: 15px;
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .aspect-item {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
+      padding: 6px 0; /* Уменьшен padding */
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
 
@@ -992,13 +997,13 @@
     .achievements-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 15px;
+      gap: 8px; /* Уменьшен отступ */
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .achievement {
       text-align: center;
-      padding: 10px;
+      padding: 8px; /* Уменьшен padding */
       border-radius: var(--border-radius);
       background: rgba(0,0,0,0.1);
     }
@@ -1008,12 +1013,12 @@
     }
 
     .achievement-icon {
-      font-size: 24px;
-      margin-bottom: 5px;
+      font-size: 20px; /* Уменьшен размер */
+      margin-bottom: 4px; /* Уменьшен отступ */
     }
 
     .achievement-title {
-      font-size: 12px;
+      font-size: 11px; /* Уменьшен размер шрифта */
     }
 
     /* 3.60 Плоские кнопки внизу экрана */
@@ -1033,25 +1038,26 @@
     .main-menu-2x4 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
+      gap: 10px; /* Уменьшен отступ */
+      margin-top: 15px; /* Уменьшен отступ */
     }
 
     .main-menu-2x4 .btn {
-      height: 100px;
+      height: 70px; /* Уменьшена высота */
     }
 
     /* 3.62 Стиль для кнопки редактирования профиля */
     #editProfileBtn {
-      padding: 4px 6px !important;
-      font-size: 10px !important;
+      padding: 3px 5px !important; /* Уменьшен padding */
+      font-size: 9px !important; /* Уменьшен размер шрифта */
       height: auto !important;
-      min-width: 60px !important;
+      min-width: 55px !important; /* Уменьшена ширина */
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
-      margin-right: 10px;
+      gap: 2px; /* Уменьшен отступ */
+      margin-right: 0; /* Удален отступ */
+      margin-left: auto; /* Перемещена вправо */
     }
     
     /* 3.63 Стиль для кнопки переключения темы */
@@ -1059,7 +1065,7 @@
       background: none;
       border: none;
       color: var(--text-color);
-      font-size: 20px;
+      font-size: 18px; /* Уменьшен размер */
       cursor: pointer;
       margin-left: 10px;
       transition: transform 0.3s ease;
@@ -1067,6 +1073,25 @@
 
     #themeToggleBtn:hover {
       transform: scale(1.1);
+    }
+
+    /* 3.64 Новый стиль для логотипа (кликабельная область) */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 10px; /* Уменьшен отступ */
+    }
+
+    /* 3.65 Новый стиль для кнопки натальной карты */
+    .natal-chart-icon {
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom: 3px; /* Уменьшен отступ */
     }
   </style>
 </head>
@@ -1083,8 +1108,8 @@
   <!-- 6. Главное меню -->
   <div id="mainMenu">
     <!-- 6.1 Заголовок приложения -->
-    <div style="text-align: center; margin-bottom: 20px;">
-      <h1 style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 10px rgba(147, 112, 219, 0.5); letter-spacing: 2px;">
+    <div class="logo-container" id="themeToggleLogo">
+      <h1 style="font-size: 2rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 8px rgba(147, 112, 219, 0.5); letter-spacing: 1px;">
         ASTRODAMUS
       </h1>
       <button id="themeToggleBtn" aria-label="Сменить тему">
@@ -1100,7 +1125,7 @@
       <span>Анкета</span>
     </button>
     <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
-      <i class="fas fa-star-chart"></i>
+      <div class="natal-chart-icon"></div>
       <span>Натальная карта</span>
     </button>
     <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
@@ -1150,7 +1175,7 @@
     <div class="stars-added" id="starsAdded" style="display: none;">
       <i class="fas fa-star"></i> +<span id="starsAddedCount">1</span> звезда
     </div>
-    <button class="btn btn-primary" id="shareBonusBtn" style="margin-top: 15px; display: none;">
+    <button class="btn btn-primary" id="shareBonusBtn" style="margin-top: 12px; display: none;">
       <i class="fas fa-share-alt"></i> Поделиться бонусом
     </button>
   </div>
@@ -1361,7 +1386,7 @@
         <!-- Текущие транзиты будут загружены динамически -->
       </div>
       
-      <div id="transitNotifications" style="margin-top: 20px;">
+      <div id="transitNotifications" style="margin-top: 15px;">
         <h3><i class="fas fa-bell"></i> Уведомления</h3>
         <div id="notificationsList"></div>
       </div>
@@ -1386,7 +1411,7 @@
       <!-- Лунный календарь будет загружен динамически -->
     </div>
     
-    <div class="moon-rituals" style="margin-top: 20px;">
+    <div class="moon-rituals" style="margin-top: 15px;">
       <h3><i class="fas fa-magic"></i> Рекомендации</h3>
       <div id="moonRituals"></div>
     </div>
@@ -1435,6 +1460,7 @@
     const closeBonusMessage = document.getElementById('closeBonusMessage');
     const overlay = document.getElementById('overlay');
     const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleLogo = document.getElementById('themeToggleLogo');
     const starsCounter = document.getElementById('starsCounter');
     const starsCount = document.getElementById('starsCount');
     const starsAdded = document.getElementById('starsAdded');
