@@ -2613,11 +2613,11 @@ function updateBonusButton() {
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
     
     bonusBtn.innerHTML = `
-  <i class="fas fa-gift"></i> Бонус
-  <div id="bonusTimer">
-    ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}
-  </div>
-`;
+      <i class="fas fa-gift"></i> Бонус
+      <div id="bonusTimer">
+        ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}
+      </div>
+    `;
     
     // Обновляем таймер каждую секунду
     if (window.bonusTimerInterval) {
