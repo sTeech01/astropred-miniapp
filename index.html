@@ -17,7 +17,7 @@
   
   <!-- 3. Стили приложения -->
   <style>
-    /* 3.1 CSS переменные для темной темы (по умолчанию) */
+    /* 3.1 CSS переменные для темной темы (по умололчанию) */
     :root {
       --primary-color: #9370db;
       --primary-hover: #7b5dc5;
@@ -105,59 +105,30 @@
       font-size: 1.5rem;
     }
     
-    /* 3.9 Контейнер логотипа */
-    .logo-container {
-      text-align: center;
-      margin-bottom: 30px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    
-    .logo-container:hover {
-      transform: scale(1.02);
-    }
-    
-    /* 3.10 Стили SVG логотипа */
-    .logo-svg {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 15px;
-      filter: drop-shadow(0 0 5px rgba(106, 90, 205, 0.5));
-    }
-    
-    /* 3.11 Текст логотипа */
-    .logo-text {
-      font-size: 28px;
-      font-weight: bold;
-      color: var(--primary-color);
-      margin-top: 10px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    
-    /* 3.12 Стили главного меню */
+    /* 3.12 Стили главного меню - изменено для iOS стиля */
     .main-menu {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 15px;
       margin-top: 20px;
     }
     
     /* 3.13 Боковая панель */
     .side-panel {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: var(--panel-width);
-      height: 100vh;
-      background: var(--bg-color);
-      box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-      z-index: 100;
-      overflow-y: auto;
-      transition: right var(--transition-speed) ease;
-      padding: 50px 20px 20px;
-      border-left: 1px solid rgba(255,255,255,0.1);
+        position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg-color);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            overflow-y: auto;
+            transition: right var(--transition-speed) ease;
+            padding: 20px;
+            box-sizing: border-box;
     }
-    
+
     /* 3.14 Активное состояние боковой панели */
     .side-panel.active {
       right: 0;
@@ -180,7 +151,7 @@
       transform: rotate(90deg);
     }
     
-    /* 3.16 Основные стили кнопок */
+    /* 3.16 Основные стили кнопок - полностью переработано под iOS стиль */
     .btn {
       position: relative;
       overflow: hidden;
@@ -212,7 +183,7 @@
     }
     
     .btn:active {
-      transform: translateY(0);
+      transform: scale(0.98);
     }
     
     .btn:disabled {
@@ -222,6 +193,25 @@
       box-shadow: none;
     }
     
+    /* 3.17.1 Добавленные стили для кнопки бонуса */
+    #bonusBtn.disabled {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed;
+  position: relative;
+}
+
+#bonusTimer {
+  font-size: 10px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+}
+
     /* 3.18 Стили для разных типов кнопок */
     .btn-success {
       background-color: var(--success-color);
@@ -259,14 +249,14 @@
       background-color: #e68a00;
     }
     
-    /* 3.19 Эффект ripple для кнопок */
+    /* 3.19 Иконки в кнопках */
     .btn i {
       font-size: 28px;
       margin-bottom: 5px;
       display: block;
     }
     
-    /* 3.20 Анимация ripple эффекта */
+    /* 3.20 Эффект ripple для кнопок */
     .btn::after {
       content: "";
       position: absolute;
@@ -297,7 +287,7 @@
       }
     }
     
-    /* 3.22 Группы полей формы */
+    /* 3.22 Стили форм */
     form {
       display: flex;
       flex-direction: column;
@@ -311,7 +301,14 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    /* 3.23 Стили меток */
+    /* 3.23 Группы полей формы */
+    .form-group {
+      position: relative;
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+    
+    /* 3.24 Стили меток */
     label {
       font-weight: 600;
       display: block;
@@ -327,7 +324,7 @@
       text-align: center;
     }
     
-    /* 3.24 Стили полей ввода */
+    /* 3.25 Стили полей ввода */
     input, select, textarea {
       padding: 12px 15px;
       border-radius: var(--border-radius);
@@ -352,7 +349,7 @@
       cursor: pointer;
     }
   
-    /* 3.25 Состояния полей ввода */
+    /* 3.26 Состояния полей ввода */
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
@@ -364,7 +361,7 @@
       border-color: var(--error-color);
     }
     
-    /* 3.26 Контейнер прогресс-бара */
+    /* 3.27 Контейнер прогресс-бара */
     .progress-container {
       width: 100%;
       background: rgba(0,0,0,0.2);
@@ -373,7 +370,7 @@
       overflow: hidden;
     }
     
-    /* 3.27 Прогресс-бар */
+    /* 3.28 Прогресс-бар */
     .progress-bar {
       height: 8px;
       background: var(--primary-color);
@@ -381,7 +378,7 @@
       transition: width 0.4s ease;
     }
     
-    /* 3.28 Шаги прогресса */
+    /* 3.29 Шаги прогресса */
     .progress-steps {
       display: flex;
       justify-content: space-between;
@@ -390,7 +387,7 @@
       color: var(--text-color);
     }
     
-    /* 3.29 Стили шагов */
+    /* 3.30 Стили шагов */
     .step {
       text-align: center;
       flex: 1;
@@ -411,7 +408,7 @@
       margin-right: 5px;
     }
     
-    /* 3.30 Контейнер прогноза */
+    /* 3.31 Контейнер прогноза */
     .forecast-container {
       background: var(--card-color);
       padding: 25px;
@@ -423,26 +420,26 @@
       animation: slideUp 0.5s ease forwards;
     }
     
-    /* 3.31 Заголовок прогноза */
+    /* 3.32 Заголовок прогноза */
     .forecast-header {
       text-align: center;
       margin-bottom: 20px;
       color: var(--primary-color);
     }
     
-    /* 3.32 Контент прогноза */
+    /* 3.33 Контент прогноза */
     .forecast-content {
       line-height: 1.6;
     }
     
-    /* 3.33 Секции прогноза */
+    /* 3.34 Секции прогноза */
     .forecast-section {
       margin-bottom: 15px;
       padding-bottom: 15px;
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
     
-    /* 3.34 Заголовки секций */
+    /* 3.35 Заголовки секций */
     .forecast-section h3 {
       color: var(--primary-color);
       margin-bottom: 10px;
@@ -452,7 +449,7 @@
       font-size: 1.1rem;
     }
     
-    /* 3.35 Просмотр профиля */
+    /* 3.36 Просмотр профиля */
     .profile-view {
       background: var(--card-color);
       padding: 25px;
@@ -463,7 +460,7 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    /* 3.36 Заголовки профиля */
+    /* 3.37 Заголовки профиля */
     .profile-view h3 {
       color: var(--primary-color);
       margin-bottom: 20px 0 15px;
@@ -473,13 +470,13 @@
       font-size: 1.3rem;
     }
     
-    /* 3.37 Параграфы профиля */
+    /* 3.38 Параграфы профиля */
     .profile-view p {
       margin-bottom: 10px;
       padding-left: 10px;
     }
     
-    /* 3.38 Кнопки "Поделиться" */
+    /* 3.39 Кнопки "Поделиться" */
     .share-buttons {
       display: flex;
       gap: 10px;
@@ -492,22 +489,40 @@
       min-width: 0;
     }
     
-    /* 3.39 Кнопки внизу экрана */
+    /* 3.40 Кнопки внизу экрана */
     .bottom-buttons {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 40px);
-      max-width: 500px;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-bottom: env(safe-area-inset-bottom);
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 0 20px;
+        padding-bottom: env(safe-area-inset-bottom);
+        box-sizing: border-box;
+    }
+
+    #bonusBtn {
+        background-color: var(--warning-color) !important;
+        color: white !important;
+    }
+
+    #bonusBtn:disabled {
+        background-color: #cccccc !important;
+        color: #666666 !important;
+    }
+
+    #shareAppBtn {
+        background-color: var(--info-color) !important;
+        color: white !important;
     }
     
-    /* 3.40 Навигация по форме */
+    /* 3.41 Навигация по форме */
     .form-navigation {
       display: flex;
       justify-content: space-between;
@@ -519,7 +534,7 @@
       flex: 1;
     }
     
-    /* 3.41 Бонусное сообщение */
+    /* 3.42 Бонусное сообщение */
     .bonus-message {
       position: fixed;
       top: 50%;
@@ -567,7 +582,7 @@
       opacity: 1;
     }
     
-    /* 3.42 Оверлей */
+    /* 3.43 Оверлей */
     .overlay {
       position: fixed;
       top: 0;
@@ -580,7 +595,7 @@
       backdrop-filter: blur(3px);
     }
     
-    /* 3.43 Анимации */
+    /* 3.44 Анимации */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -591,7 +606,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* 3.44 Адаптивные стили */
+    /* 3.45 Адаптивные стили */
     @media (max-width: 400px) {
       :root {
         --panel-width: 95%;
@@ -619,9 +634,18 @@
       .logo-text {
         font-size: 24px;
       }
+      
+      /* Адаптация кнопок для маленьких экранов */
+      .main-menu {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn {
+        height: 80px;
+      }
     }
     
-    /* 3.45 Лоадер */
+    /* 3.46 Лоадер */
     .loader {
       display: inline-block;
       width: 20px;
@@ -637,7 +661,7 @@
       to { transform: rotate(360deg); }
     }
     
-    /* 3.46 Уведомления */
+    /* 3.47 Уведомления */
     .notification {
       position: fixed;
       bottom: 20px;
@@ -678,7 +702,7 @@
       to { opacity: 0; }
     }
     
-    /* 3.47 Счетчик звезд */
+    /* 3.48 Счетчик звезд */
     .stars-counter {
       position: fixed;
       top: 20px;
@@ -704,7 +728,7 @@
       color: gold;
     }
     
-    /* 3.48 Анимация получения звезд */
+    /* 3.49 Анимация получения звезд */
     @keyframes starBounce {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.5); }
@@ -714,7 +738,7 @@
       animation: starBounce 0.5s ease;
     }
     
-    /* 3.49 Стили для реферальной системы */
+    /* 3.50 Стили для реферальной системы */
     .ref-link {
       background: rgba(0,0,0,0.2);
       padding: 12px;
@@ -734,7 +758,7 @@
       margin-right: 5px;
     }
     
-    /* 3.50 Улучшенные сообщения об ошибках */
+    /* 3.51 Улучшенные сообщения об ошибках */
     .error-message {
       color: var(--error-color);
       font-size: 13px;
@@ -747,7 +771,7 @@
       display: block;
     }
     
-    /* 3.51 Анимация для кнопок */
+    /* 3.52 Анимация для кнопок */
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -758,7 +782,7 @@
       animation: pulse 2s infinite;
     }
     
-    /* 3.52 Дополнительные стили для улучшения UX */
+    /* 3.53 Дополнительные стили для улучшения UX */
     .tooltip {
       position: relative;
       display: inline-block;
@@ -788,14 +812,14 @@
       opacity: 1;
     }
     
-    /* 3.53 Подсказки для полей формы */
+    /* 3.54 Подсказки для полей формы */
     .field-hint {
       font-size: 12px;
       color: rgba(255,255,255,0.6);
       margin-top: 5px;
     }
     
-    /* 3.54 Улучшенный скроллбар */
+    /* 3.55 Улучшенный скроллбар */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -814,7 +838,7 @@
       background: var(--secondary-color);
     }
 
-    /* 3.55 Стили для натальной карты */
+    /* 3.56 Стили для натальной карты */
     .natal-chart-container {
       margin-top: 20px;
       background: var(--card-color);
@@ -852,7 +876,7 @@
       gap: 5px;
     }
 
-    /* 3.56 Стили для транзитов */
+    /* 3.57 Стили для транзитов */
     .transits-container {
       margin-top: 20px;
       background: var(--card-color);
@@ -883,7 +907,7 @@
       opacity: 0.7;
     }
 
-    /* 3.57 Стили для лунного календаря */
+    /* 3.58 Стили для лунного календаря */
     .moon-phase {
       text-align: center;
       margin: 20px 0;
@@ -913,55 +937,34 @@
       color: white;
     }
 
-    /* 3.58 Стили для обучения */
-    .learning-card {
-      background: var(--card-color);
-      padding: 15px;
-      border-radius: var(--border-radius);
-      margin-bottom: 15px;
-    }
-
-    .learning-card h3 {
-      color: var(--primary-color);
-      margin-top: 0;
-    }
-
-    .quiz-container {
-      margin-top: 15px;
-    }
-
-    .quiz-question {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    /* 3.59 Стили для обучения */
+    .quiz-toggle {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+        height: auto !important;
     }
 
     .quiz-option {
-      padding: 8px;
-      border-radius: 5px;
-      background: rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: background 0.2s;
+        background: rgba(255,255,255,0.1) !important;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        transition: background 0.2s;
     }
 
     .quiz-option:hover {
-      background: rgba(0,0,0,0.2);
+        background: rgba(255,255,255,0.2) !important;
     }
 
     .quiz-option.correct {
-      background: var(--success-color);
+        background: var(--success-color) !important;
     }
 
     .quiz-option.incorrect {
-      background: var(--error-color);
+        background: var(--error-color) !important;
     }
 
-    /* 3.59 Стили для совместимости */
+    /* 3.60 Стили для совместимости */
     .compatibility-container {
       margin-top: 20px;
     }
@@ -985,7 +988,7 @@
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
 
-    /* 3.60 Стили для достижений */
+    /* 3.61 Стили для достижений */
     .achievements-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1012,6 +1015,64 @@
     .achievement-title {
       font-size: 12px;
     }
+
+    /* 3.62 Плоские кнопки внизу экрана */
+    .flat-btn {
+      background: none;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .flat-btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* 3.63 Новый стиль для главного меню - 2x4 кнопки */
+    .main-menu-2x4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .main-menu-2x4 .btn {
+      height: 100px;
+    }
+
+    #shareAppBtn {
+      flex: 0 1 40%;
+      font-size: 12px;
+      padding: 12px 8px;
+    }
+
+    /* 3.64 Стиль для кнопки редактирования профиля */
+      #editProfileBtn {
+      padding: 4px 6px !important;
+      font-size: 10px !important;
+      height: auto !important;
+      min-width: 60px !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      margin-right: 10px;
+      transform: translateX(-10px);
+    }
+    #themeToggleBtn {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+    }
+
+#themeToggleBtn:hover {
+  transform: scale(1.1);
+}
   </style>
 </head>
 <body>
@@ -1026,54 +1087,50 @@
   
   <!-- 6. Главное меню -->
   <div id="mainMenu">
-    <div class="logo-container" id="themeToggle" title="Сменить тему">
-      <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <path id="star-path" d="M100,20 L123.5,70 L177.6,76.8 L137.8,113.9 L149.1,167.6 L100,142 L50.9,167.6 L62.2,113.9 L22.4,76.8 L76.5,70 Z" />
-          <circle id="circle-path" cx="100" cy="100" r="80" />
-        </defs>
-        
-        <text x="100" y="110" text-anchor="middle" font-size="24" fill="#9370db" font-weight="bold">AstroPred</text>
-        
-        <use href="#star-path" x="0" y="0" fill="none" stroke="#9370db" stroke-width="2">
-          <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
-        </use>
-        
-        <use href="#circle-path" fill="none" stroke="#6a5acd" stroke-width="2" stroke-dasharray="10,5">
-          <animate attributeName="stroke-dashoffset" values="0;500;0" dur="15s" repeatCount="indefinite" />
-        </use>
-      </svg>
-      <div class="logo-text">AstroPred</div>
-      <span id="themeIcon" style="margin-top: 10px; font-size: 20px; display: block;">
-        <i class="fas fa-moon"></i>
-      </span>
+      <!-- Добавленный заголовок -->
+  <div style="text-align: center; margin-bottom: 20px;">
+    <h1 style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 10px rgba(147, 112, 219, 0.5); letter-spacing: 2px;">
+      ASTRODAMUS
+    </h1>
+      <button id="themeToggleBtn" aria-label="Сменить тему">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
     </div>
-    
-    <!-- 7. Основные кнопки меню -->
-    <div class="main-menu">
+  </div>
+
+    <!-- 7. Основные кнопки меню в стиле iOS -->
+    <div class="main-menu main-menu-2x4">
       <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
-        <i class="fas fa-user-edit"></i> Анкета
+        <i class="fas fa-user-edit"></i>
+        <span>Анкета</span>
       </button>
       <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
-        <i class="fas fa-star-chart"></i> Натальная карта
+        <i class="fas fa-chart-pie"></i>
+        <span>Натальная карта</span>
       </button>
       <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
-        <i class="fas fa-sun"></i> Прогноз на день
+        <i class="fas fa-sun"></i>
+        <span>Прогноз на день</span>
       </button>
       <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
-        <i class="fas fa-calendar-week"></i> Прогноз на неделю
+        <i class="fas fa-calendar-week"></i>
+        <span>Прогноз на неделю</span>
       </button>
       <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
-        <i class="fas fa-calendar-alt"></i> Прогноз на месяц
+        <i class="fas fa-calendar-alt"></i>
+        <span>Прогноз на месяц</span>
       </button>
       <button id="transitsBtn" class="btn" aria-label="Текущие транзиты">
-        <i class="fas fa-satellite"></i> Транзиты
+        <i class="fas fa-satellite"></i>
+        <span>Транзиты</span>
       </button>
       <button id="moonBtn" class="btn" aria-label="Лунный календарь">
-        <i class="fas fa-moon"></i> Лунный календарь
+        <i class="fas fa-moon"></i>
+        <span>Лунный календарь</span>
       </button>
       <button id="learningBtn" class="btn" aria-label="Обучение астрологии">
-        <i class="fas fa-graduation-cap"></i> Обучение
+        <i class="fas fa-graduation-cap"></i>
+        <span>Обучение</span>
       </button>
     </div>
     
@@ -1097,10 +1154,10 @@
     
     <!-- 10. Кнопки внизу экрана -->
     <div class="bottom-buttons">
-      <button id="bonusBtn" class="btn btn-warning" aria-label="Получить бонус">
+      <button id="bonusBtn" class="btn btn-warning flat-btn" aria-label="Получить бонус">
         <i class="fas fa-envelope"></i> Получить бонус
       </button>
-      <button id="shareAppBtn" class="btn btn-info" aria-label="Поделиться приложением">
+      <button id="shareAppBtn" class="btn btn-info flat-btn" aria-label="Поделиться приложением">
         <i class="fas fa-share-alt"></i> Поделиться приложением
       </button>
     </div>
@@ -1278,7 +1335,7 @@
       <i class="fas fa-times"></i>
     </button>
     
-    <h2><i class="fas fa-star-chart"></i> Ваша натальная карта</h2>
+    <h2><i class="fas fa-chart-pie"></i> Ваша натальная карта</h2>
     
     <div class="natal-chart-container">
       <div class="natal-chart">
@@ -2540,23 +2597,47 @@
       updateBonusButton();
     }
     
-    // 21.40 Обновить состояние кнопки бонуса
-    function updateBonusButton() {
-      const now = Date.now();
-      const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
-      
-      if (timeLeft > 0) {
-        const hoursLeft = Math.ceil(timeLeft / (60 * 60 * 1000));
-        bonusBtn.innerHTML = `<i class="fas fa-clock"></i> До бонуса: ${hoursLeft}ч`;
-        bonusBtn.disabled = true;
-        bonusBtn.classList.remove('btn-pulse');
-      } else {
-        bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
-        bonusBtn.disabled = false;
-        bonusBtn.classList.add('btn-pulse');
-      }
+// 21.40 Обновить состояние кнопки бонуса (новая версия с таймером)
+function updateBonusButton() {
+  const now = Date.now();
+  const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
+  
+  if (timeLeft > 0) {
+    bonusBtn.disabled = true;
+    bonusBtn.classList.add('disabled');
+    bonusBtn.classList.remove('btn-pulse');
+    
+    // Добавляем таймер на кнопку
+    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    
+    bonusBtn.innerHTML = `
+      <i class="fas fa-gift"></i> Бонус
+      <div id="bonusTimer">
+        ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}
+      </div>
+    `;
+    
+    // Обновляем таймер каждую секунду
+    if (window.bonusTimerInterval) {
+      clearInterval(window.bonusTimerInterval);
     }
     
+    window.bonusTimerInterval = setInterval(() => {
+      updateBonusButton();
+    }, 1000);
+  } else {
+    bonusBtn.disabled = false;
+    bonusBtn.classList.remove('disabled');
+    bonusBtn.classList.add('btn-pulse');
+    bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
+    
+    if (window.bonusTimerInterval) {
+      clearInterval(window.bonusTimerInterval);
+    }
+  }
+}
     // 21.41 Переключение темы (светлая/тёмная) с иконкой
     function toggleTheme() {
       const root = document.documentElement;
