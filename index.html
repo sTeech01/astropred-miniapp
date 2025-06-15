@@ -17,7 +17,7 @@
   
   <!-- 3. Стили приложения -->
   <style>
-    /* 3.1 CSS переменные для темной темы (по умололчанию) */
+    /* 3.1 CSS переменные для темной темы (по умолчанию) */
     :root {
       --primary-color: #9370db;
       --primary-hover: #7b5dc5;
@@ -134,10 +134,10 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
-    /* 3.12 Стили главного меню - изменено для iOS стиля */
+    /* 3.12 Стили главного меню */
     .main-menu {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 15px;
       margin-top: 20px;
     }
@@ -180,7 +180,7 @@
       transform: rotate(90deg);
     }
     
-    /* 3.16 Основные стили кнопок - полностью переработано под iOS стиль */
+    /* 3.16 Основные стили кнопок */
     .btn {
       position: relative;
       overflow: hidden;
@@ -212,7 +212,7 @@
     }
     
     .btn:active {
-      transform: scale(0.98);
+      transform: translateY(0);
     }
     
     .btn:disabled {
@@ -259,14 +259,14 @@
       background-color: #e68a00;
     }
     
-    /* 3.19 Иконки в кнопках */
+    /* 3.19 Эффект ripple для кнопок */
     .btn i {
       font-size: 28px;
       margin-bottom: 5px;
       display: block;
     }
     
-    /* 3.20 Эффект ripple для кнопок */
+    /* 3.20 Анимация ripple эффекта */
     .btn::after {
       content: "";
       position: absolute;
@@ -297,7 +297,7 @@
       }
     }
     
-    /* 3.22 Стили форм */
+    /* 3.22 Группы полей формы */
     form {
       display: flex;
       flex-direction: column;
@@ -311,14 +311,7 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    /* 3.23 Группы полей формы */
-    .form-group {
-      position: relative;
-      animation: fadeIn 0.5s ease forwards;
-      opacity: 0;
-    }
-    
-    /* 3.24 Стили меток */
+    /* 3.23 Стили меток */
     label {
       font-weight: 600;
       display: block;
@@ -334,7 +327,7 @@
       text-align: center;
     }
     
-    /* 3.25 Стили полей ввода */
+    /* 3.24 Стили полей ввода */
     input, select, textarea {
       padding: 12px 15px;
       border-radius: var(--border-radius);
@@ -359,7 +352,7 @@
       cursor: pointer;
     }
   
-    /* 3.26 Состояния полей ввода */
+    /* 3.25 Состояния полей ввода */
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
@@ -371,7 +364,7 @@
       border-color: var(--error-color);
     }
     
-    /* 3.27 Контейнер прогресс-бара */
+    /* 3.26 Контейнер прогресс-бара */
     .progress-container {
       width: 100%;
       background: rgba(0,0,0,0.2);
@@ -380,7 +373,7 @@
       overflow: hidden;
     }
     
-    /* 3.28 Прогресс-бар */
+    /* 3.27 Прогресс-бар */
     .progress-bar {
       height: 8px;
       background: var(--primary-color);
@@ -388,7 +381,7 @@
       transition: width 0.4s ease;
     }
     
-    /* 3.29 Шаги прогресса */
+    /* 3.28 Шаги прогресса */
     .progress-steps {
       display: flex;
       justify-content: space-between;
@@ -397,7 +390,7 @@
       color: var(--text-color);
     }
     
-    /* 3.30 Стили шагов */
+    /* 3.29 Стили шагов */
     .step {
       text-align: center;
       flex: 1;
@@ -418,7 +411,7 @@
       margin-right: 5px;
     }
     
-    /* 3.31 Контейнер прогноза */
+    /* 3.30 Контейнер прогноза */
     .forecast-container {
       background: var(--card-color);
       padding: 25px;
@@ -430,26 +423,26 @@
       animation: slideUp 0.5s ease forwards;
     }
     
-    /* 3.32 Заголовок прогноза */
+    /* 3.31 Заголовок прогноза */
     .forecast-header {
       text-align: center;
       margin-bottom: 20px;
       color: var(--primary-color);
     }
     
-    /* 3.33 Контент прогноза */
+    /* 3.32 Контент прогноза */
     .forecast-content {
       line-height: 1.6;
     }
     
-    /* 3.34 Секции прогноза */
+    /* 3.33 Секции прогноза */
     .forecast-section {
       margin-bottom: 15px;
       padding-bottom: 15px;
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
     
-    /* 3.35 Заголовки секций */
+    /* 3.34 Заголовки секций */
     .forecast-section h3 {
       color: var(--primary-color);
       margin-bottom: 10px;
@@ -459,7 +452,7 @@
       font-size: 1.1rem;
     }
     
-    /* 3.36 Просмотр профиля */
+    /* 3.35 Просмотр профиля */
     .profile-view {
       background: var(--card-color);
       padding: 25px;
@@ -470,7 +463,7 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    /* 3.37 Заголовки профиля */
+    /* 3.36 Заголовки профиля */
     .profile-view h3 {
       color: var(--primary-color);
       margin-bottom: 20px 0 15px;
@@ -480,13 +473,13 @@
       font-size: 1.3rem;
     }
     
-    /* 3.38 Параграфы профиля */
+    /* 3.37 Параграфы профиля */
     .profile-view p {
       margin-bottom: 10px;
       padding-left: 10px;
     }
     
-    /* 3.39 Кнопки "Поделиться" */
+    /* 3.38 Кнопки "Поделиться" */
     .share-buttons {
       display: flex;
       gap: 10px;
@@ -499,7 +492,7 @@
       min-width: 0;
     }
     
-    /* 3.40 Кнопки внизу экрана */
+    /* 3.39 Кнопки внизу экрана */
     .bottom-buttons {
       position: fixed;
       bottom: 20px;
@@ -514,7 +507,7 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
     
-    /* 3.41 Навигация по форме */
+    /* 3.40 Навигация по форме */
     .form-navigation {
       display: flex;
       justify-content: space-between;
@@ -526,7 +519,7 @@
       flex: 1;
     }
     
-    /* 3.42 Бонусное сообщение */
+    /* 3.41 Бонусное сообщение */
     .bonus-message {
       position: fixed;
       top: 50%;
@@ -574,7 +567,7 @@
       opacity: 1;
     }
     
-    /* 3.43 Оверлей */
+    /* 3.42 Оверлей */
     .overlay {
       position: fixed;
       top: 0;
@@ -587,7 +580,7 @@
       backdrop-filter: blur(3px);
     }
     
-    /* 3.44 Анимации */
+    /* 3.43 Анимации */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -598,7 +591,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* 3.45 Адаптивные стили */
+    /* 3.44 Адаптивные стили */
     @media (max-width: 400px) {
       :root {
         --panel-width: 95%;
@@ -626,18 +619,9 @@
       .logo-text {
         font-size: 24px;
       }
-      
-      /* Адаптация кнопок для маленьких экранов */
-      .main-menu {
-        grid-template-columns: 1fr;
-      }
-      
-      .btn {
-        height: 80px;
-      }
     }
     
-    /* 3.46 Лоадер */
+    /* 3.45 Лоадер */
     .loader {
       display: inline-block;
       width: 20px;
@@ -653,7 +637,7 @@
       to { transform: rotate(360deg); }
     }
     
-    /* 3.47 Уведомления */
+    /* 3.46 Уведомления */
     .notification {
       position: fixed;
       bottom: 20px;
@@ -694,7 +678,7 @@
       to { opacity: 0; }
     }
     
-    /* 3.48 Счетчик звезд */
+    /* 3.47 Счетчик звезд */
     .stars-counter {
       position: fixed;
       top: 20px;
@@ -720,7 +704,7 @@
       color: gold;
     }
     
-    /* 3.49 Анимация получения звезд */
+    /* 3.48 Анимация получения звезд */
     @keyframes starBounce {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.5); }
@@ -730,7 +714,7 @@
       animation: starBounce 0.5s ease;
     }
     
-    /* 3.50 Стили для реферальной системы */
+    /* 3.49 Стили для реферальной системы */
     .ref-link {
       background: rgba(0,0,0,0.2);
       padding: 12px;
@@ -750,7 +734,7 @@
       margin-right: 5px;
     }
     
-    /* 3.51 Улучшенные сообщения об ошибках */
+    /* 3.50 Улучшенные сообщения об ошибках */
     .error-message {
       color: var(--error-color);
       font-size: 13px;
@@ -763,7 +747,7 @@
       display: block;
     }
     
-    /* 3.52 Анимация для кнопок */
+    /* 3.51 Анимация для кнопок */
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -774,7 +758,7 @@
       animation: pulse 2s infinite;
     }
     
-    /* 3.53 Дополнительные стили для улучшения UX */
+    /* 3.52 Дополнительные стили для улучшения UX */
     .tooltip {
       position: relative;
       display: inline-block;
@@ -804,14 +788,14 @@
       opacity: 1;
     }
     
-    /* 3.54 Подсказки для полей формы */
+    /* 3.53 Подсказки для полей формы */
     .field-hint {
       font-size: 12px;
       color: rgba(255,255,255,0.6);
       margin-top: 5px;
     }
     
-    /* 3.55 Улучшенный скроллбар */
+    /* 3.54 Улучшенный скроллбар */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -830,7 +814,7 @@
       background: var(--secondary-color);
     }
 
-    /* 3.56 Стили для натальной карты */
+    /* 3.55 Стили для натальной карты */
     .natal-chart-container {
       margin-top: 20px;
       background: var(--card-color);
@@ -868,7 +852,7 @@
       gap: 5px;
     }
 
-    /* 3.57 Стили для транзитов */
+    /* 3.56 Стили для транзитов */
     .transits-container {
       margin-top: 20px;
       background: var(--card-color);
@@ -899,7 +883,7 @@
       opacity: 0.7;
     }
 
-    /* 3.58 Стили для лунного календаря */
+    /* 3.57 Стили для лунного календаря */
     .moon-phase {
       text-align: center;
       margin: 20px 0;
@@ -929,7 +913,7 @@
       color: white;
     }
 
-    /* 3.59 Стили для обучения */
+    /* 3.58 Стили для обучения */
     .learning-card {
       background: var(--card-color);
       padding: 15px;
@@ -977,7 +961,7 @@
       background: var(--error-color);
     }
 
-    /* 3.60 Стили для совместимости */
+    /* 3.59 Стили для совместимости */
     .compatibility-container {
       margin-top: 20px;
     }
@@ -1001,7 +985,7 @@
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
 
-    /* 3.61 Стили для достижений */
+    /* 3.60 Стили для достижений */
     .achievements-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1065,39 +1049,31 @@
       </span>
     </div>
     
-    <!-- 7. Основные кнопки меню в стиле iOS -->
+    <!-- 7. Основные кнопки меню -->
     <div class="main-menu">
       <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
-        <i class="fas fa-user-edit"></i>
-        <span>Анкета</span>
+        <i class="fas fa-user-edit"></i> Анкета
       </button>
       <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
-        <i class="fas fa-star-chart"></i>
-        <span>Натальная карта</span>
+        <i class="fas fa-star-chart"></i> Натальная карта
       </button>
       <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
-        <i class="fas fa-sun"></i>
-        <span>Прогноз на день</span>
+        <i class="fas fa-sun"></i> Прогноз на день
       </button>
       <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
-        <i class="fas fa-calendar-week"></i>
-        <span>Прогноз на неделю</span>
+        <i class="fas fa-calendar-week"></i> Прогноз на неделю
       </button>
       <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
-        <i class="fas fa-calendar-alt"></i>
-        <span>Прогноз на месяц</span>
+        <i class="fas fa-calendar-alt"></i> Прогноз на месяц
       </button>
       <button id="transitsBtn" class="btn" aria-label="Текущие транзиты">
-        <i class="fas fa-satellite"></i>
-        <span>Транзиты</span>
+        <i class="fas fa-satellite"></i> Транзиты
       </button>
       <button id="moonBtn" class="btn" aria-label="Лунный календарь">
-        <i class="fas fa-moon"></i>
-        <span>Лунный календарь</span>
+        <i class="fas fa-moon"></i> Лунный календарь
       </button>
       <button id="learningBtn" class="btn" aria-label="Обучение астрологии">
-        <i class="fas fa-graduation-cap"></i>
-        <span>Обучение</span>
+        <i class="fas fa-graduation-cap"></i> Обучение
       </button>
     </div>
     
@@ -2483,4 +2459,539 @@
       localStorage.setItem('starsCount', currentStars);
       starsCount.textContent = currentStars;
       
-      // Анима
+      // Анимация добавления звезд
+      starsCounter.classList.add('star-added');
+      setTimeout(() => {
+        starsCounter.classList.remove('star-added');
+      }, 500);
+      
+      // Показываем уведомление о начислении
+      if (reason) {
+        showNotification(`+${count} звезд за ${reason}`, 'success');
+      }
+      
+      // Проверяем достижения
+      checkAchievements(currentStars);
+      
+      return currentStars;
+    }
+    
+    // 21.38 Проверка достижений
+    function checkAchievements(currentStars) {
+      const achievements = [
+        { id: 'first_steps', title: 'Первые шаги', description: 'Получите 10 звезд', threshold: 10, icon: 'fa-shoe-prints' },
+        { id: 'astrology_learner', title: 'Ученик астрологии', description: 'Получите 25 звезд', threshold: 25, icon: 'fa-book' },
+        { id: 'astrology_expert', title: 'Эксперт астрологии', description: 'Получите 50 звезд', threshold: 50, icon: 'fa-graduation-cap' },
+        { id: 'astrology_master', title: 'Мастер астрологии', description: 'Получите 100 звезд', threshold: 100, icon: 'fa-crown' }
+      ];
+      
+      const unlockedAchievements = JSON.parse(localStorage.getItem('achievements')) || [];
+      
+      achievements.forEach(achievement => {
+        if (currentStars >= achievement.threshold && !unlockedAchievements.includes(achievement.id)) {
+          unlockedAchievements.push(achievement.id);
+          showNotification(`Достижение разблокировано: ${achievement.title}`, 'info');
+          
+          // Показываем красивый алерт для достижения
+          Swal.fire({
+            title: 'Новое достижение!',
+            text: achievement.title,
+            icon: 'success',
+            confirmButtonText: 'Отлично!'
+          });
+        }
+      });
+      
+      localStorage.setItem('achievements', JSON.stringify(unlockedAchievements));
+    }
+    
+    // 21.39 Показать случайный бонус
+    function showRandomBonus() {
+      const now = Date.now();
+      const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
+      
+      if (timeLeft > 0) {
+        const hoursLeft = Math.ceil(timeLeft / (60 * 60 * 1000));
+        showNotification(`Вы сможете получить новый бонус через ${hoursLeft} часа(ов)`, 'error');
+        return;
+      }
+      
+      const randomIndex = Math.floor(Math.random() * bonusPhrases.length);
+      bonusText.textContent = bonusPhrases[randomIndex];
+      
+      // Начисляем звезды за бонус
+      const starsToAdd = 1 + Math.floor(Math.random() * 3); // 1-3 звезды
+      starsAddedCount.textContent = starsToAdd;
+      starsAdded.style.display = 'block';
+      addStars(starsToAdd, 'получение бонуса');
+      
+      // Показываем кнопку "Поделиться бонусом"
+      shareBonusBtn.style.display = 'block';
+      
+      // Показываем оверлей и сообщение
+      overlay.style.display = 'block';
+      bonusMessage.style.display = 'block';
+      
+      // Сохраняем время получения бонуса
+      lastBonusTime = now;
+      localStorage.setItem('lastBonusTime', lastBonusTime);
+      
+      // Обновляем состояние кнопки
+      updateBonusButton();
+    }
+    
+    // 21.40 Обновить состояние кнопки бонуса
+    function updateBonusButton() {
+      const now = Date.now();
+      const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
+      
+      if (timeLeft > 0) {
+        const hoursLeft = Math.ceil(timeLeft / (60 * 60 * 1000));
+        bonusBtn.innerHTML = `<i class="fas fa-clock"></i> До бонуса: ${hoursLeft}ч`;
+        bonusBtn.disabled = true;
+        bonusBtn.classList.remove('btn-pulse');
+      } else {
+        bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
+        bonusBtn.disabled = false;
+        bonusBtn.classList.add('btn-pulse');
+      }
+    }
+    
+    // 21.41 Переключение темы (светлая/тёмная) с иконкой
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isLight = root.classList.toggle('light-theme');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+      // Обновляем иконку
+      const themeIcon = document.getElementById('themeIcon');
+      if (themeIcon) {
+        themeIcon.innerHTML = isLight
+          ? '<i class="fas fa-sun"></i>'
+          : '<i class="fas fa-moon"></i>';
+      }
+      
+      // Пересоздаем звезды для соответствия теме
+      document.getElementById('stars-container').innerHTML = '';
+      createStars();
+    }
+    
+    // 21.42 Проверка реферального кода
+    function checkReferral() {
+      if (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) {
+        const refCode = tg.initDataUnsafe.start_param;
+        if (refCode && refCode.startsWith('ref')) {
+          // Начисляем звезды за приглашенного друга
+          addStars(5, 'приглашение друга');
+          showNotification('Вы получили 5 звезд за приглашенного друга!', 'success');
+        }
+      }
+    }
+    
+    // 21.43 Сохранение прогноза в localStorage
+    function saveForecast() {
+      if (!currentForecast) return;
+      
+      const savedForecasts = JSON.parse(localStorage.getItem('savedForecasts')) || [];
+      
+      // Проверяем, не сохранен ли уже этот прогноз
+      const exists = savedForecasts.some(f => 
+        f.date === currentForecast.date && 
+        f.period === currentForecast.period && 
+        f.zodiacSign === currentForecast.zodiacSign
+      );
+      
+      if (exists) {
+        showNotification('Этот прогноз уже сохранен', 'info');
+        return;
+      }
+      
+      savedForecasts.push(currentForecast);
+      localStorage.setItem('savedForecasts', JSON.stringify(savedForecasts));
+      
+      // Начисляем звезды за сохранение
+      addStars(1, 'сохранение прогноза');
+      showNotification('Прогноз сохранен! (+1 звезда)', 'success');
+    }
+    
+    // 21.44 Добавление данных партнера для сравнения
+    function addPartnerData() {
+      Swal.fire({
+        title: 'Добавить данные партнера',
+        html: `
+          <input type="text" id="partnerName" class="swal2-input" placeholder="Имя">
+          <input type="date" id="partnerBirthDate" class="swal2-input" placeholder="Дата рождения">
+          <select id="partnerZodiacSystem" class="swal2-input">
+            <option value="tropical">Тропический зодиак</option>
+            <option value="sidereal">Сидерический зодиак</option>
+          </select>
+        `,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            name: document.getElementById('partnerName').value,
+            birth_date: document.getElementById('partnerBirthDate').value,
+            zodiac_system: document.getElementById('partnerZodiacSystem').value
+          };
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const partnerData = result.value;
+          if (!partnerData.birth_date) {
+            showNotification('Пожалуйста, укажите дату рождения', 'error');
+            return;
+          }
+          
+          localStorage.setItem('partnerData', JSON.stringify(partnerData));
+          
+          // Обновляем отчет о совместимости
+          const userData = JSON.parse(localStorage.getItem('astroProfileData'));
+          generateCompatibilityReport(userData, partnerData);
+          
+          showNotification('Данные партнера сохранены', 'success');
+          addStars(2, 'анализ совместимости');
+        }
+      });
+    }
+    
+    // 21.45 Инициализация приложения
+    function initApp() {
+      // Сначала применяем сохранённую тему
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+      }
+
+      // Затем создаём звёзды (с учётом темы)
+      createStars();
+
+      // Проверяем, есть ли сохранённые данные анкеты
+      const savedData = localStorage.getItem('astroProfileData');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+
+        // Заполняем форму сохранёнными данными
+        for (const key in data) {
+          if (profileForm.elements[key]) {
+           profileForm.elements[key].value = data[key];
+          }
+        }
+
+        // Показываем данные в режиме просмотра
+        displayProfileData(data);
+        toggleProfileViewMode(false);
+      } else {
+        // Если данных нет — открываем форму
+        toggleProfileViewMode(true);
+      }
+
+      // Инициализация автодополнения для города
+      new Awesomplete(document.getElementById('birth_city'), {
+        list: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 
+               'Челябинск', 'Самара', 'Омск', 'Ростов-на-Дону', 'Уфа', 'Красноярск', 'Пермь', 'Воронеж', 
+               'Волгоград', 'Краснодар', 'Саратов', 'Тюмень', 'Тольятти', 'Ижевск', 'Барнаул', 'Ульяновск'],
+        minChars: 1,
+        maxItems: 10
+      });
+
+      // Инициализация счетчика звезд
+      const savedStars = parseInt(localStorage.getItem('starsCount')) || 0;
+      starsCount.textContent = savedStars;
+      
+      // Обновляем состояние кнопки бонуса
+      updateBonusButton();
+      
+      // Проверяем реферальный код
+      checkReferral();
+      
+      // Начисляем звезды за первый запуск
+      if (!localStorage.getItem('firstLaunch')) {
+        addStars(3, 'первый запуск');
+        localStorage.setItem('firstLaunch', 'true');
+      }
+    }
+
+    // 21.46 Обработчики событий
+    profileBtn.addEventListener('click', () => {
+      showPanel(profilePanel);
+      
+      // Проверяем, есть ли сохраненные данные
+      const savedData = localStorage.getItem('astroProfileData');
+      if (savedData) {
+        // Если есть - показываем режим просмотра
+        toggleProfileViewMode(false);
+      } else {
+        // Если нет - показываем форму для заполнения
+        toggleProfileViewMode(true);
+      }
+    });
+    
+    // Обработчик кнопки редактирования профиля
+    editProfileBtn.addEventListener('click', () => {
+      toggleProfileViewMode(true);
+    });
+    
+    // Обработчик кнопки натальной карты
+    natalChartBtn.addEventListener('click', () => {
+      const savedData = localStorage.getItem('astroProfileData');
+      if (!savedData) {
+        showNotification('Пожалуйста, сначала заполните анкету', 'error');
+        showPanel(profilePanel);
+        return;
+      }
+      
+      showPanel(natalChartPanel);
+    });
+    
+    dailyForecastBtn.addEventListener('click', async () => {
+      const savedData = localStorage.getItem('astroProfileData');
+      if (!savedData) {
+        showNotification('Пожалуйста, сначала заполните анкету', 'error');
+        showPanel(profilePanel);
+        return;
+      }
+      
+      const data = JSON.parse(savedData);
+      
+      // Показываем индикатор загрузки
+      dailyForecastBtn.disabled = true;
+      dailyForecastBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка...';
+      
+      forecastContent.innerHTML = await generateForecast(data, 'день');
+      forecastDate.textContent = `Прогноз на ${new Date().toLocaleDateString('ru-RU')}`;
+      showPanel(forecastPanel);
+      
+      // Возвращаем кнопку в исходное состояние
+      dailyForecastBtn.disabled = false;
+      dailyForecastBtn.innerHTML = '<i class="fas fa-sun"></i> Прогноз на день';
+    });
+    
+    weeklyForecastBtn.addEventListener('click', async () => {
+      const savedData = localStorage.getItem('astroProfileData');
+      if (!savedData) {
+        showNotification('Пожалуйста, сначала заполните анкету', 'error');
+        showPanel(profilePanel);
+        return;
+      }
+      
+      const data = JSON.parse(savedData);
+      
+      // Показываем индикатор загрузки
+      weeklyForecastBtn.disabled = true;
+      weeklyForecastBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка...';
+      
+      forecastContent.innerHTML = await generateForecast(data, 'неделю');
+      forecastDate.textContent = `Прогноз на неделю ${new Date().toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}`;
+      showPanel(forecastPanel);
+      
+      // Возвращаем кнопку в исходное состояние
+      weeklyForecastBtn.disabled = false;
+      weeklyForecastBtn.innerHTML = '<i class="fas fa-calendar-week"></i> Прогноз на неделю';
+    });
+    
+    monthlyForecastBtn.addEventListener('click', async () => {
+      const savedData = localStorage.getItem('astroProfileData');
+      if (!savedData) {
+        showNotification('Пожалуйста, сначала заполните анкету', 'error');
+        showPanel(profilePanel);
+        return;
+      }
+      
+      const data = JSON.parse(savedData);
+      
+      // Показываем индикатор загрузки
+      monthlyForecastBtn.disabled = true;
+      monthlyForecastBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка...';
+      
+      forecastContent.innerHTML = await generateForecast(data, 'месяц');
+      forecastDate.textContent = `Прогноз на месяц ${new Date().toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}`;
+      showPanel(forecastPanel);
+      
+      // Возвращаем кнопку в исходное состояние
+      monthlyForecastBtn.disabled = false;
+      monthlyForecastBtn.innerHTML = '<i class="fas fa-calendar-alt"></i> Прогноз на месяц';
+    });
+    
+    // Обработчик кнопки транзитов
+    transitsBtn.addEventListener('click', () => {
+      const savedData = localStorage.getItem('astroProfileData');
+      if (!savedData) {
+        showNotification('Пожалуйста, сначала заполните анкету', 'error');
+        showPanel(profilePanel);
+        return;
+      }
+      
+      showPanel(transitsPanel);
+    });
+    
+    // Обработчик кнопки лунного календаря
+    moonBtn.addEventListener('click', () => {
+      showPanel(moonPanel);
+    });
+    
+    // Обработчик кнопки обучения
+    learningBtn.addEventListener('click', () => {
+      showPanel(learningPanel);
+    });
+    
+    // Обработчики закрытия панелей
+    closeProfilePanel.addEventListener('click', hideAllPanels);
+    closeForecastPanel.addEventListener('click', hideAllPanels);
+    closeNatalChartPanel.addEventListener('click', hideAllPanels);
+    closeTransitsPanel.addEventListener('click', hideAllPanels);
+    closeMoonPanel.addEventListener('click', hideAllPanels);
+    closeLearningPanel.addEventListener('click', hideAllPanels);
+    
+    // Обработчики шагов анкеты
+    nextStep1.addEventListener('click', () => goToNextStep(1, 2));
+    nextStep2.addEventListener('click', () => goToNextStep(2, 3));
+    prevStep2.addEventListener('click', () => goToPrevStep(2, 1));
+    prevStep3.addEventListener('click', () => goToPrevStep(3, 2));
+    
+    // Обработка сохранения анкеты
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      if (!profileForm.checkValidity()) {
+        showNotification('Пожалуйста, заполните все обязательные поля', 'error');
+        return;
+      }
+      
+      const formData = new FormData(profileForm);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Сохраняем данные в localStorage
+      localStorage.setItem('astroProfileData', JSON.stringify(data));
+      
+      // Показываем данные профиля
+      displayProfileData(data);
+      
+      // Переключаемся в режим просмотра
+      toggleProfileViewMode(false);
+      
+      // Начисляем звезды за заполнение анкеты
+      addStars(5, 'заполнение анкеты');
+      
+      // Показываем уведомление об успешном сохранении
+      showNotification('Анкета успешно сохранена (+5 звезд)', 'success');
+    });
+    
+    // Поделиться через Telegram
+    document.getElementById('shareTelegram').addEventListener('click', () => {
+      const text = `Мой астропрогноз на сегодня:\n${forecastContent.textContent.substring(0, 200)}...\n\nПолный прогноз в приложении AstroPred!`;
+      if (tg && tg.isTelegram) {
+        tg.sendData(text);
+      } else {
+        const url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+      }
+      
+      // Начисляем звезды за шаринг
+      addStars(2, 'поделиться прогнозом');
+    });
+    
+    // Поделиться через WhatsApp
+    document.getElementById('shareWhatsApp').addEventListener('click', () => {
+      const text = `Мой астропрогноз на сегодня:\n${forecastContent.textContent.substring(0, 200)}...\n\nПолный прогноз в приложении AstroPred!`;
+      const url = `https://wa.me/?text=${encodeURIComponent(text + '\n\n' + window.location.href)}`;
+      window.open(url, '_blank');
+      
+      // Начисляем звезды за шаринг
+      addStars(2, 'поделиться прогнозом');
+    });
+    
+    // Сохранить прогноз
+    saveForecastBtn.addEventListener('click', saveForecast);
+    
+    // Поделиться бонусом
+    shareBonusBtn.addEventListener('click', () => {
+      const text = `Мой астрологический бонус на сегодня: ${bonusText.textContent}\n\nПолучи свой бонус в приложении AstroPred!`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'Мой астрологический бонус',
+          text: text,
+          url: window.location.href
+        }).then(() => {
+          addStars(1, 'поделиться бонусом');
+        }).catch(console.error);
+      } else if (tg && tg.isTelegram) {
+        tg.sendData(text);
+        addStars(1, 'поделиться бонусом');
+      } else {
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            showNotification('Бонус скопирован в буфер обмена!', 'success');
+            addStars(1, 'поделиться бонусом');
+          })
+          .catch(() => showNotification(text, 'info'));
+      }
+    });
+    
+    // Поделиться приложением
+    shareAppBtn.addEventListener('click', () => {
+      // Используем сохраненный реферальный код или генерируем новый
+      let refCode = localStorage.getItem('refCode');
+      if (!refCode) {
+        const savedData = localStorage.getItem('astroProfileData');
+        const name = savedData ? JSON.parse(savedData).name : 'friend';
+        refCode = `ref_${name.toLowerCase().replace(/\s+/g, '')}_${Math.floor(1000 + Math.random() * 9000)}`;
+        localStorage.setItem('refCode', refCode);
+      }
+      
+      const shareUrl = `https://t.me/astropred_bot?start=${refCode}`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: 'AstroPred — Астрологический помощник',
+          text: 'Попробуй AstroPred — это работает магически ✨',
+          url: shareUrl
+        }).then(() => {
+          // Начисляем звезды за шаринг
+          addStars(3, 'поделиться приложением');
+        }).catch(console.error);
+      } else if (tg && tg.isTelegram) {
+        tg.sendData(shareUrl);
+        addStars(3, 'поделиться приложением');
+      } else {
+        navigator.clipboard.writeText(shareUrl)
+          .then(() => {
+            showNotification('Ссылка скопирована в буфер обмена!', 'success');
+            addStars(3, 'поделиться приложением');
+          })
+          .catch(() => showNotification(`Ссылка для приглашения: ${shareUrl}`, 'info'));
+      }
+    });
+    
+    // Показать бонусное сообщение
+    bonusBtn.addEventListener('click', showRandomBonus);
+    
+    // Закрыть бонусное сообщение
+    closeBonusMessage.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      bonusMessage.style.display = 'none';
+    });
+    
+    // Закрыть бонусное сообщение при клике на оверлей
+    overlay.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      bonusMessage.style.display = 'none';
+    });
+    
+    // Переключение темы по клику на логотип
+    themeToggle.addEventListener('click', toggleTheme);
+    
+    // Клик по счетчику звезд
+    starsCounter.addEventListener('click', () => {
+      const count = parseInt(localStorage.getItem('starsCount')) || 0;
+      showNotification(`У вас ${count} звезд!`, 'info');
+    });
+    
+    // Добавление партнера для сравнения
+    addPartnerBtn.addEventListener('click', addPartnerData);
+    
+    // Запуск приложения
+    window.addEventListener('load', initApp);
+  </script>
+</body>
+</html>
