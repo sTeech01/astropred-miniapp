@@ -29,7 +29,7 @@
       --success-color: #4caf50;
       --info-color: #4285f4;
       --warning-color: #ff9800;
-      --panel-width: 85%;
+      --panel-width: 92%;
       --transition-speed: 0.3s;
       --border-radius: 12px;
     }
@@ -619,39 +619,13 @@
     /* 3.45 Адаптивные стили */
     @media (max-width: 400px) {
       :root {
-        --panel-width: 95%;
-      }
-      .forecast-container, .profile-view {
-        padding: 15px;
+        --panel-width: 96%;
       }
     }
-      
+  
     @media (max-width: 480px) {
       :root {
-        --panel-width: 90%;
-      }
-      
-      .share-buttons {
-        flex-direction: row;
-        gap: 8px;
-      }
-      
-      .logo-svg {
-        width: 100px;
-        height: 100px;
-      }
-      
-      .logo-text {
-        font-size: 24px;
-      }
-      
-      /* Адаптация кнопок для маленьких экранов */
-      .main-menu {
-        grid-template-columns: 1fr;
-      }
-      
-      .btn {
-        height: 80px;
+        --panel-width: 94%;
       }
     }
     
@@ -887,35 +861,42 @@
     }
 
     /* 3.57 Стили для транзитов */
-    .transits-container {
-      margin-top: 20px;
-      background: var(--card-color);
-      padding: 20px;
-      border-radius: var(--border-radius);
-    }
+  .transits-container {
+    margin-top: 10px;
+    background: var(--card-color);
+    padding: 15px;
+    border-radius: var(--border-radius);
+  }
 
-    .transit-item {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px dashed rgba(255,255,255,0.1);
-    }
+  .transit-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    margin-bottom: 5px;
+  }
 
-    .transit-icon {
-      font-size: 24px;
-      margin-right: 15px;
-      width: 30px;
-      text-align: center;
-    }
+  .transit-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    width: 24px;
+    text-align: center;
+  }
 
-    .transit-content {
-      flex: 1;
-    }
+  .transit-content h4 {
+    font-size: 14px;
+    margin: 0 0 3px 0;
+  }
 
-    .transit-date {
-      font-size: 12px;
-      opacity: 0.7;
-    }
+  .transit-content p {
+    font-size: 13px;
+    margin: 0 0 3px 0;
+  }
+
+  .transit-date {
+    font-size: 11px;
+    opacity: 0.7;
+  }
 
     /* 3.58 Стили для лунного календаря */
     .moon-phase {
@@ -1059,14 +1040,15 @@
 
     /* 3.64 Стиль для кнопки редактирования профиля */
       #editProfileBtn {
-      padding: 8px 12px !important;
-      font-size: 12px !important;
+      padding: 4px 6px !important;
+      font-size: 10px !important;
       height: auto !important;
-      min-width: 120px !important;
+      min-width: 60px !important;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
+      margin-left: -10px;
     }
   </style>
 </head>
@@ -1082,30 +1064,13 @@
   
   <!-- 6. Главное меню -->
   <div id="mainMenu">
-    <div class="logo-container" id="themeToggle" title="Сменить тему">
-      <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <path id="star-path" d="M100,20 L123.5,70 L177.6,76.8 L137.8,113.9 L149.1,167.6 L100,142 L50.9,167.6 L62.2,113.9 L22.4,76.8 L76.5,70 Z" />
-          <circle id="circle-path" cx="100" cy="100" r="80" />
-        </defs>
-        
-        <text x="100" y="110" text-anchor="middle" font-size="24" fill="#9370db" font-weight="bold">AstroPred</text>
-        
-        <use href="#star-path" x="0" y="0" fill="none" stroke="#9370db" stroke-width="2">
-          <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
-        </use>
-        
-        <use href="#circle-path" fill="none" stroke="#6a5acd" stroke-width="2" stroke-dasharray="10,5">
-          <animate attributeName="stroke-dashoffset" values="0;500;0" dur="15s" repeatCount="indefinite" />
-        </use>
-      </svg>
-      <div class="logo-text">AstroPred</div>
-      <span id="themeIcon" style="margin-top: 10px; font-size: 20px; display: block;">
-        <i class="fas fa-moon"></i>
-      </span>
+    <!-- Счетчик звезд перенесен вверх -->
+    <div class="stars-counter" id="starsCounter" title="Ваши звезды">
+      <i class="fas fa-star"></i>
+      <span id="starsCount">0</span>
     </div>
-    
-    <!-- 7. Основные кнопки меню в стиле iOS -->
+
+  <!-- Основные кнопки меню -->
     <div class="main-menu main-menu-2x4">
       <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
         <i class="fas fa-user-edit"></i>
@@ -1140,6 +1105,49 @@
         <span>Обучение</span>
       </button>
     </div>
+
+    <!-- Оверлей и бонусное сообщение остаются без изменений -->
+    <div class="overlay" id="overlay"></div>
+    <div class="bonus-message" id="bonusMessage">
+      [...существующее содержимое...]
+    </div>
+  </div>
+    
+    <!-- 7. Основные кнопки меню в стиле iOS -->
+    <div class="main-menu main-menu-2x4">
+        <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
+          <i class="fas fa-user-edit"></i>
+          <span>Анкета</span>
+       </button>
+        <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
+          <i class="fas fa-chart-pie"></i>
+          <span>Натальная карта</span>
+        </button>
+        <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
+          <i class="fas fa-sun"></i>
+          <span>Прогноз на день</span>
+        </button>
+        <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
+          <i class="fas fa-calendar-week"></i>
+          <span>Прогноз на неделю</span>
+        </button>
+        <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Прогноз на месяц</span>
+        </button>
+        <button id="transitsBtn" class="btn" aria-label="Текущие транзиты">
+          <i class="fas fa-satellite"></i>
+          <span>Транзиты</span>
+        </button>
+        <button id="moonBtn" class="btn" aria-label="Лунный календарь">
+          <i class="fas fa-moon"></i>
+          <span>Лунный календарь</span>
+        </button>
+        <button id="learningBtn" class="btn" aria-label="Обучение астрологии">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Обучение</span>
+        </button>
+      </div>
     
     <!-- 8. Оверлей для бонусного сообщения -->
     <div class="overlay" id="overlay"></div>
@@ -1164,11 +1172,13 @@
       <button id="bonusBtn" class="btn btn-warning flat-btn" aria-label="Получить бонус">
         <i class="fas fa-envelope"></i> Получить бонус
       </button>
+      <button id="themeToggleBtn" class="btn btn-info flat-btn" aria-label="Сменить тему">
+        <i class="fas fa-moon"></i> Тема
+      </button>
       <button id="shareAppBtn" class="btn btn-info flat-btn" aria-label="Поделиться приложением">
-        <i class="fas fa-share-alt"></i> Поделиться приложением
+        <i class="fas fa-share-alt"></i> Поделиться
       </button>
     </div>
-  </div>
   
   <!-- 11. Боковая панель для анкеты -->
   <div class="side-panel" id="profilePanel">
@@ -1458,7 +1468,8 @@
     const refLink = document.getElementById('refLink');
     const shareBonusBtn = document.getElementById('shareBonusBtn');
     const saveForecastBtn = document.getElementById('saveForecastBtn');
-    
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
     // 21.3 Панели
     const profilePanel = document.getElementById('profilePanel');
     const forecastPanel = document.getElementById('forecastPanel');
@@ -2898,6 +2909,7 @@
       showPanel(learningPanel);
     });
     
+    
     // Обработчики закрытия панелей
     closeProfilePanel.addEventListener('click', hideAllPanels);
     closeForecastPanel.addEventListener('click', hideAllPanels);
@@ -2912,6 +2924,9 @@
     prevStep2.addEventListener('click', () => goToPrevStep(2, 1));
     prevStep3.addEventListener('click', () => goToPrevStep(3, 2));
     
+    // Обработчик переключения темы (новый)
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
     // Обработка сохранения анкеты
     profileForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -3041,9 +3056,6 @@
       overlay.style.display = 'none';
       bonusMessage.style.display = 'none';
     });
-    
-    // Переключение темы по клику на логотип
-    themeToggle.addEventListener('click', toggleTheme);
     
     // Клик по счетчику звезд
     starsCounter.addEventListener('click', () => {
