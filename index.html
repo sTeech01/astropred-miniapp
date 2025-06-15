@@ -193,6 +193,18 @@
       box-shadow: none;
     }
     
+    /* 3.17.1 Добавленные стили для кнопки бонуса */
+    #bonusBtn.disabled {
+      background-color: #cccccc !important;
+      color: #666666 !important;
+      cursor: not-allowed;
+    }
+
+    #bonusTimer {
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
     /* 3.18 Стили для разных типов кнопок */
     .btn-success {
       background-color: var(--success-color);
@@ -1057,7 +1069,7 @@
   <div id="mainMenu">
       <!-- Добавленный заголовок -->
         <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="font-size: 1.2rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 10px rgba(147, 112, 219, 0.5); letter-spacing: 2px;">
+          <h1 style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 10px rgba(147, 112, 219, 0.5); letter-spacing: 2px;">
             ASTRODAMUS
           </h1>
         </div>
@@ -2562,22 +2574,51 @@
     }
     
     // 21.40 Обновить состояние кнопки бонуса
-    function updateBonusButton() {
+  function updateBonusButton() {
+    const now = Date.now();
+    const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
+    
+    if (timeLeft > 0) {
+      bonusBtn.disabled = true;
+      bonusBtn.classList.add('disabled');
+      bonusBtn.classList.remove('btn-pulse');
+    } else {
+      bonusBtn.disabled = false;
+      bonusBtn.classList.remove('disabled');
+      bonusBtn.classList.add('btn-pulse');
+      bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
+    }
+  }
+  
+    // Запуск таймера обратного отсчета
+  function startBonusTimer() {
+    const endTime = lastBonusTime + BONUS_COOLDOWN;
+    
+    function updateTimer() {
       const now = Date.now();
-      const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
+      const timeLeft = endTime - now;
       
-      if (timeLeft > 0) {
-        const hoursLeft = Math.ceil(timeLeft / (60 * 60 * 1000));
-        bonusBtn.innerHTML = `<i class="fas fa-clock"></i> До бонуса: ${hoursLeft}ч`;
-        bonusBtn.disabled = true;
-        bonusBtn.classList.remove('btn-pulse');
-      } else {
-        bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
-        bonusBtn.disabled = false;
-        bonusBtn.classList.add('btn-pulse');
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        updateBonusButton();
+        return;
       }
+      
+      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      
+      bonusBtn.innerHTML = `
+        <i class="fas fa-clock"></i> До бонуса: 
+        ${hours.toString().padStart(2, '0')}:
+        ${minutes.toString().padStart(2, '0')}:
+        ${seconds.toString().padStart(2, '0')}
+      `;
     }
     
+    updateTimer(); // Первое обновление
+    const timer = setInterval(updateTimer, 1000);
+  }
     // 21.41 Переключение темы (светлая/тёмная) с иконкой
     function toggleTheme() {
       const root = document.documentElement;
