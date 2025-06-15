@@ -1419,7 +1419,7 @@
   <!-- 21. Основной JavaScript код -->
   <script>
     // 21.1 Инициализация WebApp Telegram
-    const tg = window.Telegram.WebApp;
+    const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.expand();
       tg.enableClosingConfirmation();
@@ -1442,7 +1442,7 @@
     const bonusText = document.getElementById('bonusText');
     const closeBonusMessage = document.getElementById('closeBonusMessage');
     const overlay = document.getElementById('overlay');
-    const themeToggle = document.getElementById('themeToggle');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const starsCounter = document.getElementById('starsCounter');
     const starsCount = document.getElementById('starsCount');
     const starsAdded = document.getElementById('starsAdded');
