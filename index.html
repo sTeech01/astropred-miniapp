@@ -1028,6 +1028,31 @@
     .achievement-title {
       font-size: 12px;
     }
+
+    /* 3.62 Плоские кнопки внизу экрана */
+    .flat-btn {
+      background: none;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .flat-btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* 3.63 Новый стиль для главного меню - 2x4 кнопки */
+    .main-menu-2x4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .main-menu-2x4 .btn {
+      height: 100px;
+    }
   </style>
 </head>
 <body>
@@ -1066,13 +1091,13 @@
     </div>
     
     <!-- 7. Основные кнопки меню в стиле iOS -->
-    <div class="main-menu">
+    <div class="main-menu main-menu-2x4">
       <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
         <i class="fas fa-user-edit"></i>
         <span>Анкета</span>
       </button>
       <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
-        <i class="fas fa-star-chart"></i>
+        <i class="fas fa-chart-pie"></i>
         <span>Натальная карта</span>
       </button>
       <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
@@ -1121,10 +1146,10 @@
     
     <!-- 10. Кнопки внизу экрана -->
     <div class="bottom-buttons">
-      <button id="bonusBtn" class="btn btn-warning" aria-label="Получить бонус">
+      <button id="bonusBtn" class="btn btn-warning flat-btn" aria-label="Получить бонус">
         <i class="fas fa-envelope"></i> Получить бонус
       </button>
-      <button id="shareAppBtn" class="btn btn-info" aria-label="Поделиться приложением">
+      <button id="shareAppBtn" class="btn btn-info flat-btn" aria-label="Поделиться приложением">
         <i class="fas fa-share-alt"></i> Поделиться приложением
       </button>
     </div>
@@ -1302,7 +1327,7 @@
       <i class="fas fa-times"></i>
     </button>
     
-    <h2><i class="fas fa-star-chart"></i> Ваша натальная карта</h2>
+    <h2><i class="fas fa-chart-pie"></i> Ваша натальная карта</h2>
     
     <div class="natal-chart-container">
       <div class="natal-chart">
