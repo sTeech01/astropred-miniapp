@@ -144,20 +144,21 @@
     
     /* 3.13 Боковая панель */
     .side-panel {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: var(--panel-width);
-      height: 100vh;
-      background: var(--bg-color);
-      box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-      z-index: 100;
-      overflow-y: auto;
-      transition: right var(--transition-speed) ease;
-      padding: 50px 20px 20px;
-      border-left: 1px solid rgba(255,255,255,0.1);
-    }
-    
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: var(--panel-width);
+        height: 100vh;
+        background: var(--bg-color);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        z-index: 100;
+        overflow-y: auto;
+        transition: right var(--transition-speed) ease;
+        padding: 20px 20px 20px; /* изменено с 50px на 20px сверху */
+        border-left: 1px solid rgba(255,255,255,0.1);
+        box-sizing: border-box;
+      }
+
     /* 3.14 Активное состояние боковой панели */
     .side-panel.active {
       right: 0;
@@ -501,17 +502,17 @@
     
     /* 3.40 Кнопки внизу экрана */
     .bottom-buttons {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 40px);
-      max-width: 500px;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-bottom: env(safe-area-inset-bottom);
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        max-width: 500px;
+        z-index: 10;
+        display: flex;
+        flex-direction: row; /* изменено с column на row */
+        gap: 10px;
+        padding-bottom: env(safe-area-inset-bottom);
     }
     
     /* 3.41 Навигация по форме */
@@ -1052,6 +1053,12 @@
 
     .main-menu-2x4 .btn {
       height: 100px;
+    }
+
+    #shareAppBtn {
+      flex: 0 1 40%;
+      font-size: 12px;
+      padding: 12px 8px;
     }
   </style>
 </head>
