@@ -105,35 +105,6 @@
       font-size: 1.5rem;
     }
     
-    /* 3.9 Контейнер логотипа */
-    .logo-container {
-      text-align: center;
-      margin-bottom: 30px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    
-    .logo-container:hover {
-      transform: scale(1.02);
-    }
-    
-    /* 3.10 Стили SVG логотипа */
-    .logo-svg {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 15px;
-      filter: drop-shadow(0 0 5px rgba(106, 90, 205, 0.5));
-    }
-    
-    /* 3.11 Текст логотипа */
-    .logo-text {
-      font-size: 28px;
-      font-weight: bold;
-      color: var(--primary-color);
-      margin-top: 10px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    
     /* 3.12 Стили главного меню - изменено для iOS стиля */
     .main-menu {
       display: grid;
@@ -1082,28 +1053,6 @@
   
   <!-- 6. Главное меню -->
   <div id="mainMenu">
-    <div class="logo-container" id="themeToggle" title="Сменить тему">
-      <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <path id="star-path" d="M100,20 L123.5,70 L177.6,76.8 L137.8,113.9 L149.1,167.6 L100,142 L50.9,167.6 L62.2,113.9 L22.4,76.8 L76.5,70 Z" />
-          <circle id="circle-path" cx="100" cy="100" r="80" />
-        </defs>
-        
-        <text x="100" y="110" text-anchor="middle" font-size="24" fill="#9370db" font-weight="bold">AstroPred</text>
-        
-        <use href="#star-path" x="0" y="0" fill="none" stroke="#9370db" stroke-width="2">
-          <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
-        </use>
-        
-        <use href="#circle-path" fill="none" stroke="#6a5acd" stroke-width="2" stroke-dasharray="10,5">
-          <animate attributeName="stroke-dashoffset" values="0;500;0" dur="15s" repeatCount="indefinite" />
-        </use>
-      </svg>
-      <div class="logo-text">AstroPred</div>
-      <span id="themeIcon" style="margin-top: 10px; font-size: 20px; display: block;">
-        <i class="fas fa-moon"></i>
-      </span>
-    </div>
     
     <!-- 7. Основные кнопки меню в стиле iOS -->
     <div class="main-menu main-menu-2x4">
