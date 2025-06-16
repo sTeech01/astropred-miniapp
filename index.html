@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -88,9 +87,9 @@
       50% { opacity: 1; }
     }
     
-    /* 3.7 Стили главного меню */
+    /* 3.7 Стили главного меню - УЛУЧШЕНИЕ: уменьшен отступ сверху */
     #mainMenu {
-      padding: 20px;
+      padding: 10px 20px 20px; /* Уменьшен верхний padding */
       transition: all var(--transition-speed) ease;
       position: relative;
       z-index: 1;
@@ -104,12 +103,15 @@
       margin-top: 0;
       padding-top: 10px;
       font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     
     /* 3.9 Контейнер логотипа */
     .logo-container {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px; /* Уменьшен отступ */
       cursor: pointer;
       transition: transform 0.3s ease;
     }
@@ -120,30 +122,31 @@
     
     /* 3.10 Стили SVG логотипа */
     .logo-svg {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 15px;
+      width: 100px; /* Уменьшен размер */
+      height: 100px; /* Уменьшен размер */
+      margin-bottom: 10px; /* Уменьшен отступ */
       filter: drop-shadow(0 0 5px rgba(106, 90, 205, 0.5));
     }
     
     /* 3.11 Текст логотипа */
     .logo-text {
-      font-size: 28px;
+      font-size: 24px; /* Уменьшен размер */
       font-weight: bold;
       color: var(--primary-color);
-      margin-top: 10px;
+      margin-top: 8px; /* Уменьшен отступ */
       text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
-    /* 3.12 Стили главного меню */
+    /* 3.12 Стили главного меню - УЛУЧШЕНИЕ: сетка 2x4 */
     .main-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
     }
     
-    /* 3.13 Боковая панель */
+    /* 3.13 Боковая панель - УЛУЧШЕНИЕ: фиксированная высота с прокруткой */
     .side-panel {
       position: fixed;
       top: 0;
@@ -181,14 +184,14 @@
       transform: rotate(90deg);
     }
     
-    /* 3.16 Основные стили кнопок */
+    /* 3.16 Основные стили кнопок - УЛУЧШЕНИЕ: квадратные кнопки для меню */
     .btn {
       position: relative;
       overflow: hidden;
-      padding: 15px 10px;
-      border-radius: 18px;
+      padding: 10px;
+      border-radius: var(--border-radius);
       border: none;
-      font-size: 14px;
+      font-size: 12px; /* Уменьшен размер шрифта */
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -196,14 +199,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 5px;
       background-color: var(--card-color);
       color: var(--text-color);
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      height: 90px;
+      height: 80px; /* Уменьшена высота */
       text-align: center;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.1);
+      aspect-ratio: 1/1; /* Квадратная форма */
     }
     
     /* 3.17 Состояния кнопок */
@@ -259,10 +263,16 @@
     .btn-warning:hover {
       background-color: #e68a00;
     }
+
+    /* 3.18.1 Стиль для кнопки бонуса после нажатия */
+    .btn-bonus-used {
+      background-color: #9e9e9e;
+      color: white;
+    }
     
     /* 3.19 Эффект ripple для кнопок */
     .btn i {
-      font-size: 28px;
+      font-size: 24px; /* Уменьшен размер иконки */
       margin-bottom: 5px;
       display: block;
     }
@@ -493,7 +503,7 @@
       min-width: 0;
     }
     
-    /* 3.39 Кнопки внизу экрана */
+    /* 3.39 Кнопки внизу экрана - УЛУЧШЕНИЕ: выравнивание с кнопками меню */
     .bottom-buttons {
       position: fixed;
       bottom: 20px;
@@ -502,8 +512,8 @@
       width: calc(100% - 40px);
       max-width: 500px;
       z-index: 10;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       padding-bottom: env(safe-area-inset-bottom);
     }
@@ -613,12 +623,27 @@
       }
       
       .logo-svg {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
       }
       
       .logo-text {
-        font-size: 24px;
+        font-size: 20px;
+      }
+
+      /* УЛУЧШЕНИЕ: адаптация меню для маленьких экранов */
+      .main-menu {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+      }
+
+      .btn {
+        height: 70px;
+        font-size: 11px;
+      }
+
+      .btn i {
+        font-size: 20px;
       }
     }
     
@@ -1013,6 +1038,31 @@
     .achievement-title {
       font-size: 12px;
     }
+
+    /* 3.61 УЛУЧШЕНИЕ: Стиль для маленькой кнопки редактирования */
+    .small-btn {
+      padding: 5px 10px;
+      font-size: 12px;
+      height: auto;
+      width: auto;
+      min-width: 0;
+      margin-left: 10px;
+    }
+
+    /* 3.62 УЛУЧШЕНИЕ: Стиль для заголовка с кнопкой */
+    .title-with-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* 3.63 УЛУЧШЕНИЕ: Стиль для SVG иконки натальной карты */
+    .natal-icon {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
   </style>
 </head>
 <body>
@@ -1040,28 +1090,35 @@
       </span>
     </div>
     
-    <!-- 7. Основные кнопки меню -->
+    <!-- 7. Основные кнопки меню - УЛУЧШЕНИЕ: сетка 2x4 -->
     <div class="main-menu">
       <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
         <i class="fas fa-user-edit"></i> Анкета
       </button>
       <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
-        <i class="fas fa-star-chart"></i> Натальная карта
+        <!-- УЛУЧШЕНИЕ: Добавлена SVG иконка для натальной карты -->
+        <svg class="natal-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 12L12 22L20 12L12 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+          <path d="M12 5L12 19" stroke="currentColor" stroke-width="2"/>
+          <path d="M5 12L19 12" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Натальная карта
       </button>
       <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
-        <i class="fas fa-sun"></i> Прогноз на день
+        <i class="fas fa-sun"></i> День
       </button>
       <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
-        <i class="fas fa-calendar-week"></i> Прогноз на неделю
+        <i class="fas fa-calendar-week"></i> Неделя
       </button>
       <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
-        <i class="fas fa-calendar-alt"></i> Прогноз на месяц
+        <i class="fas fa-calendar-alt"></i> Месяц
       </button>
       <button id="transitsBtn" class="btn" aria-label="Текущие транзиты">
         <i class="fas fa-satellite"></i> Транзиты
       </button>
       <button id="moonBtn" class="btn" aria-label="Лунный календарь">
-        <i class="fas fa-moon"></i> Лунный календарь
+        <i class="fas fa-moon"></i> Луна
       </button>
       <button id="learningBtn" class="btn" aria-label="Обучение астрологии">
         <i class="fas fa-graduation-cap"></i> Обучение
@@ -1086,13 +1143,13 @@
       </button>
     </div>
     
-    <!-- 10. Кнопки внизу экрана -->
+    <!-- 10. Кнопки внизу экрана - УЛУЧШЕНИЕ: выравнивание с кнопками меню -->
     <div class="bottom-buttons">
       <button id="bonusBtn" class="btn btn-warning" aria-label="Получить бонус">
-        <i class="fas fa-envelope"></i> Получить бонус
+        <i class="fas fa-envelope"></i> Бонус
       </button>
       <button id="shareAppBtn" class="btn btn-info" aria-label="Поделиться приложением">
-        <i class="fas fa-share-alt"></i> Поделиться приложением
+        <i class="fas fa-share-alt"></i> Поделиться
       </button>
     </div>
   </div>
@@ -1103,15 +1160,16 @@
       <i class="fas fa-times"></i>
     </button>
     
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+    <!-- 11.1 УЛУЧШЕНИЕ: заголовок с маленькой кнопкой редактирования -->
+    <div class="title-with-btn">
       <h2><i class="fas fa-user-edit"></i> Анкета</h2>
-      <button id="editProfileBtn" class="btn btn-info" style="display: none;">
-        <i class="fas fa-edit"></i> Редактировать
+      <button id="editProfileBtn" class="btn btn-info small-btn" style="display: none;">
+        <i class="fas fa-edit"></i>
       </button>
     </div>
     
     <!-- 12. Прогресс-бар анкеты -->
-    <div id="formProgressContainer" class="progress-container">
+    <div id="formProgressContainer" class="progress-container" style="display: none;">
       <div class="progress-bar" id="formProgressBar" style="width: 33%"></div>
       <div class="progress-steps">
         <div class="step active" id="step1">Личные данные</div>
@@ -2408,7 +2466,6 @@
       
       const refUrl = `https://t.me/astropred_bot?start=${refCode}`;
       refLink.innerHTML = `<i class="fas fa-link"></i> ${refUrl}`;
-      
       // Добавляем обработчик копирования ссылки
       refLink.onclick = () => {
         navigator.clipboard.writeText(refUrl)
