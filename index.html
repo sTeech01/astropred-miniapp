@@ -1,3 +1,4 @@
+html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -137,13 +138,12 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
-    /* 3.12 Стили главного меню - УЛУЧШЕНИЕ: сетка 2x4 */
+    /* 3.12 Стили главного меню - УЛУЧШЕНИЕ: сетка 2x2 с увеличенными кнопками */
     .main-menu {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 15px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
     }
     
     /* 3.13 Боковая панель - УЛУЧШЕНИЕ: фиксированная высота с прокруткой */
@@ -184,14 +184,14 @@
       transform: rotate(90deg);
     }
     
-    /* 3.16 Основные стили кнопок - УЛУЧШЕНИЕ: квадратные кнопки для меню */
+    /* 3.16 Основные стили кнопок - УЛУЧШЕНИЕ: увеличенные кнопки для меню */
     .btn {
       position: relative;
       overflow: hidden;
-      padding: 10px;
+      padding: 15px;
       border-radius: var(--border-radius);
       border: none;
-      font-size: 12px; /* Уменьшен размер шрифта */
+      font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -199,15 +199,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 8px;
       background-color: var(--card-color);
       color: var(--text-color);
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      height: 80px; /* Уменьшена высота */
+      height: 100px;
       text-align: center;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.1);
-      aspect-ratio: 1/1; /* Квадратная форма */
     }
     
     /* 3.17 Состояния кнопок */
@@ -272,7 +271,7 @@
     
     /* 3.19 Эффект ripple для кнопок */
     .btn i {
-      font-size: 24px; /* Уменьшен размер иконки */
+      font-size: 28px;
       margin-bottom: 5px;
       display: block;
     }
@@ -634,16 +633,15 @@
       /* УЛУЧШЕНИЕ: адаптация меню для маленьких экранов */
       .main-menu {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, 1fr);
       }
 
       .btn {
-        height: 70px;
-        font-size: 11px;
+        height: 90px;
+        font-size: 13px;
       }
 
       .btn i {
-        font-size: 20px;
+        font-size: 24px;
       }
     }
     
@@ -1055,6 +1053,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      margin-bottom: 20px;
     }
 
     /* 3.63 УЛУЧШЕНИЕ: Стиль для SVG иконки натальной карты */
@@ -1062,6 +1061,24 @@
       width: 24px;
       height: 24px;
       fill: currentColor;
+    }
+
+    /* 3.64 УЛУЧШЕНИЕ: Новый стиль для кнопки редактирования в заголовке */
+    .edit-btn-inline {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 10px;
+      font-size: 14px;
+      padding: 2px 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+    }
+
+    /* 3.65 УЛУЧШЕНИЕ: Стиль для контейнера бонусного сообщения */
+    .bonus-message-container {
+      max-height: 80vh;
+      overflow-y: auto;
+      padding-right: 10px;
     }
   </style>
 </head>
