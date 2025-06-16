@@ -17,7 +17,7 @@
   
   <!-- 3. Стили приложения -->
   <style>
-    /* 3.1 CSS переменные для темной темы (по умолчанию) */
+    /* 3.1 CSS переменные для темной темы (по умололчанию) */
     :root {
       --primary-color: #9370db;
       --primary-hover: #7b5dc5;
@@ -59,6 +59,7 @@
       overflow-x: hidden;
       min-height: 100vh;
       line-height: 1.5;
+      padding-bottom: 80px; /* Уменьшено для поднятия кнопок вверх */
     }
     
     /* 3.4 Контейнер для звездного фона */
@@ -87,13 +88,13 @@
       50% { opacity: 1; }
     }
     
-    /* 3.7 Стили главного меню - УЛУЧШЕНИЕ: уменьшен отступ сверху */
+    /* 3.7 Стили главного меню */
     #mainMenu {
-      padding: 10px 20px 20px; /* Уменьшен верхний padding */
+      padding: 20px;
       transition: all var(--transition-speed) ease;
       position: relative;
       z-index: 1;
-      padding-bottom: 120px;
+      padding-bottom: 20px; /* Уменьшено для поднятия кнопок вверх */
       max-width: 600px;
       margin: 0 auto;
     }
@@ -103,71 +104,38 @@
       margin-top: 0;
       padding-top: 10px;
       font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
     
-    /* 3.9 Контейнер логотипа */
-    .logo-container {
-      text-align: center;
-      margin-bottom: 20px; /* Уменьшен отступ */
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    
-    .logo-container:hover {
-      transform: scale(1.02);
-    }
-    
-    /* 3.10 Стили SVG логотипа */
-    .logo-svg {
-      width: 100px; /* Уменьшен размер */
-      height: 100px; /* Уменьшен размер */
-      margin-bottom: 10px; /* Уменьшен отступ */
-      filter: drop-shadow(0 0 5px rgba(106, 90, 205, 0.5));
-    }
-    
-    /* 3.11 Текст логотипа */
-    .logo-text {
-      font-size: 24px; /* Уменьшен размер */
-      font-weight: bold;
-      color: var(--primary-color);
-      margin-top: 8px; /* Уменьшен отступ */
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    
-    /* 3.12 Стили главного меню - УЛУЧШЕНИЕ: сетка 2x4 */
+    /* 3.9 Стили главного меню - изменено для iOS стиля */
     .main-menu {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 15px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px; /* Уменьшен отступ между кнопками */
+      margin-top: 10px; /* Уменьшен отступ сверху */
     }
     
-    /* 3.13 Боковая панель - УЛУЧШЕНИЕ: фиксированная высота с прокруткой */
+    /* 3.10 Боковая панель */
     .side-panel {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: var(--panel-width);
-      height: 100vh;
-      background: var(--bg-color);
-      box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-      z-index: 100;
-      overflow-y: auto;
-      transition: right var(--transition-speed) ease;
-      padding: 50px 20px 20px;
-      border-left: 1px solid rgba(255,255,255,0.1);
+        position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg-color);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            overflow-y: auto;
+            transition: right var(--transition-speed) ease;
+            padding: 20px;
+            box-sizing: border-box;
     }
-    
-    /* 3.14 Активное состояние боковой панели */
+
+    /* 3.11 Активное состояние боковой панели */
     .side-panel.active {
       right: 0;
     }
     
-    /* 3.15 Кнопка закрытия панели */
+    /* 3.12 Кнопка закрытия панели */
     .close-panel {
       position: absolute;
       top: 15px;
@@ -184,12 +152,12 @@
       transform: rotate(90deg);
     }
     
-    /* 3.16 Основные стили кнопок - УЛУЧШЕНИЕ: квадратные кнопки для меню */
+    /* 3.13 Основные стили кнопок - полностью переработано под iOS стиль */
     .btn {
       position: relative;
       overflow: hidden;
-      padding: 10px;
-      border-radius: var(--border-radius);
+      padding: 8px 5px; /* Уменьшен padding */
+      border-radius: 12px; /* Уменьшен радиус */
       border: none;
       font-size: 12px; /* Уменьшен размер шрифта */
       font-weight: 500;
@@ -199,25 +167,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 5px; /* Уменьшен отступ между иконкой и текстом */
       background-color: var(--card-color);
       color: var(--text-color);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      height: 80px; /* Уменьшена высота */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Уменьшена тень */
+      height: 60px; /* Уменьшена высота кнопки */
       text-align: center;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.1);
-      aspect-ratio: 1/1; /* Квадратная форма */
     }
     
-    /* 3.17 Состояния кнопок */
+    /* 3.14 Состояния кнопок */
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25); /* Уменьшена тень */
     }
     
     .btn:active {
-      transform: translateY(0);
+      transform: scale(0.98);
     }
     
     .btn:disabled {
@@ -227,7 +194,30 @@
       box-shadow: none;
     }
     
-    /* 3.18 Стили для разных типов кнопок */
+    /* 3.15 Добавленные стили для кнопки бонуса */
+    #bonusBtn.disabled {
+      background-color: #cccccc !important;
+      color: #666666 !important;
+      cursor: not-allowed;
+      position: relative;
+    }
+
+    #bonusBtn.collected {
+      background-color: var(--success-color) !important;
+    }
+
+    #bonusTimer {
+      font-size: 9px; /* Уменьшен размер шрифта */
+      position: absolute;
+      bottom: 3px; /* Поднят выше */
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* 3.16 Стили для разных типов кнопок */
     .btn-success {
       background-color: var(--success-color);
       color: white;
@@ -263,21 +253,15 @@
     .btn-warning:hover {
       background-color: #e68a00;
     }
-
-    /* 3.18.1 Стиль для кнопки бонуса после нажатия */
-    .btn-bonus-used {
-      background-color: #9e9e9e;
-      color: white;
-    }
     
-    /* 3.19 Эффект ripple для кнопок */
+    /* 3.17 Иконки в кнопках */
     .btn i {
-      font-size: 24px; /* Уменьшен размер иконки */
-      margin-bottom: 5px;
+      font-size: 20px; /* Уменьшен размер иконки */
+      margin-bottom: 3px; /* Уменьшен отступ */
       display: block;
     }
     
-    /* 3.20 Анимация ripple эффекта */
+    /* 3.18 Эффект ripple для кнопок */
     .btn::after {
       content: "";
       position: absolute;
@@ -296,7 +280,7 @@
       animation: ripple 0.6s ease-out;
     }
     
-    /* 3.21 Анимация ripple эффекта */
+    /* 3.19 Анимация ripple эффекта */
     @keyframes ripple {
       0% {
         transform: scale(0, 0);
@@ -308,42 +292,49 @@
       }
     }
     
-    /* 3.22 Группы полей формы */
+    /* 3.20 Стили форм */
     form {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
       transition: all var(--transition-speed) ease;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    /* 3.23 Стили меток */
+    /* 3.21 Группы полей формы */
+    .form-group {
+      position: relative;
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+    
+    /* 3.22 Стили меток */
     label {
       font-weight: 600;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px; /* Уменьшен отступ */
       color: var(--text-color);
-      font-size: 15px;
+      font-size: 14px; /* Уменьшен размер шрифта */
     }
     
     label i {
-      margin-right: 8px;
+      margin-right: 6px; /* Уменьшен отступ */
       color: var(--primary-color);
-      width: 20px;
+      width: 18px; /* Уменьшена ширина */
       text-align: center;
     }
     
-    /* 3.24 Стили полей ввода */
+    /* 3.23 Стили полей ввода */
     input, select, textarea {
-      padding: 12px 15px;
+      padding: 10px 12px; /* Уменьшен padding */
       border-radius: var(--border-radius);
       border: 1px solid rgba(255,255,255,0.2);
-      font-size: 16px;
+      font-size: 14px; /* Уменьшен размер шрифта */
       width: 100%;
       box-sizing: border-box;
       background: rgba(0,0,0,0.2);
@@ -357,13 +348,13 @@
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg fill='%23cccccc' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 18px 18px;
-      padding-right: 40px;
+      background-position: right 10px center;
+      background-size: 16px 16px; /* Уменьшен размер стрелки */
+      padding-right: 35px; /* Уменьшен отступ */
       cursor: pointer;
     }
   
-    /* 3.25 Состояния полей ввода */
+    /* 3.24 Состояния полей ввода */
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
@@ -375,38 +366,38 @@
       border-color: var(--error-color);
     }
     
-    /* 3.26 Контейнер прогресс-бара */
+    /* 3.25 Контейнер прогресс-бара */
     .progress-container {
       width: 100%;
       background: rgba(0,0,0,0.2);
       border-radius: var(--border-radius);
-      margin-bottom: 20px;
+      margin-bottom: 15px; /* Уменьшен отступ */
       overflow: hidden;
     }
     
-    /* 3.27 Прогресс-бар */
+    /* 3.26 Прогресс-бар */
     .progress-bar {
-      height: 8px;
+      height: 6px; /* Уменьшена высота */
       background: var(--primary-color);
       border-radius: var(--border-radius);
       transition: width 0.4s ease;
     }
     
-    /* 3.28 Шаги прогресса */
+    /* 3.27 Шаги прогресса */
     .progress-steps {
       display: flex;
       justify-content: space-between;
-      margin-top: 10px;
-      font-size: 14px;
+      margin-top: 8px; /* Уменьшен отступ */
+      font-size: 12px; /* Уменьшен размер шрифта */
       color: var(--text-color);
     }
     
-    /* 3.29 Стили шагов */
+    /* 3.28 Стили шагов */
     .step {
       text-align: center;
       flex: 1;
       position: relative;
-      font-size: 13px;
+      font-size: 12px; /* Уменьшен размер шрифта */
       opacity: 0.7;
     }
     
@@ -419,82 +410,82 @@
     .step.completed::before {
       content: "✓";
       color: var(--success-color);
-      margin-right: 5px;
+      margin-right: 4px; /* Уменьшен отступ */
     }
     
-    /* 3.30 Контейнер прогноза */
+    /* 3.29 Контейнер прогноза */
     .forecast-container {
       background: var(--card-color);
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      margin-top: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-top: 15px; /* Уменьшен отступ */
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
       animation: slideUp 0.5s ease forwards;
     }
     
-    /* 3.31 Заголовок прогноза */
+    /* 3.30 Заголовок прогноза */
     .forecast-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px; /* Уменьшен отступ */
       color: var(--primary-color);
     }
     
-    /* 3.32 Контент прогноза */
+    /* 3.31 Контент прогноза */
     .forecast-content {
-      line-height: 1.6;
+      line-height: 1.5; /* Уменьшен межстрочный интервал */
     }
     
-    /* 3.33 Секции прогноза */
+    /* 3.32 Секции прогноза */
     .forecast-section {
-      margin-bottom: 15px;
-      padding-bottom: 15px;
+      margin-bottom: 12px; /* Уменьшен отступ */
+      padding-bottom: 12px; /* Уменьшен отступ */
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
     
-    /* 3.34 Заголовки секций */
+    /* 3.33 Заголовки секций */
     .forecast-section h3 {
       color: var(--primary-color);
-      margin-bottom: 10px;
+      margin-bottom: 8px; /* Уменьшен отступ */
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.1rem;
+      gap: 8px; /* Уменьшен отступ */
+      font-size: 1rem; /* Уменьшен размер шрифта */
     }
     
-    /* 3.35 Просмотр профиля */
+    /* 3.34 Просмотр профиля */
     .profile-view {
       background: var(--card-color);
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      margin-top: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-top: 15px; /* Уменьшен отступ */
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    /* 3.36 Заголовки профиля */
+    /* 3.35 Заголовки профиля */
     .profile-view h3 {
       color: var(--primary-color);
-      margin-bottom: 20px 0 15px;
+      margin-bottom: 15px; /* Уменьшен отступ */
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.3rem;
+      gap: 8px; /* Уменьшен отступ */
+      font-size: 1.2rem; /* Уменьшен размер шрифта */
     }
     
-    /* 3.37 Параграфы профиля */
+    /* 3.36 Параграфы профиля */
     .profile-view p {
-      margin-bottom: 10px;
-      padding-left: 10px;
+      margin-bottom: 8px; /* Уменьшен отступ */
+      padding-left: 8px; /* Уменьшен отступ */
     }
     
-    /* 3.38 Кнопки "Поделиться" */
+    /* 3.37 Кнопки "Поделиться" */
     .share-buttons {
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 8px; /* Уменьшен отступ */
+      margin-top: 15px; /* Уменьшен отступ */
       justify-content: space-between;
     }
 
@@ -503,34 +494,52 @@
       min-width: 0;
     }
     
-    /* 3.39 Кнопки внизу экрана - УЛУЧШЕНИЕ: выравнивание с кнопками меню */
+    /* 3.38 Кнопки внизу экрана */
     .bottom-buttons {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 40px);
-      max-width: 500px;
-      z-index: 10;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding-bottom: env(safe-area-inset-bottom);
+        position: fixed;
+        bottom: 15px; /* Подняты выше */
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        gap: 8px; /* Уменьшен отступ */
+        padding: 0 15px; /* Уменьшен padding */
+        padding-bottom: env(safe-area-inset-bottom);
+        box-sizing: border-box;
+    }
+
+    #bonusBtn {
+        background-color: var(--warning-color) !important;
+        color: white !important;
+    }
+
+    #bonusBtn:disabled {
+        background-color: #cccccc !important;
+        color: #666666 !important;
+    }
+
+    #shareAppBtn {
+        background-color: var(--info-color) !important;
+        color: white !important;
     }
     
-    /* 3.40 Навигация по форме */
+    /* 3.39 Навигация по форме */
     .form-navigation {
       display: flex;
       justify-content: space-between;
-      gap: 15px;
-      margin-top: 20px;
+      gap: 12px; /* Уменьшен отступ */
+      margin-top: 15px; /* Уменьшен отступ */
     }
     
     .form-navigation .btn {
       flex: 1;
     }
     
-    /* 3.41 Бонусное сообщение */
+    /* 3.40 Бонусное сообщение */
     .bonus-message {
       position: fixed;
       top: 50%;
@@ -539,10 +548,10 @@
       width: calc(100% - 40px);
       max-width: 400px;
       box-sizing: border-box;
-      padding: 25px;
+      padding: 20px; /* Уменьшен padding */
       background: var(--card-color);
       border-radius: var(--border-radius);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* Уменьшена тень */
       z-index: 1000;
       text-align: center;
       display: none;
@@ -552,23 +561,23 @@
     
     .bonus-message h3 {
       color: var(--primary-color);
-      margin-bottom: 15px;
-      font-size: 1.3rem;
+      margin-bottom: 12px; /* Уменьшен отступ */
+      font-size: 1.2rem; /* Уменьшен размер шрифта */
     }
     
     .bonus-message p {
-      line-height: 1.6;
-      margin-bottom: 15px;
+      line-height: 1.5; /* Уменьшен межстрочный интервал */
+      margin-bottom: 12px; /* Уменьшен отступ */
     }
     
     .bonus-message .close-bonus {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      top: 12px; /* Уменьшен отступ */
+      right: 12px; /* Уменьшен отступ */
       background: none;
       border: none;
       color: var(--text-color);
-      font-size: 18px;
+      font-size: 16px; /* Уменьшен размер шрифта */
       cursor: pointer;
       opacity: 0.7;
       transition: opacity 0.2s;
@@ -578,7 +587,7 @@
       opacity: 1;
     }
     
-    /* 3.42 Оверлей */
+    /* 3.41 Оверлей */
     .overlay {
       position: fixed;
       top: 0;
@@ -591,24 +600,24 @@
       backdrop-filter: blur(3px);
     }
     
-    /* 3.43 Анимации */
+    /* 3.42 Анимации */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* 3.44 Адаптивные стили */
+    /* 3.43 Адаптивные стили */
     @media (max-width: 400px) {
       :root {
         --panel-width: 95%;
       }
       .forecast-container, .profile-view {
-        padding: 15px;
+        padding: 12px; /* Уменьшен padding */
       }
     }
       
@@ -619,57 +628,51 @@
       
       .share-buttons {
         flex-direction: row;
-        gap: 8px;
+        gap: 6px; /* Уменьшен отступ */
       }
       
       .logo-svg {
-        width: 80px;
-        height: 80px;
+        width: 80px; /* Уменьшен размер */
+        height: 80px; /* Уменьшен размер */
       }
       
       .logo-text {
-        font-size: 20px;
+        font-size: 20px; /* Уменьшен размер шрифта */
       }
-
-      /* УЛУЧШЕНИЕ: адаптация меню для маленьких экранов */
+      
+      /* Адаптация кнопок для маленьких экранов */
       .main-menu {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, 1fr);
+        grid-template-columns: 1fr;
       }
-
+      
       .btn {
-        height: 70px;
-        font-size: 11px;
-      }
-
-      .btn i {
-        font-size: 20px;
+        height: 55px; /* Уменьшена высота */
       }
     }
     
-    /* 3.45 Лоадер */
+    /* 3.44 Лоадер */
     .loader {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,.3);
+      width: 16px; /* Уменьшен размер */
+      height: 16px; /* Уменьшен размер */
+      border: 2px solid rgba(255,255,255,.3);
       border-radius: 50%;
       border-top-color: #fff;
       animation: spin 1s ease-in-out infinite;
-      margin-left: 10px;
+      margin-left: 8px; /* Уменьшен отступ */
     }
     
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
     
-    /* 3.46 Уведомления */
+    /* 3.45 Уведомления */
     .notification {
       position: fixed;
-      bottom: 20px;
+      bottom: 15px; /* Поднято выше */
       left: 50%;
       transform: translateX(-50%);
-      padding: 12px 20px;
+      padding: 10px 15px; /* Уменьшен padding */
       border-radius: var(--border-radius);
       color: white;
       z-index: 1000;
@@ -695,8 +698,8 @@
     }
     
     @keyframes slideIn {
-      from { bottom: -50px; opacity: 0; }
-      to { bottom: 20px; opacity: 1; }
+      from { bottom: -40px; opacity: 0; }
+      to { bottom: 15px; opacity: 1; }
     }
     
     @keyframes fadeOut {
@@ -704,20 +707,20 @@
       to { opacity: 0; }
     }
     
-    /* 3.47 Счетчик звезд */
+    /* 3.46 Счетчик звезд */
     .stars-counter {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 15px; /* Поднято выше */
+      left: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 8px 15px;
-      border-radius: 20px;
+      padding: 6px 12px; /* Уменьшен padding */
+      border-radius: 18px; /* Уменьшен радиус */
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px; /* Уменьшен отступ */
       z-index: 50;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      font-size: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* Уменьшена тень */
+      font-size: 12px; /* Уменьшен размер шрифта */
       cursor: pointer;
       transition: transform 0.2s ease;
     }
@@ -730,7 +733,7 @@
       color: gold;
     }
     
-    /* 3.48 Анимация получения звезд */
+    /* 3.47 Анимация получения звезд */
     @keyframes starBounce {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.5); }
@@ -740,12 +743,12 @@
       animation: starBounce 0.5s ease;
     }
     
-    /* 3.49 Стили для реферальной системы */
+    /* 3.48 Стили для реферальной системы */
     .ref-link {
       background: rgba(0,0,0,0.2);
-      padding: 12px;
+      padding: 10px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      margin-top: 15px;
+      margin-top: 12px; /* Уменьшен отступ */
       word-break: break-all;
       text-align: center;
       cursor: pointer;
@@ -757,14 +760,14 @@
     }
     
     .ref-link i {
-      margin-right: 5px;
+      margin-right: 4px; /* Уменьшен отступ */
     }
     
-    /* 3.50 Улучшенные сообщения об ошибках */
+    /* 3.49 Улучшенные сообщения об ошибках */
     .error-message {
       color: var(--error-color);
-      font-size: 13px;
-      margin-top: 5px;
+      font-size: 12px; /* Уменьшен размер шрифта */
+      margin-top: 4px; /* Уменьшен отступ */
       display: none;
     }
     
@@ -773,7 +776,7 @@
       display: block;
     }
     
-    /* 3.51 Анимация для кнопок */
+    /* 3.50 Анимация для кнопок */
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -784,7 +787,7 @@
       animation: pulse 2s infinite;
     }
     
-    /* 3.52 Дополнительные стили для улучшения UX */
+    /* 3.51 Дополнительные стили для улучшения UX */
     .tooltip {
       position: relative;
       display: inline-block;
@@ -792,12 +795,12 @@
     
     .tooltip .tooltiptext {
       visibility: hidden;
-      width: 200px;
+      width: 180px; /* Уменьшена ширина */
       background-color: var(--card-color);
       color: var(--text-color);
       text-align: center;
       border-radius: 6px;
-      padding: 8px;
+      padding: 6px; /* Уменьшен padding */
       position: absolute;
       z-index: 1;
       bottom: 125%;
@@ -805,8 +808,8 @@
       transform: translateX(-50%);
       opacity: 0;
       transition: opacity 0.3s;
-      font-size: 14px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      font-size: 12px; /* Уменьшен размер шрифта */
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2); /* Уменьшена тень */
     }
     
     .tooltip:hover .tooltiptext {
@@ -814,17 +817,17 @@
       opacity: 1;
     }
     
-    /* 3.53 Подсказки для полей формы */
+    /* 3.52 Подсказки для полей формы */
     .field-hint {
-      font-size: 12px;
+      font-size: 11px; /* Уменьшен размер шрифта */
       color: rgba(255,255,255,0.6);
-      margin-top: 5px;
+      margin-top: 4px; /* Уменьшен отступ */
     }
     
-    /* 3.54 Улучшенный скроллбар */
+    /* 3.53 Улучшенный скроллбар */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px; /* Уменьшена ширина */
+      height: 6px; /* Уменьшена высота */
     }
     
     ::-webkit-scrollbar-track {
@@ -833,70 +836,70 @@
     
     ::-webkit-scrollbar-thumb {
       background: var(--primary-color);
-      border-radius: 4px;
+      border-radius: 3px; /* Уменьшен радиус */
     }
     
     ::-webkit-scrollbar-thumb:hover {
       background: var(--secondary-color);
     }
 
-    /* 3.55 Стили для натальной карты */
+    /* 3.54 Стили для натальной карты */
     .natal-chart-container {
-      margin-top: 20px;
+      margin-top: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 20px;
+      padding: 15px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
     }
 
     .natal-chart {
       width: 100%;
-      height: 300px;
-      margin: 20px 0;
+      height: 250px; /* Уменьшена высота */
+      margin: 15px 0; /* Уменьшен отступ */
     }
 
     .planet-info {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
+      gap: 8px; /* Уменьшен отступ */
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .planet-card {
       background: rgba(0,0,0,0.2);
-      padding: 10px;
+      padding: 8px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      flex: 1 1 calc(33% - 10px);
-      min-width: 120px;
+      flex: 1 1 calc(33% - 8px); /* Уменьшен отступ */
+      min-width: 100px; /* Уменьшена минимальная ширина */
     }
 
     .planet-card h4 {
-      margin: 0 0 5px 0;
+      margin: 0 0 4px 0; /* Уменьшен отступ */
       color: var(--primary-color);
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px; /* Уменьшен отступ */
     }
 
-    /* 3.56 Стили для транзитов */
+    /* 3.55 Стили для транзитов */
     .transits-container {
-      margin-top: 20px;
+      margin-top: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 20px;
+      padding: 15px; /* Уменьшен padding */
       border-radius: var(--border-radius);
     }
 
     .transit-item {
       display: flex;
       align-items: center;
-      padding: 10px;
+      padding: 8px; /* Уменьшен padding */
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
 
     .transit-icon {
-      font-size: 24px;
-      margin-right: 15px;
-      width: 30px;
+      font-size: 20px; /* Уменьшен размер */
+      margin-right: 12px; /* Уменьшен отступ */
+      width: 24px; /* Уменьшена ширина */
       text-align: center;
     }
 
@@ -905,32 +908,32 @@
     }
 
     .transit-date {
-      font-size: 12px;
+      font-size: 11px; /* Уменьшен размер шрифта */
       opacity: 0.7;
     }
 
-    /* 3.57 Стили для лунного календаря */
+    /* 3.56 Стили для лунного календаря */
     .moon-phase {
       text-align: center;
-      margin: 20px 0;
+      margin: 15px 0; /* Уменьшен отступ */
     }
 
     .moon-icon {
-      font-size: 50px;
-      margin-bottom: 10px;
+      font-size: 40px; /* Уменьшен размер */
+      margin-bottom: 8px; /* Уменьшен отступ */
     }
 
     .moon-calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-top: 15px;
+      gap: 4px; /* Уменьшен отступ */
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .moon-day {
       text-align: center;
-      padding: 5px;
-      border-radius: 5px;
+      padding: 4px; /* Уменьшен padding */
+      border-radius: 4px; /* Уменьшен радиус */
       background: rgba(0,0,0,0.1);
     }
 
@@ -939,89 +942,68 @@
       color: white;
     }
 
-    /* 3.58 Стили для обучения */
-    .learning-card {
-      background: var(--card-color);
-      padding: 15px;
-      border-radius: var(--border-radius);
-      margin-bottom: 15px;
-    }
-
-    .learning-card h3 {
-      color: var(--primary-color);
-      margin-top: 0;
-    }
-
-    .quiz-container {
-      margin-top: 15px;
-    }
-
-    .quiz-question {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    /* 3.57 Стили для обучения */
+    .quiz-toggle {
+        padding: 6px 10px !important; /* Уменьшен padding */
+        font-size: 11px !important; /* Уменьшен размер шрифта */
+        height: auto !important;
     }
 
     .quiz-option {
-      padding: 8px;
-      border-radius: 5px;
-      background: rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: background 0.2s;
+        background: rgba(255,255,255,0.1) !important;
+        padding: 8px; /* Уменьшен padding */
+        border-radius: 4px; /* Уменьшен радиус */
+        margin-bottom: 4px; /* Уменьшен отступ */
+        transition: background 0.2s;
     }
 
     .quiz-option:hover {
-      background: rgba(0,0,0,0.2);
+        background: rgba(255,255,255,0.2) !important;
     }
 
     .quiz-option.correct {
-      background: var(--success-color);
+        background: var(--success-color) !important;
     }
 
     .quiz-option.incorrect {
-      background: var(--error-color);
+        background: var(--error-color) !important;
     }
 
-    /* 3.59 Стили для совместимости */
+    /* 3.58 Стили для совместимости */
     .compatibility-container {
-      margin-top: 20px;
+      margin-top: 15px; /* Уменьшен отступ */
     }
 
     .compatibility-score {
-      font-size: 24px;
+      font-size: 20px; /* Уменьшен размер шрифта */
       font-weight: bold;
       color: var(--primary-color);
       text-align: center;
-      margin: 15px 0;
+      margin: 12px 0; /* Уменьшен отступ */
     }
 
     .compatibility-aspects {
-      margin-top: 15px;
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .aspect-item {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
+      padding: 6px 0; /* Уменьшен padding */
       border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
 
-    /* 3.60 Стили для достижений */
+    /* 3.59 Стили для достижений */
     .achievements-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 15px;
+      gap: 8px; /* Уменьшен отступ */
+      margin-top: 12px; /* Уменьшен отступ */
     }
 
     .achievement {
       text-align: center;
-      padding: 10px;
+      padding: 8px; /* Уменьшен padding */
       border-radius: var(--border-radius);
       background: rgba(0,0,0,0.1);
     }
@@ -1031,37 +1013,85 @@
     }
 
     .achievement-icon {
-      font-size: 24px;
-      margin-bottom: 5px;
+      font-size: 20px; /* Уменьшен размер */
+      margin-bottom: 4px; /* Уменьшен отступ */
     }
 
     .achievement-title {
-      font-size: 12px;
+      font-size: 11px; /* Уменьшен размер шрифта */
     }
 
-    /* 3.61 УЛУЧШЕНИЕ: Стиль для маленькой кнопки редактирования */
-    .small-btn {
-      padding: 5px 10px;
-      font-size: 12px;
-      height: auto;
-      width: auto;
-      min-width: 0;
+    /* 3.60 Плоские кнопки внизу экрана */
+    .flat-btn {
+      background: none;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .flat-btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* 3.61 Новый стиль для главного меню - 2x4 кнопки */
+    .main-menu-2x4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px; /* Уменьшен отступ */
+      margin-top: 15px; /* Уменьшен отступ */
+    }
+
+    .main-menu-2x4 .btn {
+      height: 70px; /* Уменьшена высота */
+    }
+
+    /* 3.62 Стиль для кнопки редактирования профиля */
+    #editProfileBtn {
+      padding: 3px 5px !important; /* Уменьшен padding */
+      font-size: 9px !important; /* Уменьшен размер шрифта */
+      height: auto !important;
+      min-width: 55px !important; /* Уменьшена ширина */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px; /* Уменьшен отступ */
+      margin-right: 0; /* Удален отступ */
+      margin-left: auto; /* Перемещена вправо */
+    }
+    
+    /* 3.63 Стиль для кнопки переключения темы */
+    #themeToggleBtn {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 18px; /* Уменьшен размер */
+      cursor: pointer;
       margin-left: 10px;
+      transition: transform 0.3s ease;
     }
 
-    /* 3.62 УЛУЧШЕНИЕ: Стиль для заголовка с кнопкой */
-    .title-with-btn {
+    #themeToggleBtn:hover {
+      transform: scale(1.1);
+    }
+
+    /* 3.64 Новый стиль для логотипа (кликабельная область) */
+    .logo-container {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 10px; /* Уменьшен отступ */
     }
 
-    /* 3.63 УЛУЧШЕНИЕ: Стиль для SVG иконки натальной карты */
-    .natal-icon {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
+    /* 3.65 Новый стиль для кнопки натальной карты */
+    .natal-chart-icon {
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom: 3px; /* Уменьшен отступ */
     }
   </style>
 </head>
@@ -1077,99 +1107,94 @@
   
   <!-- 6. Главное меню -->
   <div id="mainMenu">
-    <div class="logo-container" id="themeToggle" title="Сменить тему">
-      <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <path id="star-path" d="M100,20 L123.5,70 L177.6,76.8 L137.8,113.9 L149.1,167.6 L100,142 L50.9,167.6 L62.2,113.9 L22.4,76.8 L76.5,70 Z" />
-          <circle id="circle-path" cx="100" cy="100" r="80" />
-        </defs>
-      </svg>
-      <div class="logo-text">ASTRODAMUS</div>
-      <span id="themeIcon" style="margin-top: 10px; font-size: 20px; display: block;">
-        <i class="fas fa-moon"></i>
-      </span>
-    </div>
-    
-    <!-- 7. Основные кнопки меню - УЛУЧШЕНИЕ: сетка 2x4 -->
-    <div class="main-menu">
-      <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
-        <i class="fas fa-user-edit"></i> Анкета
-      </button>
-      <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
-        <!-- УЛУЧШЕНИЕ: Добавлена SVG иконка для натальной карты -->
-        <svg class="natal-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L4 12L12 22L20 12L12 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
-          <circle cx="12" cy="12" r="3" fill="currentColor"/>
-          <path d="M12 5L12 19" stroke="currentColor" stroke-width="2"/>
-          <path d="M5 12L19 12" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        Натальная карта
-      </button>
-      <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
-        <i class="fas fa-sun"></i> День
-      </button>
-      <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
-        <i class="fas fa-calendar-week"></i> Неделя
-      </button>
-      <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
-        <i class="fas fa-calendar-alt"></i> Месяц
-      </button>
-      <button id="transitsBtn" class="btn" aria-label="Текущие транзиты">
-        <i class="fas fa-satellite"></i> Транзиты
-      </button>
-      <button id="moonBtn" class="btn" aria-label="Лунный календарь">
-        <i class="fas fa-moon"></i> Луна
-      </button>
-      <button id="learningBtn" class="btn" aria-label="Обучение астрологии">
-        <i class="fas fa-graduation-cap"></i> Обучение
-      </button>
-    </div>
-    
-    <!-- 8. Оверлей для бонусного сообщения -->
-    <div class="overlay" id="overlay"></div>
-    
-    <!-- 9. Бонусное сообщение -->
-    <div class="bonus-message" id="bonusMessage">
-      <button class="close-bonus" id="closeBonusMessage" aria-label="Закрыть">
-        <i class="fas fa-times"></i>
-      </button>
-      <h3><i class="fas fa-gift"></i> Ваш мини-бонус!</h3>
-      <p id="bonusText"></p>
-      <div class="stars-added" id="starsAdded" style="display: none;">
-        <i class="fas fa-star"></i> +<span id="starsAddedCount">1</span> звезда
-      </div>
-      <button class="btn btn-primary" id="shareBonusBtn" style="margin-top: 15px; display: none;">
-        <i class="fas fa-share-alt"></i> Поделиться бонусом
-      </button>
-    </div>
-    
-    <!-- 10. Кнопки внизу экрана - УЛУЧШЕНИЕ: выравнивание с кнопками меню -->
-    <div class="bottom-buttons">
-      <button id="bonusBtn" class="btn btn-warning" aria-label="Получить бонус">
-        <i class="fas fa-envelope"></i> Бонус
-      </button>
-      <button id="shareAppBtn" class="btn btn-info" aria-label="Поделиться приложением">
-        <i class="fas fa-share-alt"></i> Поделиться
+    <!-- 6.1 Заголовок приложения -->
+    <div class="logo-container" id="themeToggleLogo">
+      <h1 style="font-size: 2rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 8px rgba(147, 112, 219, 0.5); letter-spacing: 1px;">
+        ASTRODAMUS
+      </h1>
+      <button id="themeToggleBtn" aria-label="Сменить тему">
+        <i class="fas fa-moon" id="themeIcon"></i>
       </button>
     </div>
   </div>
+
+  <!-- 7. Основные кнопки меню в стиле iOS (2x4) -->
+  <div class="main-menu main-menu-2x4">
+    <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
+      <i class="fas fa-user-edit"></i>
+      <span>Анкета</span>
+    </button>
+    <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
+      <div class="natal-chart-icon"></div>
+      <span>Натальная карта</span>
+    </button>
+    <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
+      <i class="fas fa-sun"></i>
+      <span>Прогноз на день</span>
+    </button>
+    <button id="weeklyForecastBtn" class="btn" aria-label="Прогноз на неделю">
+      <i class="fas fa-calendar-week"></i>
+      <span>Прогноз на неделю</span>
+    </button>
+    <button id="monthlyForecastBtn" class="btn" aria-label="Прогноз на месяц">
+      <i class="fas fa-calendar-alt"></i>
+      <span>Прогноз на месяц</span>
+    </button>
+    <button id="transitsBtn" class="btn" aria-label="Текущие транзиты">
+      <i class="fas fa-satellite"></i>
+      <span>Транзиты</span>
+    </button>
+    <button id="moonBtn" class="btn" aria-label="Лунный календарь">
+      <i class="fas fa-moon"></i>
+      <span>Лунный календарь</span>
+    </button>
+    <button id="learningBtn" class="btn" aria-label="Обучение астрологии">
+      <i class="fas fa-graduation-cap"></i>
+      <span>Обучение</span>
+    </button>
+    <button id="bonusBtn" class="btn btn-warning" aria-label="Получить бонус">
+      <i class="fas fa-gift"></i>
+      <span>Бонус</span>
+    </button>
+    <button id="shareAppBtn" class="btn btn-info" aria-label="Поделиться приложением">
+      <i class="fas fa-share-alt"></i>
+      <span>Поделиться</span>
+    </button>
+  </div>
+    
+  <!-- 8. Оверлей для бонусного сообщения -->
+  <div class="overlay" id="overlay"></div>
   
-  <!-- 11. Боковая панель для анкеты -->
+  <!-- 9. Бонусное сообщение -->
+  <div class="bonus-message" id="bonusMessage">
+    <button class="close-bonus" id="closeBonusMessage" aria-label="Закрыть">
+      <i class="fas fa-times"></i>
+    </button>
+    <h3><i class="fas fa-gift"></i> Ваш мини-бонус!</h3>
+    <p id="bonusText"></p>
+    <div class="stars-added" id="starsAdded" style="display: none;">
+      <i class="fas fa-star"></i> +<span id="starsAddedCount">1</span> звезда
+    </div>
+    <button class="btn btn-primary" id="shareBonusBtn" style="margin-top: 12px; display: none;">
+      <i class="fas fa-share-alt"></i> Поделиться бонусом
+    </button>
+  </div>
+  
+  <!-- 10. Боковая панель для анкеты -->
   <div class="side-panel" id="profilePanel">
     <button class="close-panel" id="closeProfilePanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
     </button>
     
-    <!-- 11.1 УЛУЧШЕНИЕ: заголовок с маленькой кнопкой редактирования -->
-    <div class="title-with-btn">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
       <h2><i class="fas fa-user-edit"></i> Анкета</h2>
-      <button id="editProfileBtn" class="btn btn-info small-btn" style="display: none;">
-        <i class="fas fa-edit"></i>
+      <button id="editProfileBtn" class="btn btn-info" style="display: none;">
+        <i class="fas fa-edit"></i> Редактировать
       </button>
     </div>
     
-    <!-- 12. Прогресс-бар анкеты -->
-    <div id="formProgressContainer" class="progress-container" style="display: none;">
+    <!-- 11. Прогресс-бар анкеты -->
+    <div id="formProgressContainer" class="progress-container">
       <div class="progress-bar" id="formProgressBar" style="width: 33%"></div>
       <div class="progress-steps">
         <div class="step active" id="step1">Личные данные</div>
@@ -1178,7 +1203,7 @@
       </div>
     </div>
     
-    <!-- 13. Форма анкеты -->
+    <!-- 12. Форма анкеты -->
     <form id="astroForm" style="display: none;">
       <div class="form-step" id="step1Form">
         <div class="form-group">
@@ -1280,12 +1305,12 @@
       </div>
     </form>
     
-    <!-- 14. Просмотр профиля -->
+    <!-- 13. Просмотр профиля -->
     <div class="profile-view" id="profileView">
       <h3><i class="fas fa-user-circle"></i> Ваши данные</h3>
       <div id="profileData"></div>
       
-      <!-- 14.1 Реферальная ссылка -->
+      <!-- 13.1 Реферальная ссылка -->
       <div class="ref-link" id="refLinkContainer" style="display: none;">
         <i class="fas fa-user-plus"></i> Пригласите друзей и получите 5 звезд за каждого!
         <div class="ref-link" id="refLink"></div>
@@ -1293,7 +1318,7 @@
     </div>
   </div>
   
-  <!-- 15. Панель прогноза -->
+  <!-- 14. Панель прогноза -->
   <div class="side-panel" id="forecastPanel">
     <button class="close-panel" id="closeForecastPanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
@@ -1321,7 +1346,7 @@
     </div>
   </div>
 
-  <!-- 16. Панель натальной карты -->
+  <!-- 15. Панель натальной карты -->
   <div class="side-panel" id="natalChartPanel">
     <button class="close-panel" id="closeNatalChartPanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
@@ -1348,7 +1373,7 @@
     </div>
   </div>
 
-  <!-- 17. Панель транзитов -->
+  <!-- 16. Панель транзитов -->
   <div class="side-panel" id="transitsPanel">
     <button class="close-panel" id="closeTransitsPanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
@@ -1361,14 +1386,14 @@
         <!-- Текущие транзиты будут загружены динамически -->
       </div>
       
-      <div id="transitNotifications" style="margin-top: 20px;">
+      <div id="transitNotifications" style="margin-top: 15px;">
         <h3><i class="fas fa-bell"></i> Уведомления</h3>
         <div id="notificationsList"></div>
       </div>
     </div>
   </div>
 
-  <!-- 18. Панель лунного календаря -->
+  <!-- 17. Панель лунного календаря -->
   <div class="side-panel" id="moonPanel">
     <button class="close-panel" id="closeMoonPanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
@@ -1386,13 +1411,13 @@
       <!-- Лунный календарь будет загружен динамически -->
     </div>
     
-    <div class="moon-rituals" style="margin-top: 20px;">
+    <div class="moon-rituals" style="margin-top: 15px;">
       <h3><i class="fas fa-magic"></i> Рекомендации</h3>
       <div id="moonRituals"></div>
     </div>
   </div>
 
-  <!-- 19. Панель обучения -->
+  <!-- 18. Панель обучения -->
   <div class="side-panel" id="learningPanel">
     <button class="close-panel" id="closeLearningPanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
@@ -1405,12 +1430,12 @@
     </div>
   </div>
 
-  <!-- 20. Подключение библиотеки автодополнения -->
+  <!-- 19. Подключение библиотеки автодополнения -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
   
-  <!-- 21. Основной JavaScript код -->
+  <!-- 20. Основной JavaScript код -->
   <script>
-    // 21.1 Инициализация WebApp Telegram
+    // 20.1 Инициализация WebApp Telegram
     const tg = window.Telegram.WebApp;
     if (tg) {
       tg.expand();
@@ -1418,7 +1443,7 @@
       tg.BackButton.onClick(() => hideAllPanels());
     }
     
-    // 21.2 Основные элементы
+    // 20.2 Основные элементы
     const mainMenu = document.getElementById('mainMenu');
     const profileBtn = document.getElementById('profileBtn');
     const natalChartBtn = document.getElementById('natalChartBtn');
@@ -1434,7 +1459,8 @@
     const bonusText = document.getElementById('bonusText');
     const closeBonusMessage = document.getElementById('closeBonusMessage');
     const overlay = document.getElementById('overlay');
-    const themeToggle = document.getElementById('themeToggle');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleLogo = document.getElementById('themeToggleLogo');
     const starsCounter = document.getElementById('starsCounter');
     const starsCount = document.getElementById('starsCount');
     const starsAdded = document.getElementById('starsAdded');
@@ -1444,7 +1470,7 @@
     const shareBonusBtn = document.getElementById('shareBonusBtn');
     const saveForecastBtn = document.getElementById('saveForecastBtn');
     
-    // 21.3 Панели
+    // 20.3 Панели
     const profilePanel = document.getElementById('profilePanel');
     const forecastPanel = document.getElementById('forecastPanel');
     const natalChartPanel = document.getElementById('natalChartPanel');
@@ -1452,7 +1478,7 @@
     const moonPanel = document.getElementById('moonPanel');
     const learningPanel = document.getElementById('learningPanel');
     
-    // 21.4 Кнопки закрытия панелей
+    // 20.4 Кнопки закрытия панелей
     const closeProfilePanel = document.getElementById('closeProfilePanel');
     const closeForecastPanel = document.getElementById('closeForecastPanel');
     const closeNatalChartPanel = document.getElementById('closeNatalChartPanel');
@@ -1460,7 +1486,7 @@
     const closeMoonPanel = document.getElementById('closeMoonPanel');
     const closeLearningPanel = document.getElementById('closeLearningPanel');
     
-    // 21.5 Форма анкеты
+    // 20.5 Форма анкеты
     const profileForm = document.getElementById('astroForm');
     const saveProfileBtn = document.getElementById('saveProfileBtn');
     const profileView = document.getElementById('profileView');
@@ -1468,50 +1494,50 @@
     const editProfileBtn = document.getElementById('editProfileBtn');
     const formProgressContainer = document.getElementById('formProgressContainer');
     
-    // 21.6 Прогноз
+    // 20.6 Прогноз
     const forecastContent = document.getElementById('forecastContent');
     const forecastDate = document.getElementById('forecastDate');
     const forecastTitle = document.getElementById('forecastTitle');
     
-    // 21.7 Прогресс-бар анкеты
+    // 20.7 Прогресс-бар анкеты
     const formProgressBar = document.getElementById('formProgressBar');
     const step1 = document.getElementById('step1');
     const step2 = document.getElementById('step2');
     const step3 = document.getElementById('step3');
     
-    // 21.8 Шаги анкеты
+    // 20.8 Шаги анкеты
     const step1Form = document.getElementById('step1Form');
     const step2Form = document.getElementById('step2Form');
     const step3Form = document.getElementById('step3Form');
     
-    // 21.9 Навигация по шагам
+    // 20.9 Навигация по шагам
     const nextStep1 = document.getElementById('nextStep1');
     const nextStep2 = document.getElementById('nextStep2');
     const prevStep2 = document.getElementById('prevStep2');
     const prevStep3 = document.getElementById('prevStep3');
     
-    // 21.10 Натальная карта
+    // 20.10 Натальная карта
     const natalChartCanvas = document.getElementById('natalChartCanvas');
     const planetInfo = document.getElementById('planetInfo');
     const compatibilitySection = document.getElementById('compatibilitySection');
     const compatibilityContent = document.getElementById('compatibilityContent');
     const addPartnerBtn = document.getElementById('addPartnerBtn');
     
-    // 21.11 Транзиты
+    // 20.11 Транзиты
     const currentTransits = document.getElementById('currentTransits');
     const notificationsList = document.getElementById('notificationsList');
     
-    // 21.12 Лунный календарь
+    // 20.12 Лунный календарь
     const currentMoonPhaseIcon = document.getElementById('currentMoonPhaseIcon');
     const currentMoonPhase = document.getElementById('currentMoonPhase');
     const moonPhaseDescription = document.getElementById('moonPhaseDescription');
     const moonCalendar = document.getElementById('moonCalendar');
     const moonRituals = document.getElementById('moonRituals');
     
-    // 21.13 Обучение
+    // 20.13 Обучение
     const learningContent = document.getElementById('learningContent');
     
-    // 21.14 Мотивирующие фразы для бонуса
+    // 20.14 Мотивирующие фразы для бонуса
     const bonusPhrases = [
       "Солнышко, сегодня твой день! Звезды сложились в твою пользу — действуй смело!",
       "Родной человек, сегодня Вселенная шепчет: ты сильнее, чем думаешь! Верь в себя!",
@@ -1525,13 +1551,13 @@
       "Солнышко, твои мечты ближе, чем кажется. Продолжай идти — ты на верном пути!"
     ];
     
-    // 21.15 Время последнего бонуса
+    // 20.15 Время последнего бонуса
     const BONUS_COOLDOWN = 3 * 60 * 60 * 1000; // 3 часа в миллисекундах
     let lastBonusTime = parseInt(localStorage.getItem('lastBonusTime')) || 0;
     let currentForecast = null;
     let natalChart = null;
     
-    // 21.16 Создание звездного фона
+    // 20.16 Создание звездного фона
     function createStars() {
       const starsCount = 200;
       const containerWidth = window.innerWidth;
@@ -1558,7 +1584,7 @@
       }
     }
     
-    // 21.17 Определение знака зодиака по дате рождения
+    // 20.17 Определение знака зодиака по дате рождения
     function getZodiacSign(dateString, system = 'tropical') {
       if (!dateString) return '';
       
@@ -1600,7 +1626,7 @@
       return '';
     }
     
-    // 21.18 Получение гороскопа через OpenRouter API
+    // 20.18 Получение гороскопа через OpenRouter API
     async function getHoroscope(zodiacSign, period = 'today') {
       try {
         // Преобразуем русское название знака в английское для API
@@ -1669,7 +1695,7 @@
       }
     }
 
-    // 21.19 Локальные прогнозы (используются, если API недоступно)
+    // 20.19 Локальные прогнозы (используются, если API недоступно)
     function getLocalHoroscope(zodiacSign, period) {
       const forecasts = {
         'Овен': {
@@ -1765,7 +1791,7 @@
       };
     }
 
-    // 21.20 Генерация натальной карты
+    // 20.20 Генерация натальной карты
     function generateNatalChart(data) {
       if (!data || !data.birth_date) {
         return '<p>Пожалуйста, заполните данные о рождении в анкете.</p>';
@@ -1853,7 +1879,7 @@
       return planets;
     }
 
-    // 21.21 Генерация отчета о совместимости
+    // 20.21 Генерация отчета о совместимости
     function generateCompatibilityReport(userData, partnerData) {
       const userSign = getZodiacSign(userData.birth_date, userData.zodiac_system || 'tropical');
       const partnerSign = getZodiacSign(partnerData.birth_date, partnerData.zodiac_system || 'tropical');
@@ -1914,7 +1940,7 @@
       return compatibilityScore;
     }
 
-    // 21.22 Генерация данных о транзитах
+    // 20.22 Генерация данных о транзитах
     function generateTransits() {
       const currentDate = new Date();
       const transits = [
@@ -1995,7 +2021,7 @@
       return { transits, notifications };
     }
 
-    // 21.23 Генерация лунного календаря
+    // 20.23 Генерация лунного календаря
     function generateMoonCalendar() {
       const moonPhases = [
         { name: 'Новолуние', icon: 'fa-circle', description: 'Время новых начинаний и постановки целей' },
@@ -2076,7 +2102,7 @@
       return currentPhase;
     }
 
-    // 21.24 Генерация обучающего контента
+    // 20.24 Генерация обучающего контента
     function generateLearningContent() {
       const topics = [
         {
@@ -2198,7 +2224,7 @@
       return topics;
     }
 
-    // 21.25 Вспомогательные функции для астрологии
+    // 20.25 Вспомогательные функции для астрологии
     function getRandomSign(currentSign) {
       const signs = ['Овен', 'Телец', 'Близнецы', 'Рак', 'Лев', 'Дева', 'Весы', 'Скорпион', 'Стрелец', 'Козерог', 'Водолей', 'Рыбы'];
       let randomSign = signs[Math.floor(Math.random() * signs.length)];
@@ -2229,7 +2255,7 @@
       return icons[planetName] || 'star';
     }
 
-    // 21.26 Показать боковую панель
+    // 20.26 Показать боковую панель
     function showPanel(panel) {
       document.querySelectorAll('.side-panel').forEach(p => {
         p.classList.remove('active');
@@ -2269,7 +2295,7 @@
       }
     }
     
-    // 21.27 Скрыть все боковые панели
+    // 20.27 Скрыть все боковые панели
     function hideAllPanels() {
       document.querySelectorAll('.side-panel').forEach(panel => {
         panel.classList.remove('active');
@@ -2282,7 +2308,7 @@
       }
     }
     
-    // 21.28 Обновление прогресс-бара анкеты
+    // 20.28 Обновление прогресс-бара анкеты
     function updateProgress(currentStep) {
       const progress = (currentStep / 3) * 100;
       formProgressBar.style.width = `${progress}%`;
@@ -2298,7 +2324,7 @@
       document.getElementById(`step${currentStep}`).classList.add('active');
     }
     
-    // 21.29 Переход к следующему шагу анкеты
+    // 20.29 Переход к следующему шагу анкеты
     function goToNextStep(currentStep, nextStep) {
       const currentForm = document.getElementById(`step${currentStep}Form`);
       const inputs = currentForm.querySelectorAll('input, select');
@@ -2316,7 +2342,7 @@
       profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 21.30 Переход к предыдущему шагу анкеты
+    // 20.30 Переход к предыдущему шагу анкеты
     function goToPrevStep(currentStep, prevStep) {
       document.getElementById(`step${currentStep}Form`).style.display = 'none';
       document.getElementById(`step${prevStep}Form`).style.display = 'block';
@@ -2324,7 +2350,7 @@
       profilePanel.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // 21.31 Генерация прогноза на основе данных
+    // 20.31 Генерация прогноза на основе данных
     async function generateForecast(data, period = 'день') {
       const zodiac = getZodiacSign(data.birth_date, data.zodiac_system || 'tropical');
       
@@ -2390,7 +2416,7 @@
       return forecastHTML;
     }
     
-    // 21.32 Генерация персонализированных рекомендаций
+    // 20.32 Генерация персонализированных рекомендаций
     function getPersonalAdvice(data, horoscope, period) {
       let advice = '';
       
@@ -2417,7 +2443,7 @@
       return advice;
     }
     
-    // 21.33 Показать уведомление
+    // 20.33 Показать уведомление
     function showNotification(message, type = 'success') {
       const notification = document.createElement('div');
       notification.className = `notification ${type}`;
@@ -2432,7 +2458,7 @@
       }, 3000);
     }
     
-    // 21.34 Отображение данных профиля
+    // 20.34 Отображение данных профиля
     function displayProfileData(data) {
       if (!data || !data.name) {
         profileData.innerHTML = '<p>Анкета еще не заполнена.</p>';
@@ -2459,13 +2485,14 @@
       generateRefLink(data.name);
     }
     
-    // 21.35 Генерация реферальной ссылки
+    // 20.35 Генерация реферальной ссылки
     function generateRefLink(name) {
       const refCode = `ref_${name.toLowerCase().replace(/\s+/g, '')}_${Math.floor(1000 + Math.random() * 9000)}`;
       localStorage.setItem('refCode', refCode);
       
       const refUrl = `https://t.me/astropred_bot?start=${refCode}`;
       refLink.innerHTML = `<i class="fas fa-link"></i> ${refUrl}`;
+      
       // Добавляем обработчик копирования ссылки
       refLink.onclick = () => {
         navigator.clipboard.writeText(refUrl)
@@ -2474,7 +2501,7 @@
       };
     }
     
-    // 21.36 Переключение между режимами просмотра и редактирования анкеты
+    // 20.36 Переключение между режимами просмотра и редактирования анкеты
     function toggleProfileViewMode(editMode = false) {
       if (editMode) {
         // Режим редактирования
@@ -2500,7 +2527,7 @@
       }
     }
     
-    // 21.37 Добавление звезд на счет
+    // 20.37 Добавление звезд на счет
     function addStars(count, reason = '') {
       let currentStars = parseInt(localStorage.getItem('starsCount')) || 0;
       currentStars += count;
@@ -2514,6 +2541,7 @@
       }, 500);
       
       // Показываем уведомление о начислении
+     
       if (reason) {
         showNotification(`+${count} звезд за ${reason}`, 'success');
       }
@@ -2588,23 +2616,47 @@
       updateBonusButton();
     }
     
-    // 21.40 Обновить состояние кнопки бонуса
-    function updateBonusButton() {
-      const now = Date.now();
-      const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
-      
-      if (timeLeft > 0) {
-        const hoursLeft = Math.ceil(timeLeft / (60 * 60 * 1000));
-        bonusBtn.innerHTML = `<i class="fas fa-clock"></i> До бонуса: ${hoursLeft}ч`;
-        bonusBtn.disabled = true;
-        bonusBtn.classList.remove('btn-pulse');
-      } else {
-        bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
-        bonusBtn.disabled = false;
-        bonusBtn.classList.add('btn-pulse');
-      }
+// 21.40 Обновить состояние кнопки бонуса (новая версия с таймером)
+function updateBonusButton() {
+  const now = Date.now();
+  const timeLeft = lastBonusTime + BONUS_COOLDOWN - now;
+  
+  if (timeLeft > 0) {
+    bonusBtn.disabled = true;
+    bonusBtn.classList.add('disabled');
+    bonusBtn.classList.remove('btn-pulse');
+    
+    // Добавляем таймер на кнопку
+    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    
+    bonusBtn.innerHTML = `
+      <i class="fas fa-gift"></i> Бонус
+      <div id="bonusTimer">
+        ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}
+      </div>
+    `;
+    
+    // Обновляем таймер каждую секунду
+    if (window.bonusTimerInterval) {
+      clearInterval(window.bonusTimerInterval);
     }
     
+    window.bonusTimerInterval = setInterval(() => {
+      updateBonusButton();
+    }, 1000);
+  } else {
+    bonusBtn.disabled = false;
+    bonusBtn.classList.remove('disabled');
+    bonusBtn.classList.add('btn-pulse');
+    bonusBtn.innerHTML = '<i class="fas fa-gift"></i> Получить бонус';
+    
+    if (window.bonusTimerInterval) {
+      clearInterval(window.bonusTimerInterval);
+    }
+  }
+}
     // 21.41 Переключение темы (светлая/тёмная) с иконкой
     function toggleTheme() {
       const root = document.documentElement;
