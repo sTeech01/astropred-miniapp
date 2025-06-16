@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <!-- 1.1 Мета-теги для кодировки и адаптивности -->
+  <!-- 1. Мета-теги для кодировки и адаптивности -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="AstroPred - персональный астрологический помощник с натальными картами, прогнозами и обучением">
   <title>AstroPred Mini App</title>
   
-  <!-- 1.2 Подключение библиотек -->
+  <!-- 2. Подключение библиотек -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,9 +15,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
-  <!-- 2.1 Стили приложения -->
+  <!-- 3. Стили приложения -->
   <style>
-    /* 2.2 CSS переменные для темной темы (по умололчанию) */
+    /* 3.1 CSS переменные для темной темы (по умололчанию) */
     :root {
       --primary-color: #9370db;
       --primary-hover: #7b5dc5;
@@ -34,7 +34,7 @@
       --border-radius: 12px;
     }
     
-    /* 2.3 CSS переменные для светлой темы */
+    /* 3.2 CSS переменные для светлой темы */
     :root.light-theme {
       --primary-color: #6a5acd;
       --primary-hover: #5a4ab5;
@@ -48,7 +48,7 @@
       --warning-color: #f39c12;
     }
     
-    /* 2.4 Основные стили тела документа */
+    /* 3.3 Основные стили тела документа */
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -59,10 +59,10 @@
       overflow-x: hidden;
       min-height: 100vh;
       line-height: 1.5;
-      padding-bottom: 80px;
+      padding-bottom: 80px; /* Уменьшено для поднятия кнопок вверх */
     }
     
-    /* 2.5 Контейнер для звездного фона */
+    /* 3.4 Контейнер для звездного фона */
     #stars-container {
       position: fixed;
       top: 0;
@@ -72,13 +72,70 @@
       z-index: -1;
       overflow: hidden;
     }
+    
+    /* 3.5 Стили для звезд */
+    .star {
+      position: absolute;
+      background-color: var(--text-color);
+      border-radius: 50%;
+      animation: twinkle var(--duration) infinite ease-in-out;
+      opacity: 0.7;
+    }
+    
+    /* 3.6 Анимация мерцания звезд */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    
+    /* 3.7 Стили главного меню */
+    #mainMenu {
+      padding: 20px;
+      transition: all var(--transition-speed) ease;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 20px; /* Уменьшено для поднятия кнопок вверх */
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* 3.8 Стиль для заголовка анкеты */
+    .side-panel > h2 {
+      margin-top: 0;
+      padding-top: 10px;
+      font-size: 1.5rem;
+    }
+    
+    /* 3.9 Стили главного меню - изменено для iOS стиля */
+    .main-menu {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px; /* Уменьшен отступ между кнопками */
+      margin-top: 10px; /* Уменьшен отступ сверху */
+    }
+    
+    /* 3.10 Боковая панель */
+    .side-panel {
+        position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg-color);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            overflow-y: auto;
+            transition: right var(--transition-speed) ease;
+            padding: 20px;
+            box-sizing: border-box;
+    }
 
-    /* 4.1 Активное состояние боковой панели */
+    /* 3.11 Активное состояние боковой панели */
     .side-panel.active {
       right: 0;
     }
     
-    /* 4.2 Кнопка закрытия панели */
+    /* 3.12 Кнопка закрытия панели */
     .close-panel {
       position: absolute;
       top: 15px;
@@ -95,14 +152,14 @@
       transform: rotate(90deg);
     }
     
-    /* 4.3 Основные стили кнопок */
+    /* 3.13 Основные стили кнопок - полностью переработано под iOS стиль */
     .btn {
       position: relative;
       overflow: hidden;
-      padding: 8px 5px;
-      border-radius: 12px;
+      padding: 8px 5px; /* Уменьшен padding */
+      border-radius: 12px; /* Уменьшен радиус */
       border: none;
-      font-size: 12px;
+      font-size: 12px; /* Уменьшен размер шрифта */
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -110,22 +167,20 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 5px; /* Уменьшен отступ между иконкой и текстом */
       background-color: var(--card-color);
       color: var(--text-color);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      height: 60px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Уменьшена тень */
+      height: 60px; /* Уменьшена высота кнопки */
       text-align: center;
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.1);
-      width: calc(50% - 5px);
-      margin: 0 auto;
     }
     
-    /* 4.4 Состояния кнопок */
+    /* 3.14 Состояния кнопок */
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25); /* Уменьшена тень */
     }
     
     .btn:active {
@@ -139,7 +194,7 @@
       box-shadow: none;
     }
     
-    /* 4.5 Стили для кнопки бонуса */
+    /* 3.15 Добавленные стили для кнопки бонуса */
     #bonusBtn.disabled {
       background-color: #cccccc !important;
       color: #666666 !important;
@@ -152,9 +207,9 @@
     }
 
     #bonusTimer {
-      font-size: 9px;
+      font-size: 9px; /* Уменьшен размер шрифта */
       position: absolute;
-      bottom: 3px;
+      bottom: 3px; /* Поднят выше */
       left: 0;
       right: 0;
       text-align: center;
@@ -162,7 +217,7 @@
       font-weight: bold;
     }
 
-    /* 5.1 Стили для разных типов кнопок */
+    /* 3.16 Стили для разных типов кнопок */
     .btn-success {
       background-color: var(--success-color);
       color: white;
@@ -199,14 +254,14 @@
       background-color: #e68a00;
     }
     
-    /* 5.2 Иконки в кнопках */
+    /* 3.17 Иконки в кнопках */
     .btn i {
-      font-size: 20px;
-      margin-bottom: 3px;
+      font-size: 20px; /* Уменьшен размер иконки */
+      margin-bottom: 3px; /* Уменьшен отступ */
       display: block;
     }
     
-    /* 5.3 Эффект ripple для кнопок */
+    /* 3.18 Эффект ripple для кнопок */
     .btn::after {
       content: "";
       position: absolute;
@@ -225,7 +280,7 @@
       animation: ripple 0.6s ease-out;
     }
     
-    /* 5.4 Анимация ripple эффекта */
+    /* 3.19 Анимация ripple эффекта */
     @keyframes ripple {
       0% {
         transform: scale(0, 0);
@@ -237,49 +292,49 @@
       }
     }
     
-    /* 5.5 Стили форм */
+    /* 3.20 Стили форм */
     form {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 15px; /* Уменьшен отступ */
       background: var(--card-color);
-      padding: 20px;
+      padding: 20px; /* Уменьшен padding */
       border-radius: var(--border-radius);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Уменьшена тень */
       transition: all var(--transition-speed) ease;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    /* 6.1 Группы полей формы */
+    /* 3.21 Группы полей формы */
     .form-group {
       position: relative;
       animation: fadeIn 0.5s ease forwards;
       opacity: 0;
     }
     
-    /* 6.2 Стили меток */
+    /* 3.22 Стили меток */
     label {
       font-weight: 600;
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: 6px; /* Уменьшен отступ */
       color: var(--text-color);
-      font-size: 14px;
+      font-size: 14px; /* Уменьшен размер шрифта */
     }
     
     label i {
-      margin-right: 6px;
+      margin-right: 6px; /* Уменьшен отступ */
       color: var(--primary-color);
-      width: 18px;
+      width: 18px; /* Уменьшена ширина */
       text-align: center;
     }
     
-    /* 6.3 Стили полей ввода */
+    /* 3.23 Стили полей ввода */
     input, select, textarea {
-      padding: 10px 12px;
+      padding: 10px 12px; /* Уменьшен padding */
       border-radius: var(--border-radius);
       border: 1px solid rgba(255,255,255,0.2);
-      font-size: 14px;
+      font-size: 14px; /* Уменьшен размер шрифта */
       width: 100%;
       box-sizing: border-box;
       background: rgba(0,0,0,0.2);
@@ -288,18 +343,18 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* 6.4 Специфика для select */
+    /* Специфика для select: добавим стрелочку */
     select {
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg fill='%23cccccc' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 10px center;
-      background-size: 16px 16px;
-      padding-right: 35px;
+      background-size: 16px 16px; /* Уменьшен размер стрелки */
+      padding-right: 35px; /* Уменьшен отступ */
       cursor: pointer;
     }
   
-    /* 6.5 Состояния полей ввода */
+    /* 3.24 Состояния полей ввода */
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
@@ -1050,9 +1105,9 @@
     <span id="starsCount">0</span>
   </div>
   
-  <!-- 7.3 Главное меню -->
+  <!-- 6. Главное меню -->
   <div id="mainMenu">
-    <!-- 7.4 Заголовок приложения -->
+    <!-- 6.1 Заголовок приложения -->
     <div class="logo-container" id="themeToggleLogo">
       <h1 style="font-size: 2rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 8px rgba(147, 112, 219, 0.5); letter-spacing: 1px;">
         ASTRODAMUS
@@ -1063,39 +1118,14 @@
     </div>
   </div>
 
-</style>
-</head>
-<body>
-  <!-- 7.1 Контейнер для звездного фона -->
-  <div id="stars-container"></div>
-  
-  <!-- 7.2 Счетчик звезд -->
-  <div class="stars-counter" id="starsCounter" title="Ваши звезды">
-    <i class="fas fa-star"></i>
-    <span id="starsCount">0</span>
-  </div>
-  
-  <!-- 7.3 Главное меню -->
-  <div id="mainMenu">
-    <!-- 7.4 Заголовок приложения -->
-    <div class="logo-container" id="themeToggleLogo">
-      <h1 style="font-size: 2rem; font-weight: 700; color: var(--primary-color); text-shadow: 0 0 8px rgba(147, 112, 219, 0.5); letter-spacing: 1px;">
-        ASTRODAMUS
-      </h1>
-      <button id="themeToggleBtn" aria-label="Сменить тему">
-        <i class="fas fa-moon" id="themeIcon"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- 7.5 Основные кнопки меню -->
+  <!-- 7. Основные кнопки меню в стиле iOS (2x4) -->
   <div class="main-menu main-menu-2x4">
     <button id="profileBtn" class="btn" aria-label="Заполнить анкету">
       <i class="fas fa-user-edit"></i>
       <span>Анкета</span>
     </button>
     <button id="natalChartBtn" class="btn" aria-label="Натальная карта">
-      <i class="fas fa-chart-pie"></i>
+      <div class="natal-chart-icon"></div>
       <span>Натальная карта</span>
     </button>
     <button id="dailyForecastBtn" class="btn" aria-label="Прогноз на день">
@@ -1132,10 +1162,10 @@
     </button>
   </div>
     
-  <!-- 8.1 Оверлей для бонусного сообщения -->
+  <!-- 8. Оверлей для бонусного сообщения -->
   <div class="overlay" id="overlay"></div>
   
-  <!-- 8.2 Бонусное сообщение -->
+  <!-- 9. Бонусное сообщение -->
   <div class="bonus-message" id="bonusMessage">
     <button class="close-bonus" id="closeBonusMessage" aria-label="Закрыть">
       <i class="fas fa-times"></i>
@@ -1150,20 +1180,20 @@
     </button>
   </div>
   
-  <!-- 8.3 Боковая панель для анкеты -->
+  <!-- 10. Боковая панель для анкеты -->
   <div class="side-panel" id="profilePanel">
     <button class="close-panel" id="closeProfilePanel" aria-label="Закрыть панель">
       <i class="fas fa-times"></i>
     </button>
     
-    <h2>
-      <i class="fas fa-user-edit"></i> Анкета
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2><i class="fas fa-user-edit"></i> Анкета</h2>
       <button id="editProfileBtn" class="btn btn-info" style="display: none;">
         <i class="fas fa-edit"></i> Редактировать
       </button>
-    </h2>
+    </div>
     
-    <!-- 8.4 Прогресс-бар анкеты -->
+    <!-- 11. Прогресс-бар анкеты -->
     <div id="formProgressContainer" class="progress-container">
       <div class="progress-bar" id="formProgressBar" style="width: 33%"></div>
       <div class="progress-steps">
