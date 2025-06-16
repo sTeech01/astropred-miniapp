@@ -109,9 +109,12 @@
     /* 3.9 Стили главного меню - изменено для iOS стиля */
     .main-menu {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr); /* Изменено на 4 колонки */
       gap: 10px; /* Уменьшен отступ между кнопками */
       margin-top: 10px; /* Уменьшен отступ сверху */
+      padding: 0 15px; /* Добавлены отступы по бокам */
+      max-width: 500px; /* Ограничение максимальной ширины */
+      margin: 0 auto; /* Центрирование */
     }
     
     /* 3.10 Боковая панель */
@@ -171,7 +174,8 @@
       background-color: var(--card-color);
       color: var(--text-color);
       box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Уменьшена тень */
-      height: 60px; /* Уменьшена высота кнопки */
+      height: 80px; /* Увеличена высота кнопки */
+      width: 80px; /* Фиксированная ширина как в iOS */
       text-align: center;
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.1);
@@ -256,7 +260,7 @@
     
     /* 3.17 Иконки в кнопках */
     .btn i {
-      font-size: 20px; /* Уменьшен размер иконки */
+      font-size: 24px; /* Увеличен размер иконки */
       margin-bottom: 3px; /* Уменьшен отступ */
       display: block;
     }
@@ -642,11 +646,12 @@
       
       /* Адаптация кнопок для маленьких экранов */
       .main-menu {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки на маленьких экранах */
       }
       
       .btn {
-        height: 55px; /* Уменьшена высота */
+        height: 70px; /* Уменьшена высота */
+        width: 70px; /* Уменьшена ширина */
       }
     }
     
@@ -998,7 +1003,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px; /* Уменьшен отступ */
-      margin-top: 12px; /* Уменьшен отступ */
+      margin-top: 12px; /* Уменьшен отступ
     }
 
     .achievement {
