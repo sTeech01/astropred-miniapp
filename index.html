@@ -1227,7 +1227,7 @@
         <div class="form-group">
           <label for="birth_date"><i class="fas fa-calendar-day"></i>Дата рождения:</label>
           <input type="date" id="birth_date" name="birth_date" required aria-required="true" 
-                 max="<?= date('Y-m-d') ?>" min="1900-01-01" />
+                 max="" min="1900-01-01" />
           <div class="error-message" id="birth_date-error">Пожалуйста, введите корректную дату</div>
         </div>
         
@@ -1432,7 +1432,7 @@
   <!-- 21. Основной JavaScript код -->
   <script>
     // 21.1 Инициализация WebApp Telegram
-    const tg = window.Telegram.WebApp;
+    const tg = window.Telegram && window.Telegram.WebApp;
     if (tg) {
       tg.expand();
       tg.enableClosingConfirmation();
